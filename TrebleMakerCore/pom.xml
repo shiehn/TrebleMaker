@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.treblemaker</groupId>
+    <artifactId>treblemaker</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <dependency.jl1>/TrebleMaker/libs/jl1.0.1.jar</dependency.jl1>
+        <dependency.jsminim>/TrebleMaker/libs/jsminim.jar</dependency.jsminim>
+        <dependency.minim>/TrebleMaker/libs/minim.jar</dependency.minim>
+        <dependency.minim-spi>/TrebleMaker/libs/minim-spi.jar</dependency.minim-spi>
+        <dependency.mp3spi1>/TrebleMaker/libs/mp3spi1.9.5.jar</dependency.mp3spi1>
+        <dependency.tritonus_aos>/TrebleMaker/libs/tritonus_aos.jar</dependency.tritonus_aos>
+        <dependency.tritonus_share>/TrebleMaker/libs/tritonus_share.jar</dependency.tritonus_share>
+        <dependency.TarsosDSP-latest>/TrebleMaker/libs/TarsosDSP-latest.jar</dependency.TarsosDSP-latest>
+        <org.slf4j-version>1.7.5</org.slf4j-version>
+        <nd4j.version>1.0.0-alpha</nd4j.version>
+        <dl4j.version>1.0.0-alpha</dl4j.version>
+        <nd4j.backend>nd4j-native-platform</nd4j.backend>
+        <scala.binary.version>2.11</scala.binary.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>1.3.2.RELEASE</version>
+                    <configuration>
+                    <!-- FOR PROD: WHEN JVM ARGS ARE PASSED THE PROCESS FORKS AND DEBUGGER IS NOT ATTACHED -->
+                    <!--<jvmArguments>-->
+                          <!-- -Xmx4096m-->
+                    <!--</jvmArguments>-->
+                    <mainClass>com.treblemaker.Application</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>1.5.7.RELEASE</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${org.slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+            <version>1.11</version>
+        </dependency>
+
+        <!-- TESTING -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>1.5.7.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>1.5.7.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
+        <!-- MYSQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.8-dmr</version>
+        </dependency>
+
+        <!-- AMAZON S3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-all</artifactId>
+            <version>3.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jl1</groupId>
+            <artifactId>org.jl1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${dependency.jl1}</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jsminim</groupId>
+            <artifactId>org.jsminim</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${dependency.jsminim}</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>minim</groupId>
+            <artifactId>org.minim</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${dependency.minim}</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>minim-spi</groupId>
+            <artifactId>org.minim-spi</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${dependency.minim-spi}</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>mp3spi1</groupId>
+            <artifactId>org.mp3spi1</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${dependency.mp3spi1}</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>tritonus_aos</groupId>
+            <artifactId>org.tritonus_aos</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${dependency.tritonus_aos}</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>tritonus_share</groupId>
+            <artifactId>org.tritonus_share</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${dependency.tritonus_share}</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>TarsosDSP</groupId>
+            <artifactId>be.tarsos.dsp</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${dependency.TarsosDSP-latest}</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+
+        <!-- USED BY JFUGUGE -->
+        <dependency>
+            <groupId>xom</groupId>
+            <artifactId>xom</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+
+
+        <!-- DL4J -->
+        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-native-platform</artifactId>
+            <version>${nd4j.version}</version>
+        </dependency>
+
+        <!-- Core DL4J functionality -->
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-core</artifactId>
+            <version>${dl4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-nlp</artifactId>
+            <version>${dl4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-zoo</artifactId>
+            <version>${dl4j.version}</version>
+        </dependency>
+
+        <!-- ParallelWrapper & ParallelInference live here -->
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-parallel-wrapper_${scala.binary.version}</artifactId>
+            <version>${dl4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-ui_2.10</artifactId>
+            <version>${dl4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.14</version>
+        </dependency>
+
+    </dependencies>
+</project>

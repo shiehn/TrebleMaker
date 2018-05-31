@@ -1,0 +1,68 @@
+{
+  "Structure": [
+    {
+      "Genre": 0,
+      "BarCount": 4,
+      "Type": 0,
+      "Complexity": 70,
+      "MinorToMajor": 5,
+      "InitialChord": ""
+    },
+    {
+      "Genre": 0,
+      "BarCount": 4,
+      "Type": 0,
+      "Complexity": 70,
+      "MinorToMajor": 5,
+      "InitialChord": ""
+    },
+    {
+      "Genre": 0,
+      "BarCount": 4,
+      "Type": 2,
+      "Complexity": 100,
+      "MinorToMajor": 5,
+      "InitialChord": ""
+    },
+    {
+      "Genre": 0,
+      "BarCount": 4,
+      "Type": 0,
+      "Complexity": 70,
+      "MinorToMajor": 5,
+      "InitialChord": ""
+    },
+    {
+      "Genre": 0,
+      "BarCount": 4,
+      "Type": 0,
+      "Complexity": 70,
+      "MinorToMajor": 5,
+      "InitialChord": ""
+    },
+    {
+      "Genre": 0,
+      "BarCount": 4,
+      "Type": 2,
+      "Complexity": 100,
+      "MinorToMajor": 5,
+      "InitialChord": ""
+    },
+    {
+      "Genre": 0,
+      "BarCount": 4,
+      "Type": 1,
+      "Complexity": 50,
+      "MinorToMajor": 5,
+      "InitialChord": ""
+    },
+    {
+      "Genre": 0,
+      "BarCount": 4,
+      "Type": 2,
+      "Complexity": 100,
+      "MinorToMajor": 5,
+      "InitialChord": ""
+    }
+  ]
+}
