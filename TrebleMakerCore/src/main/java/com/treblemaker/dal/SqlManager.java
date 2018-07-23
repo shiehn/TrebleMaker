@@ -34,7 +34,7 @@ public class SqlManager implements ISqlManager {
 
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
 
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		if(connection == null || connection.isClosed() || !connection.isValid(1000)){
 			try {

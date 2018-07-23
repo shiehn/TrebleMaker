@@ -48,7 +48,7 @@ public class SetMelodicSynthEvent implements IEventChain {
         for (Map.Entry<ProgressionType, List<HiveChord>> entry : pTypeToChords.entrySet())
         {
             String jFugueMelody = melodydGenerator.generate(entry.getValue());
-            pTypeToMelody.put(entry.getKey(), jFugueMelody);
+            pTypeToMelody.put(entry.getKey(), "T" + queueState.getQueueItem().getBpm() + " " + jFugueMelody);
         }
 
         for (ProgressionUnit progressionUnit : queueState.getStructure()) {
