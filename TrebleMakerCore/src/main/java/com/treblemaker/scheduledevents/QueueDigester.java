@@ -463,10 +463,14 @@ public class QueueDigester implements IQueueDigester {
         queueState = setKickPatternAnalyticsEvent.set(queueState);
         Application.logger.debug("LOG: END KICK PATTERN ANALYTICS");
 
-        Application.logger.debug("LOG: RENDER KICK PATTERN");
+        Application.logger.debug("LOG: RENDER KICK AUDIO PATTERN");
         kickPatternRenderer.render(queueState);
-        Application.logger.debug("LOG: END RENDER KICK PATTERN");
+        Application.logger.debug("LOG: END RENDER KICK AUDIO PATTERN");
 
+        Application.logger.debug("LOG: RENDER KICK MIDI PATTERN");
+        //TODO convert kick patterns to midi
+        //TODO kickPatternRenderer.render(queueState);
+        Application.logger.debug("LOG: END RENDER KICK MIDI PATTERN");
 
         Application.logger.debug("LOG: SET HAT PATTERN EVENT");
         queueState = setHatPatternEvent.set(queueState);
@@ -480,6 +484,11 @@ public class QueueDigester implements IQueueDigester {
         hatPatternRenderer.render(queueState);
         Application.logger.debug("LOG: END RENDER HAT PATTERN");
 
+        Application.logger.debug("LOG: RENDER HAT MIDI PATTERN");
+        //TODO convert hat to midi patterns
+        //TODO hatPatternRenderer.render(queueState);
+        Application.logger.debug("LOG: END RENDER HAT MIDI PATTERN");
+
         Application.logger.debug("LOG: SET SNARE PATTERN EVENT");
         queueState = setSnarePatternEvent.set(queueState);
         Application.logger.debug("LOG: END SET HAT PATTERN EVENT");
@@ -491,6 +500,11 @@ public class QueueDigester implements IQueueDigester {
         Application.logger.debug("LOG: RENDER SNARE PATTERN");
         snarePatternRenderer.render(queueState);
         Application.logger.debug("LOG: END RENDER SNARE PATTERN");
+
+        Application.logger.debug("LOG: RENDER SNARE MIDI PATTERN");
+        //TODO convert snare pattern to midi
+        //TODO snarePatternRenderer.render(queueState);
+        Application.logger.debug("LOG: END RENDER SNARE MIDI PATTERN");
 
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         Application.logger.debug("LOG: PHASE : NORMALIZE AUDIO");

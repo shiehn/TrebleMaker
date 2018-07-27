@@ -42,6 +42,7 @@ public class ProgressionUnitBar implements Cloneable {
     private Fill fill;
     private List<Fill> fillOptions;
 
+    private Pattern kickMidiPattern;
     private KickPattern kickPattern;
     private KickSample kickSample;
 
@@ -551,6 +552,14 @@ public class ProgressionUnitBar implements Cloneable {
 
     public void setMelodicPhrase(List<String> melodicPhrase) {
         this.melodicPhrase = melodicPhrase;
+    }
+
+    public Pattern getKickMidiPattern(){
+        return this.kickMidiPattern;
+    }
+
+    public void setKickMidiPattern(Pattern kickMidiPattern){
+        this.kickMidiPattern = kickMidiPattern;
     }
 
     public KickPattern getKickPattern() {

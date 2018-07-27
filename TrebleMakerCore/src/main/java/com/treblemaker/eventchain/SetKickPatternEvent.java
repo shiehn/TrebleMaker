@@ -61,6 +61,8 @@ public class SetKickPatternEvent implements IEventChain {
         //ADD THE SELECTED PATTERN TO THE PROGRESSION UNIT BARS ..
         queueState = kickPatternSelector.setSelectedPatterns(typeToSelectedPatten, queueState); //NEEDS TEST
 
+
+
         return queueState;
     }
 

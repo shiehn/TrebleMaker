@@ -38,6 +38,7 @@ public class ProgressionUnit {
 
     private int Complexity;
     private int MinorToMajor;
+    private String key;
 
     private HashMap<Composition.Layer, Boolean> gatedLayers;
 
@@ -140,5 +141,13 @@ public class ProgressionUnit {
 
     public void setMelody(String melody) {
         this.melody = melody;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
