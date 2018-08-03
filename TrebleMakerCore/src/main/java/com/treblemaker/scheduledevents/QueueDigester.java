@@ -154,6 +154,19 @@ public class QueueDigester implements IQueueDigester {
 
         // endregion Chord Structure
 
+
+
+        // region Set Key
+
+        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        Application.logger.debug("LOG: PHASE : setKeyEvent");
+        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+
+        queueState = setKeyEvent.set(queueState);
+
+        // endregion Set Key
+
+
         // region Harmonic Loops
 
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
@@ -468,8 +481,13 @@ public class QueueDigester implements IQueueDigester {
         Application.logger.debug("LOG: END RENDER KICK AUDIO PATTERN");
 
         Application.logger.debug("LOG: RENDER KICK MIDI PATTERN");
+
+
+
         //TODO convert kick patterns to midi
         //TODO kickPatternRenderer.render(queueState);
+
+
         Application.logger.debug("LOG: END RENDER KICK MIDI PATTERN");
 
         Application.logger.debug("LOG: SET HAT PATTERN EVENT");
@@ -911,6 +929,9 @@ public class QueueDigester implements IQueueDigester {
 
     @Autowired
     private IEventChain synthTemplateAppenderEvent;
+
+    @Autowired
+    private IEventChain setKeyEvent;
 
     @Autowired
     private IEventChain setBeatLoopsEvent;

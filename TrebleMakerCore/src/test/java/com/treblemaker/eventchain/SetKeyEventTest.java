@@ -47,11 +47,14 @@ public class SetKeyEventTest {
 
     @Test
     public void shouldSetCorrectKey(){
-
         SetKeyEvent setKeyEvent = new SetKeyEvent();
 
         queueState = setKeyEvent.set(queueState);
-        assert(queueState.getStructure().get(0).getKey()).equalsIgnoreCase("c");
-        assert(queueState.getStructure().get(1).getKey()).equalsIgnoreCase("g");
+
+        ProgressionUnit pUOne = queueState.getStructure().get(0);
+        ProgressionUnit pUTwo = queueState.getStructure().get(1);
+
+        assert(pUOne.getKey()).equalsIgnoreCase("c");
+        assert(pUTwo.getKey()).equalsIgnoreCase("g");
     }
 }

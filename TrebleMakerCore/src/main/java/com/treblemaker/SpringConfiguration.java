@@ -142,6 +142,13 @@ public class SpringConfiguration {
     }
 
     // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ EVENTS
+
+
+    @Bean(name = "setKeyEvent")
+    public IEventChain setKeyEvent() {
+        return new SetKeyEvent();
+    }
+
     @Bean(name = "setHarmonicStructureEvent")
     public IEventChain setHarmonicStructureEvent() {
         return new SetChordStructureEvent();
