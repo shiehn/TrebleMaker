@@ -167,4 +167,67 @@ public class PatternConsolidationUtil {
 
         return consolidatedPatterns;
     }
+
+    public static List<Pattern> consolidateKickMidiPatterns(List<ProgressionUnit> progressionUnits, Integer bpm) {
+        List<Pattern> consolidatedPatterns = new ArrayList<>();
+
+            Pattern consolidatedPattern = new Pattern();
+
+            for (int k = 0; k < progressionUnits.size(); k++) {
+                for (int i = 0; i < progressionUnits.get(k).getProgressionUnitBars().size(); i++) {
+                    Pattern pattern = progressionUnits.get(k).getProgressionUnitBars().get(i).getKickMidiPattern();
+                    if(i==0){
+                        pattern.setTempo(bpm);
+                    }
+
+                    consolidatedPattern.add(pattern);
+                }
+            }
+
+            consolidatedPatterns.add(consolidatedPattern);
+
+        return consolidatedPatterns;
+    }
+
+    public static List<Pattern> consolidateSnareMidiPatterns(List<ProgressionUnit> progressionUnits, Integer bpm) {
+        List<Pattern> consolidatedPatterns = new ArrayList<>();
+
+        Pattern consolidatedPattern = new Pattern();
+
+        for (int k = 0; k < progressionUnits.size(); k++) {
+            for (int i = 0; i < progressionUnits.get(k).getProgressionUnitBars().size(); i++) {
+                Pattern pattern = progressionUnits.get(k).getProgressionUnitBars().get(i).getSnareMidiPattern();
+                if(i==0){
+                    pattern.setTempo(bpm);
+                }
+
+                consolidatedPattern.add(pattern);
+            }
+        }
+
+        consolidatedPatterns.add(consolidatedPattern);
+
+        return consolidatedPatterns;
+    }
+
+    public static List<Pattern> consolidateHatMidiPatterns(List<ProgressionUnit> progressionUnits, Integer bpm) {
+        List<Pattern> consolidatedPatterns = new ArrayList<>();
+
+        Pattern consolidatedPattern = new Pattern();
+
+        for (int k = 0; k < progressionUnits.size(); k++) {
+            for (int i = 0; i < progressionUnits.get(k).getProgressionUnitBars().size(); i++) {
+                Pattern pattern = progressionUnits.get(k).getProgressionUnitBars().get(i).getHatMidiPattern();
+                if(i==0){
+                    pattern.setTempo(bpm);
+                }
+
+                consolidatedPattern.add(pattern);
+            }
+        }
+
+        consolidatedPatterns.add(consolidatedPattern);
+
+        return consolidatedPatterns;
+    }
 }

@@ -46,7 +46,11 @@ public class ProgressionUnitBar implements Cloneable {
     private KickPattern kickPattern;
     private KickSample kickSample;
 
+
+    private Pattern hatMidiPattern;
     private HatPattern hatPattern;
+
+    private Pattern snareMidiPattern;
     private SnarePattern snarePattern;
 
     private CompositionTimeSlot compositionTimeSlot;
@@ -578,21 +582,38 @@ public class ProgressionUnitBar implements Cloneable {
         this.kickSample = kickSample;
     }
 
+    public Pattern getHatMidiPattern() {
+        return hatMidiPattern;
+    }
+
+    public void setHatMidiPattern(Pattern hatMidiPattern) {
+        this.hatMidiPattern = hatMidiPattern;
+    }
+
     public HatPattern getHatPattern() {
         return hatPattern;
     }
 
-    public void setHatPattern(HatPattern hatPattern) {
-        this.hatPattern = hatPattern;
+    public Pattern getSnareMidiPattern() {
+        return snareMidiPattern;
+    }
+
+    public void setSnarePattern(SnarePattern snarePattern) {
+        this.snarePattern = snarePattern;
+    }
+
+    public void setSnareMidiPattern(Pattern snareMidiPattern) {
+        this.snareMidiPattern = snareMidiPattern;
     }
 
     public SnarePattern getSnarePattern() {
         return snarePattern;
     }
 
-    public void setSnarePattern(SnarePattern snarePattern) {
-        this.snarePattern = snarePattern;
+    public void setHatPattern(HatPattern hatPattern) {
+        this.hatPattern = hatPattern;
     }
+
 
     public Map<String, List<String>> getSentimentLabels() {
         return sentimentLabels;
