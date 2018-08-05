@@ -111,6 +111,36 @@ public class MidiRender implements IEventChain {
             }
         }
 
+        List<Pattern> jPatternKick = PatternConsolidationUtil.consolidateKickMidiPatterns(queueState.getStructure(), queueState.getQueueItem().getBpm());
+        for (int i = 0; i < numOfGeneratedMixes; i++) {
+            Application.logger.debug("LOG: jPatternKick : " + jPatternKick.get(i).toString());
+            try {
+                MidiFileManager.save(new Player().getSequence(jPatternKick.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_KICK_FILENAME));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        List<Pattern> jPatternSnare = PatternConsolidationUtil.consolidateSnareMidiPatterns(queueState.getStructure(), queueState.getQueueItem().getBpm());
+        for (int i = 0; i < numOfGeneratedMixes; i++) {
+            Application.logger.debug("LOG: jPatternSnare : " + jPatternSnare.get(i).toString());
+            try {
+                MidiFileManager.save(new Player().getSequence(jPatternSnare.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_SNARE_FILENAME));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        List<Pattern> jPatternHats = PatternConsolidationUtil.consolidateHatMidiPatterns(queueState.getStructure(), queueState.getQueueItem().getBpm());
+        for (int i = 0; i < numOfGeneratedMixes; i++) {
+            Application.logger.debug("LOG: jPatternHats : " + jPatternHats.get(i).toString());
+            try {
+                MidiFileManager.save(new Player().getSequence(jPatternHats.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_HATS_FILENAME));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
         //RENDER MELODIC
         //String tempoPrefix = "T" + queueState.getQueueItem().getBpm() + " ";
         String melodicString = "";

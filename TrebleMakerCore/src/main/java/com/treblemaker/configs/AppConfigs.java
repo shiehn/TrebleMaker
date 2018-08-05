@@ -196,6 +196,10 @@ public class AppConfigs {
     public final  String COMP_ALT_MID_FILENAME = "compaltmid.mid";
     public final  String COMP_LOW_FILENAME = "complow.mid";
     public final  String COMP_ALT_LOW_FILENAME = "compaltlow.mid";
+    public final String COMP_KICK_FILENAME = "compkick.mid";
+    public final String COMP_SNARE_FILENAME = "compsnare.mid";
+    public final String COMP_HATS_FILENAME = "comphats.mid";
+
 
     public final  String COMP_MELODIC_FILENAME = "compmelodic.mid";
 
