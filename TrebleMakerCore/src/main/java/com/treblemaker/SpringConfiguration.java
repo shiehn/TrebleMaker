@@ -75,7 +75,7 @@ import javax.sql.DataSource;
 @EnableAutoConfiguration
 @Configuration
 @ComponentScan({"com.treblemaker", "com.treblemaker.dal", "com.treblemaker.generators", "com.treblemaker.extractors", "com.treblemaker.scheduledevents", "com.treblemaker.utils",
-        "com.treblemaker.machinelearning", "com.treblemaker.weighters", "com.treblemaker.zzz", "com.treblemaker.machinelearning.services"})
+        "com.treblemaker.machinelearning", "com.treblemaker.weighters", "com.treblemaker", "com.treblemaker.machinelearning"})
 public class SpringConfiguration {
 
     @Value("${bypass_seqence_ratings}")
@@ -278,7 +278,9 @@ public class SpringConfiguration {
     }
 
     @Bean(name = "setChordProgressionEvent")
-    public IEventChain setChordProgressionEvent(){return new SetChordProgressionEvent();}
+    public IEventChain setChordProgressionEvent() {
+        return new SetChordProgressionEvent();
+    }
 
     @Bean(name = "setChordStructureAndHarmonicLoops")
     public IEventChain setChordStructureAndHarmonicLoops() {
@@ -346,6 +348,11 @@ public class SpringConfiguration {
     @Bean(name = "createMetaDataFile")
     public IEventChain createMetaDataFile() {
         return new CreateMetaDataFile();
+    }
+
+    @Bean(name = "packagingEvent")
+    public IEventChain packagingEvent() {
+        return new PackagingEvent();
     }
 
     @Autowired
@@ -535,8 +542,8 @@ public class SpringConfiguration {
         return new FillWeighter();
     }
 
-
     // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ RENDERER ....
+
     @Bean(name = "midiRender")
     public IEventChain midiRender() {
         return new MidiRender();
@@ -626,15 +633,6 @@ public class SpringConfiguration {
     public OptionsFilter optionsFilter() {
         return new OptionsFilter();
     }
-
-
-
-
-
-
-
-
-
 
 
 }

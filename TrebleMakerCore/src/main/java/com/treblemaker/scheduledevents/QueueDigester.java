@@ -642,52 +642,19 @@ public class QueueDigester implements IQueueDigester {
         queueItemCustomDal.setQueueItemComplete(Long.toString(queueItemDb.getId()), songName);
         //TODO WHY THE FUCK IS THIS HERE???
 
+        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        Application.logger.debug("LOG: PHASE : CREATE METADATA");
+        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 
-        // ............. METADATA ..............
         createMetaDataFile.set(queueState);
 
-        //***************************************************** PACKAGE SERVICE *************************
-        //***************************************************** PACKAGE SERVICE *************************
-        //***************************************************** PACKAGE SERVICE *************************
-        //***************************************************** PACKAGE SERVICE *************************
+        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        Application.logger.debug("LOG: PHASE : TAR PACKAGING");
+        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 
-        File src_metadata = new File(appConfigs.getMetadataPath(queueItem.getQueueItemId()));
-        File src_melody = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MELODIC_FILENAME)).toFile();
-        File src_hi = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_HI_FILENAME)).toFile();
-        File src_mid = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MID_FILENAME)).toFile();
-        File src_low = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_LOW_FILENAME)).toFile();
-
-        File src_kick = (Paths.get(queueState.getQueueItem().getStereoPartsFilePath(), appConfigs.KICK_FILENAME)).toFile();
-        File src_snare = (Paths.get(queueState.getQueueItem().getStereoPartsFilePath(), appConfigs.SNARE_FILENAME)).toFile();
-        File src_hat = (Paths.get(queueState.getQueueItem().getStereoPartsFilePath(), appConfigs.HAT_FILENAME)).toFile();
-        //File src_hits = (Paths.get(queueState.getQueueItem().getStereoPartsFilePath(), appConfigs.HITS_FILENAME)).toFile();
-        //File src_fills = (Paths.get(queueState.getQueueItem().getStereoPartsFilePath(), appConfigs.FILLS_FILENAME)).toFile();
-
-        //TAR THE PACKAGE
-        String tarTarget = Paths.get(appConfigs.getTarPackage(), queueItem.getQueueItemId() + ".tar").toString();
-
-        TAR.compress(tarTarget,
-                src_melody,
-                src_hi,
-                src_mid,
-                src_low,
-                src_kick,
-                src_snare,
-                src_hat,
-                src_metadata
-                );
+        packagingEvent.set(queueState);
 
         stationSaveService.save(queueItem.getQueueItemId());
-
-
-
-
-
-
-        //***************************************************** PACKAGE SERVICE *************************
-        //***************************************************** PACKAGE SERVICE *************************
-        //***************************************************** PACKAGE SERVICE *************************
-
 
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         Application.logger.debug("LOG: SAVING ANALYTICS . ...");
@@ -1042,6 +1009,9 @@ public class QueueDigester implements IQueueDigester {
     private IEventChain createMetaDataFile;
 
     @Autowired
+    private IEventChain packagingEvent;
+
+    @Autowired
     private IBeatLoopRenderer beatLoopRenderer;
 
     @Autowired
@@ -1125,7 +1095,8 @@ public class QueueDigester implements IQueueDigester {
     @Value("${num_of_generated_mixes}")
     Integer numOfGeneratedMixes;
 
-    //endregion
     @Autowired
     private AppConfigs appConfigs;
+
+    //endregion
 }

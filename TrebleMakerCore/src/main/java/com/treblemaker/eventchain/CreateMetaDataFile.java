@@ -9,8 +9,11 @@ import com.treblemaker.configs.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+
 import com.treblemaker.configs.*;
+
 import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.treblemaker.configs.*;
@@ -28,13 +31,13 @@ public class CreateMetaDataFile implements IEventChain {
     @Override
     public QueueState set(QueueState queueState) {
 
+        String content = "API_VERSION: 0.2 \n";
+        content += "Chord Progression: \n";
 
-        String content = "Chord Progression: \n";
-
-        for (ProgressionUnit pUnit: queueState.getStructure()) {
+        for (ProgressionUnit pUnit : queueState.getStructure()) {
             content = content + "\n";
             content = content + pUnit.getType() + ":\n";
-            for (ProgressionUnitBar pBar: pUnit.getProgressionUnitBars()) {
+            for (ProgressionUnitBar pBar : pUnit.getProgressionUnitBars()) {
                 content = content + pBar.getChord().getRawChordName() + " - ";
             }
         }
@@ -45,10 +48,10 @@ public class CreateMetaDataFile implements IEventChain {
             File file = new File(appConfigs.getMetadataPath(queueState.getQueueItem().getQueueItemId()));
             output = new BufferedWriter(new FileWriter(file));
             output.write(content);
-        } catch ( IOException e ) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if ( output != null ) {
+            if (output != null) {
                 try {
                     output.close();
                 } catch (IOException e) {

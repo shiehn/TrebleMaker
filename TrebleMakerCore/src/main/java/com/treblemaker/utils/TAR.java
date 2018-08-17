@@ -13,7 +13,6 @@ import java.io.IOException;
 public class TAR {
 
     private TAR() {
-
     }
 
     public static void compress(String name, File... files) throws IOException {
@@ -31,12 +30,12 @@ public class TAR {
                 if (entry.isDirectory()) {
                     continue;
                 }
-                File curfile = new File(out, entry.getName());
-                File parent = curfile.getParentFile();
+                File curentfile = new File(out, entry.getName());
+                File parent = curentfile.getParentFile();
                 if (!parent.exists()) {
                     parent.mkdirs();
                 }
-                IOUtils.copy(fin, new FileOutputStream(curfile));
+                IOUtils.copy(fin, new FileOutputStream(curentfile));
             }
         }
     }
