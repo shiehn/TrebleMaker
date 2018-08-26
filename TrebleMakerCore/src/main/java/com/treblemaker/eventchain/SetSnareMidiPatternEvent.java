@@ -6,7 +6,7 @@ import com.treblemaker.model.progressions.ProgressionUnitBar;
 import com.treblemaker.model.queues.QueueState;
 import org.jfugue.pattern.Pattern;
 
-public class SetKickMidiPatternEvent implements IEventChain {
+public class SetSnareMidiPatternEvent implements IEventChain {
     @Override
     public QueueState set(QueueState queueState) {
 
@@ -14,11 +14,11 @@ public class SetKickMidiPatternEvent implements IEventChain {
             String jfugueStr = "T" + queueState.getQueueItem().getBpm() + " ";
 
             for (ProgressionUnitBar pBar : pUnit.getProgressionUnitBars()) {
-                for (Integer k : pBar.getKickPattern().getAsIntegerArray()) {
+                for (Integer k : pBar.getSnarePattern().getAsIntegerArray()) {
                     jfugueStr += intToDuration(pUnit.getKey(), k) + " ";
                 }
 
-                pBar.setKickMidiPattern(new Pattern(jfugueStr));
+                pBar.setSnareMidiPattern(new Pattern(jfugueStr));
             }
         }
 
@@ -33,6 +33,6 @@ public class SetKickMidiPatternEvent implements IEventChain {
             return key + duration;
         }
 
-        throw new RuntimeException("UNEXPECTED KICK PATTERN DURATION");
+        throw new RuntimeException("UNEXPECTED Snare PATTERN DURATION");
     }
 }

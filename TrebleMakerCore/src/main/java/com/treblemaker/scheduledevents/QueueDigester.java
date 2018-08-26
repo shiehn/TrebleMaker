@@ -69,6 +69,9 @@ public class QueueDigester implements IQueueDigester {
         //SHOULD THIS FOLDER BE BASED ON THE STATION ID
         fileStructure.createDirectoryStructure(queueItem.getQueueItemId());
 
+        //TODO THIS SHOULD BE A EVENT NOT A GENERATOR!!
+        String songName = fileStructureGenerator.CreateFolderStructureEvent(queueItem);
+
         Application.logger.debug("LOG: THREAD A THREAD A THREAD A THREAD A THREAD A THREAD A THREAD A THREAD A THREAD A ");
 
         QueueState queueState = new QueueState();
@@ -307,6 +310,42 @@ public class QueueDigester implements IQueueDigester {
 
         queueState = setMidiPatternEvent.set(queueState);
 
+        Application.logger.debug("LOG: SET KICK PATTERN EVENT");
+        queueState = setKickPatternEvent.set(queueState);
+
+        Application.logger.debug("LOG: SET KICK MIDI PATTERN");
+        queueState = setKickMidiPatternEvent.set(queueState);
+
+        Application.logger.debug("LOG: SET KICK PATTERN ANALYTICS");
+        queueState = setKickPatternAnalyticsEvent.set(queueState);
+
+        Application.logger.debug("LOG: RENDER KICK AUDIO PATTERN");
+        kickPatternRenderer.render(queueState);
+
+        Application.logger.debug("LOG: SET HAT PATTERN EVENT");
+        queueState = setHatPatternEvent.set(queueState);
+
+        Application.logger.debug("LOG: SET HAT MIDI PATTERN EVENT");
+        queueState = setHatMidiPatternEvent.set(queueState);
+
+        Application.logger.debug("LOG: SET HAT PATTERN ANALYTICS");
+        queueState = setHatPatternAnalyticsEvent.set(queueState);
+
+        Application.logger.debug("LOG: RENDER HAT PATTERN");
+        hatPatternRenderer.render(queueState);
+
+        Application.logger.debug("LOG: SET SNARE PATTERN EVENT");
+        queueState = setSnarePatternEvent.set(queueState);
+
+        Application.logger.debug("LOG: SET SNARE MIDI PATTERN EVENT");
+        queueState = setSnareMidiPatternEvent.set(queueState);
+
+        Application.logger.debug("LOG: SET SNARE PATTERN ANALYTICS");
+        queueState = setSnarePatternAnalyticsEvent.set(queueState);
+
+        Application.logger.debug("LOG: RENDER SNARE PATTERN");
+        snarePatternRenderer.render(queueState);
+
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         Application.logger.debug("LOG: PHASE : midiRender");
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
@@ -337,8 +376,7 @@ public class QueueDigester implements IQueueDigester {
         Application.logger.debug("LOG: PHASE : ensure file exists");
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 
-        //TODO THIS SHOULD BE A EVENT NOT A GENERATOR!!
-        String songName = fileStructureGenerator.CreateFolderStructureEvent(queueItem);
+
 
         Application.logger.debug("LOG: Rendering Mix from audio path : " + songName);
 
@@ -468,61 +506,7 @@ public class QueueDigester implements IQueueDigester {
         Application.logger.debug("LOG: END FILL LOOP RENDER");
 
 
-        Application.logger.debug("LOG: SET KICK PATTERN EVENT");
-        queueState = setKickPatternEvent.set(queueState);
-        Application.logger.debug("LOG: END SET KICK PATTERN EVENT");
 
-        Application.logger.debug("LOG: SET KICK PATTERN ANALYTICS");
-        queueState = setKickPatternAnalyticsEvent.set(queueState);
-        Application.logger.debug("LOG: END KICK PATTERN ANALYTICS");
-
-        Application.logger.debug("LOG: RENDER KICK AUDIO PATTERN");
-        kickPatternRenderer.render(queueState);
-        Application.logger.debug("LOG: END RENDER KICK AUDIO PATTERN");
-
-        Application.logger.debug("LOG: RENDER KICK MIDI PATTERN");
-
-
-
-        //TODO convert kick patterns to midi
-        //TODO kickPatternRenderer.render(queueState);
-
-
-        Application.logger.debug("LOG: END RENDER KICK MIDI PATTERN");
-
-        Application.logger.debug("LOG: SET HAT PATTERN EVENT");
-        queueState = setHatPatternEvent.set(queueState);
-        Application.logger.debug("LOG: END SET HAT PATTERN EVENT");
-
-        Application.logger.debug("LOG: SET HAT PATTERN ANALYTICS");
-        queueState = setHatPatternAnalyticsEvent.set(queueState);
-        Application.logger.debug("LOG: END HAT PATTERN ANALYTICS");
-
-        Application.logger.debug("LOG: RENDER HAT PATTERN");
-        hatPatternRenderer.render(queueState);
-        Application.logger.debug("LOG: END RENDER HAT PATTERN");
-
-        Application.logger.debug("LOG: RENDER HAT MIDI PATTERN");
-        //TODO convert hat to midi patterns
-        //TODO hatPatternRenderer.render(queueState);
-        Application.logger.debug("LOG: END RENDER HAT MIDI PATTERN");
-
-        Application.logger.debug("LOG: SET SNARE PATTERN EVENT");
-        queueState = setSnarePatternEvent.set(queueState);
-        Application.logger.debug("LOG: END SET HAT PATTERN EVENT");
-
-        Application.logger.debug("LOG: SET SNARE PATTERN ANALYTICS");
-        queueState = setSnarePatternAnalyticsEvent.set(queueState);
-        Application.logger.debug("LOG: END SNARE PATTERN ANALYTICS");
-
-        Application.logger.debug("LOG: RENDER SNARE PATTERN");
-        snarePatternRenderer.render(queueState);
-        Application.logger.debug("LOG: END RENDER SNARE PATTERN");
-
-        Application.logger.debug("LOG: RENDER SNARE MIDI PATTERN");
-        //TODO convert snare pattern to midi
-        //TODO snarePatternRenderer.render(queueState);
-        Application.logger.debug("LOG: END RENDER SNARE MIDI PATTERN");
 
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         Application.logger.debug("LOG: PHASE : NORMALIZE AUDIO");
@@ -956,6 +940,15 @@ public class QueueDigester implements IQueueDigester {
 
     @Autowired
     private IEventChain renderFXEvent;
+
+    @Autowired
+    private IEventChain setKickMidiPatternEvent;
+
+    @Autowired
+    private IEventChain setSnareMidiPatternEvent;
+
+    @Autowired
+    private IEventChain setHatMidiPatternEvent;
 
     @Autowired
     private IEventChain midiRender;

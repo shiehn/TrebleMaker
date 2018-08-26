@@ -97,6 +97,7 @@ public class ScheduledTasks {
         Application.logger.debug("LOG: ******************************************");
 
         //UPLOAD any completed tracks to stations
+        //ALSO UPLOADS TAR FILES
         stationUploadService.fetchAndUploadTrack();
 
         //SYNC COMPLETED TRACKS WITH FEED BACK INTERFACE ...

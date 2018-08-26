@@ -272,6 +272,21 @@ public class SpringConfiguration {
         return new SetHitsAnalyticsEvent();
     }
 
+    @Bean(name = "setKickMidiPatternEvent")
+    public IEventChain setKickMidiPatternEvent() {
+        return new SetKickMidiPatternEvent();
+    }
+
+    @Bean(name = "setSnareMidiPatternEvent")
+    public IEventChain setSnareMidiPatternEvent() {
+        return new SetSnareMidiPatternEvent();
+    }
+
+    @Bean(name = "setHatMidiPatternEvent")
+    public IEventChain setHatMidiPatternEvent() {
+        return new SetHatMidiPatternEvent();
+    }
+
     @Bean(name = "setMidiPatternEvent")
     public IEventChain setMidiPatternEvent() {
         return new SetMidiPatternEvent();

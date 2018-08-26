@@ -22,7 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@JsonIgnoreProperties({"jChord", "patternHi", "patternHiAlt", "patternMid", "patternMidAlt", "patternLow", "patternLowAlt", "chord", "beatLoop", "beatLoopAlt", "ambienceLoop", "harmonicLoop", "harmonicLoopAlt", "compositionTimeSlot", "AlternativeHi", "AlternativeMid", "AlternativeLow", "AlternativeRhythm"})
+@JsonIgnoreProperties({"jChord", "patternHi", "patternHiAlt", "patternMid", "patternMidAlt", "patternLow", "patternLowAlt", "chord", "beatLoop", "beatLoopAlt", "ambienceLoop", "harmonicLoop", "harmonicLoopAlt", "compositionTimeSlot", "AlternativeHi", "AlternativeMid", "AlternativeLow", "AlternativeRhythm",
+        "kickMidiPattern",
+        "hatMidiPattern",
+        "snareMidiPattern"
+})
 public class ProgressionUnitBar implements Cloneable {
 
     private Chord jChord;

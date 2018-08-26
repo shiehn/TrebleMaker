@@ -20,16 +20,11 @@ public class PackagingEvent implements IEventChain {
     @Autowired
     public AppConfigs appConfigs;
 
-    private PackagingService packagingService;
-
     @Override
     public QueueState set(QueueState queueState) {
         QueueItem queueItem = queueState.getQueueItem();
 
-        if(packagingService == null){
-            packagingService = new PackagingService(appConfigs, queueItem);
-        }
-
+        PackagingService packagingService = new PackagingService(appConfigs, queueItem);
         packagingService.tar();
 
         return queueState;
