@@ -31,6 +31,9 @@ public class StationTrack {
     @Column(name = "num_of_version_variations")
     private int numOfVersionVariations;
 
+    @Column(name = "api_version")
+    private int apiVersion;
+
     @ManyToOne
     @JoinColumn(name = "station_id", insertable = false, updatable = false)
     private Station station;
@@ -105,5 +108,13 @@ public class StationTrack {
 
     public void setNumOfVersionVariations(int numOfVersionVariations) {
         this.numOfVersionVariations = numOfVersionVariations;
+    }
+
+    public int getApiVersion() {
+        return apiVersion;
+    }
+
+    public void setApiVersion(int apiVersion) {
+        this.apiVersion = apiVersion;
     }
 }

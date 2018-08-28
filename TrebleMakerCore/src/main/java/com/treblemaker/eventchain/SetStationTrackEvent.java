@@ -31,6 +31,9 @@ public class SetStationTrackEvent implements IEventChain {
     @Value("${num_of_generated_mix_variations}")
     int numOfGeneratedMixVariations;
 
+    @Value("${api.version}")
+    int apiVersion;
+
     @Override
     public QueueState set(QueueState queueState) {
 
@@ -41,6 +44,7 @@ public class SetStationTrackEvent implements IEventChain {
         StationTrack stationTrack = stationTrackDal.findAll().stream().filter(st -> st.getFile().equalsIgnoreCase(queueState.getQueueItem().getQueueItemId())).collect(Collectors.toList()).get(0);
 
         stationTrack.setName(trackName);
+        stationTrack.setApiVersion(apiVersion);
         stationTrack.setStationId(station.getId());
         stationTrack.setStation(station);
         stationTrackDal.save(stationTrack);

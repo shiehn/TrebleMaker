@@ -72,14 +72,17 @@ public class StationUploadService {
 
             for (File file : outputFiles) {
                 if (file.getName().contains(stationTrack.getFile()) && (file.getName().contains("_0_1.mp3"))) {
-
-                    //audioTransferService.uploadAudioFile(s3Bin, stationTrack.getFile(), FINAL_MIX_OUTPUT_WITH_ESCAPE_QUOTES + file.getName());
+                    //upload mp3
                     audioTransferService.uploadAudioFile(s3Bin, file.getName(), appConfigs.getFinalMixOutput() + "/" + file.getName());
 
+                    //upload tar package
                     String itemId = file.getName().replace("_0_1.mp3", "");
                     String tarSource = Paths.get(appConfigs.getTarPackage(), itemId + ".tar").toString();
                     audioTransferService.uploadAudioFile(s3Bin, itemId + ".tar",
                             tarSource);
+
+                    //upload untared package
+                    audioTransferService.uploadAudioDirectory(s3Bin, itemId, Paths.get(appConfigs.getTarPackage(), itemId).toFile());
                 }
             }
 

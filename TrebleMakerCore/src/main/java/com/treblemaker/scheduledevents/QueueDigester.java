@@ -114,7 +114,6 @@ public class QueueDigester implements IQueueDigester {
         // NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW
         // NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW
         // NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW NEW
-
         queueState = setChordProgressionEvent.set(queueState);
 
         //int maxBarCount = 4;

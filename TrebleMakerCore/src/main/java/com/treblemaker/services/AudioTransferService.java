@@ -8,10 +8,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.transfer.Download;
-import com.amazonaws.services.s3.transfer.PersistableTransfer;
-import com.amazonaws.services.s3.transfer.TransferManager;
-import com.amazonaws.services.s3.transfer.Upload;
+import com.amazonaws.services.s3.transfer.*;
 import com.amazonaws.services.s3.transfer.internal.S3ProgressListener;
 import com.treblemaker.Application;
 import com.treblemaker.configs.AppConfigs;
@@ -197,5 +194,16 @@ public class AudioTransferService {
         Application.logger.debug("LOG: UPLOADING: STARTED FOR: FILEPATH: " + filePath);
 
         s3.putObject(new PutObjectRequest(bucketName, key, new File(filePath)));
+    }
+
+    public void uploadAudioDirectory(String bucketName, String key, File filePath) throws InterruptedException {
+        AmazonS3 s3 = new AmazonS3Client();
+        Region usWest2 = Region.getRegion(Regions.US_WEST_2);
+        s3.setRegion(usWest2);
+
+        TransferManager tm = new TransferManager(s3);
+        MultipleFileUpload upload = tm.uploadDirectory(bucketName,
+                key, filePath, true);
+        upload.waitForCompletion();
     }
 }
