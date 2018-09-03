@@ -5,21 +5,11 @@ import com.treblemaker.model.progressions.ProgressionUnit;
 import com.treblemaker.model.progressions.ProgressionUnitBar;
 import com.treblemaker.model.queues.QueueState;
 import com.treblemaker.configs.*;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-
-import com.treblemaker.configs.*;
-
 import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.treblemaker.configs.*;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component

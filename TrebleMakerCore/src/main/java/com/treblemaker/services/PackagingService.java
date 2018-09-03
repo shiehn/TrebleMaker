@@ -18,15 +18,26 @@ public class PackagingService {
 
     AppConfigs appConfigs;
     QueueItem queueItem;
+    Integer numOfMelodies;
 
-    public PackagingService(AppConfigs appConfigs, QueueItem queueItem){
+    public PackagingService(AppConfigs appConfigs, QueueItem queueItem, Integer numOfMelodies){
         this.appConfigs = appConfigs;
         this.queueItem = queueItem;
+        this.numOfMelodies = numOfMelodies;
     }
 
     public void tar(){
-         File src_metadata = new File(appConfigs.getMetadataPath(queueItem.getQueueItemId()));
+        List<File> melodies = new ArrayList<>();
+        for(int i=0; i<numOfMelodies; i++){
+            File src_melody = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MELODIC_FILENAME.replace(".wav", "_"+i+".wav"))).toFile();
+            melodies.add(src_melody);
+        }
+
+        File src_metadata = new File(appConfigs.getMetadataPath(queueItem.getQueueItemId()));
+
         File src_melody = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MELODIC_FILENAME)).toFile();
+
+
         File src_hi = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_HI_FILENAME)).toFile();
         File src_mid = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MID_FILENAME)).toFile();
         File src_low = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_LOW_FILENAME)).toFile();
@@ -40,7 +51,6 @@ public class PackagingService {
 
         List<File> filesToTar = Arrays.asList(
                 src_metadata,
-                src_melody,
                 src_hi,
                 src_mid,
                 src_low,
@@ -51,6 +61,10 @@ public class PackagingService {
                 src_snare,
                 src_hat
         );
+
+        for (File melody:melodies) {
+            filesToTar.add(melody);
+        }
 
         //MAKE UNTARED PACKAGE
         Path unTaredDir = Paths.get(appConfigs.getTarPackage(), queueItem.getQueueItemId());
@@ -69,23 +83,9 @@ public class PackagingService {
         String tarTarget = Paths.get(appConfigs.getTarPackage(), queueItem.getQueueItemId() + ".tar").toString();
 
         try {
-            TAR.compress(tarTarget,
-                    filesToTar.get(0),
-                    filesToTar.get(1),
-                    filesToTar.get(2),
-                    filesToTar.get(3),
-                    filesToTar.get(4),
-                    filesToTar.get(5),
-                    filesToTar.get(6),
-                    filesToTar.get(7),
-                    filesToTar.get(8),
-                    filesToTar.get(9),
-                    filesToTar.get(10)
-            );
+            TAR.compress(tarTarget,filesToTar.toArray(new File[filesToTar.size()]));
         } catch (IOException e) {
             Application.logger.debug("LOG: ERROR : FAILED TO PACKAGE TAR !!!");
         }
-
-
     }
 }

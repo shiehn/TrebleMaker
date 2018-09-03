@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-//import org.jfugue.pattern.Pattern;
-
 @JsonIgnoreProperties({"jChords", "types", "InitialChord", "gatedLayerGroups"})
 public class ProgressionUnit {
 

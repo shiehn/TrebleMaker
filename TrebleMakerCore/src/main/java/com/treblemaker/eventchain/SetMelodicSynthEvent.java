@@ -12,6 +12,7 @@ import com.treblemaker.model.progressions.ProgressionUnit.ProgressionType;
 import com.treblemaker.model.progressions.ProgressionUnitBar;
 import com.treblemaker.model.queues.QueueState;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -26,6 +27,9 @@ public class SetMelodicSynthEvent implements IEventChain {
 
     private IBachChoraleDal bachChoraleDal;
 
+    @Value("${num_of_alt_melodies}")
+    Integer numOfAltMelodies;
+
     @Autowired
     public SetMelodicSynthEvent(MelodyGenerator melodydGenerator, MelodicExtractor melodicExtractor, IBachChoraleDal bachChoraleDal) {
         this.melodydGenerator = melodydGenerator;
@@ -35,24 +39,29 @@ public class SetMelodicSynthEvent implements IEventChain {
 
     @Override
     public QueueState set(QueueState queueState) {
-        Map<ProgressionType, List<HiveChord>> pTypeToChords = new HashMap<>();
-        for (ProgressionUnit progressionUnit : queueState.getStructure()) {
-            List<HiveChord> chords = new ArrayList<>();
-            for(ProgressionUnitBar pBar : progressionUnit.getProgressionUnitBars()){
-                chords.add(pBar.getChord());
+        if(this.numOfAltMelodies == null){
+            this.numOfAltMelodies = 1;
+        }
+
+        for(int i=0; i<this.numOfAltMelodies; i++) {
+            Map<ProgressionType, List<HiveChord>> pTypeToChords = new HashMap<>();
+            for (ProgressionUnit progressionUnit : queueState.getStructure()) {
+                List<HiveChord> chords = new ArrayList<>();
+                for (ProgressionUnitBar pBar : progressionUnit.getProgressionUnitBars()) {
+                    chords.add(pBar.getChord());
+                }
+                pTypeToChords.put(progressionUnit.getType(), chords);
             }
-            pTypeToChords.put(progressionUnit.getType(), chords);
-        }
 
-        Map<ProgressionType, String> pTypeToMelody = new HashMap<>();
-        for (Map.Entry<ProgressionType, List<HiveChord>> entry : pTypeToChords.entrySet())
-        {
-            String jFugueMelody = melodydGenerator.generate(entry.getValue());
-            pTypeToMelody.put(entry.getKey(), "T" + queueState.getQueueItem().getBpm() + " " + jFugueMelody);
-        }
+            Map<ProgressionType, String> pTypeToMelody = new HashMap<>();
+            for (Map.Entry<ProgressionType, List<HiveChord>> entry : pTypeToChords.entrySet()) {
+                String jFugueMelody = melodydGenerator.generate(entry.getValue());
+                pTypeToMelody.put(entry.getKey(), "T" + queueState.getQueueItem().getBpm() + " " + jFugueMelody);
+            }
 
-        for (ProgressionUnit progressionUnit : queueState.getStructure()) {
-            progressionUnit.setMelody(pTypeToMelody.get(progressionUnit.getType()));
+            for (ProgressionUnit progressionUnit : queueState.getStructure()) {
+                progressionUnit.addMelodies(pTypeToMelody.get(progressionUnit.getType()));
+            }
         }
 
         return queueState;

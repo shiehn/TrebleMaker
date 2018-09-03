@@ -19,6 +19,7 @@ import com.treblemaker.configs.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -35,6 +36,9 @@ public class MidiRender implements IEventChain {
 
     @Value("${num_of_generated_mixes}")
     Integer numOfGeneratedMixes;
+
+    @Value("${num_of_alt_melodies}")
+    Integer numOfAltMelodies;
 
     //TODO THIS IS JUST FOR TESTING ...
     @Autowired
@@ -143,21 +147,27 @@ public class MidiRender implements IEventChain {
 
         //RENDER MELODIC
         //String tempoPrefix = "T" + queueState.getQueueItem().getBpm() + " ";
-        String melodicString = "";
-        for (ProgressionUnit progressionUnit : queueState.getStructure()) {
-            if(!progressionUnit.getMelody().isEmpty()) {
-                melodicString = melodicString + progressionUnit.getMelody() + " ";
+        List<String> melodicStrings = new ArrayList<>();
+        for(int i=0; i<numOfAltMelodies; i++) {
+            String melodicString = "";
+            for (ProgressionUnit progressionUnit : queueState.getStructure()) {
+                if (!progressionUnit.getMelodies().get(i).isEmpty()) {
+                    melodicString = melodicString + progressionUnit.getMelodies().get(i) + " ";
+                }
             }
+            melodicStrings.add(melodicString);
         }
 
         //2)RENDER PATTERN
-        Application.logger.debug("LOG: jPatternMelodic : " + melodicString);
-        for (int i = 0; i < numOfGeneratedMixes; i++) {
-            try {
-                Pattern melodicPattern = new Pattern(melodicString);
-                MidiFileManager.save(new Player().getSequence(melodicPattern.setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_MELODIC_FILENAME));
-            } catch (IOException e1) {
-                e1.printStackTrace();
+        for(int i=0; i<numOfAltMelodies; i++) {
+            Application.logger.debug("LOG: jPatternMelodic : " + melodicStrings.get(i));
+            for (int j = 0; j < numOfGeneratedMixes; j++) {
+                try {
+                    Pattern melodicPattern = new Pattern(melodicStrings.get(i));
+                    MidiFileManager.save(new Player().getSequence(melodicPattern.setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + j + appConfigs.COMP_MELODIC_FILENAME.replace(".wav", "_"+i+".wav")));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         }
 
