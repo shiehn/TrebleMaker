@@ -16,9 +16,9 @@ public class DeployRTransportHelper {
         }
 
         //TODO THIS IS ONLY RATING THE FIRST SYNTH !!!!
-        String synthHiId = Integer.toString(pUnitBar.getHiSynthId().get(0));
-        String synthMidId = Integer.toString(pUnitBar.getMidSynthId().get(0));
-        String synthLowId = Integer.toString(pUnitBar.getLowSynthId().get(0));
+        String synthHiId = Integer.toString(pUnitBar.getSynthTemplates().get(0).getHiSynthId());
+        String synthMidId = Integer.toString(pUnitBar.getSynthTemplates().get(0).getMidSynthId());
+        String synthLowId = Integer.toString(pUnitBar.getSynthTemplates().get(0).getLowSynthId());
 //{beat_loop_id}/{harmonic_loop_id}/{harmonic_loop_alt_id}/{synth_template_hi_id}/{synth_template_mid_id}/{synth_template_low_id}
 
         StringBuilder payload = new StringBuilder();

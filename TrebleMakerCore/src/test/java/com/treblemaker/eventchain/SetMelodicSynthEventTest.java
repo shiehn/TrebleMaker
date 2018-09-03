@@ -2,9 +2,15 @@ package com.treblemaker.eventchain;
 
 import com.treblemaker.SpringConfiguration;
 import com.treblemaker.extractors.model.HarmonyExtraction;
+import com.treblemaker.model.HiveChord;
 import com.treblemaker.model.melodic.BachChorale;
+import com.treblemaker.model.progressions.ProgressionDTO;
+import com.treblemaker.model.progressions.ProgressionUnit;
 import com.treblemaker.model.progressions.ProgressionUnit.ProgressionType;
+import com.treblemaker.model.queues.QueueItem;
+import com.treblemaker.model.queues.QueueState;
 import junit.framework.TestCase;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +25,52 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.treblemaker.model.progressions.ProgressionUnit.BarCount.FOUR;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @ComponentScan({"com.treblemaker"})
 @SpringBootTest(classes = SpringConfiguration.class)
 @TestPropertySource(
-        locations = "classpath:application-test.properties")
+        locations = "classpath:application-test.properties", properties = {"num_of_alt_melodies=2"})
 public class SetMelodicSynthEventTest extends TestCase {
 
     @Autowired
     private SetMelodicSynthEvent setMelodicSynthEvent;
+
+    private QueueState queueState;
+
+    @Before
+    public void setup(){
+        String KEY = "c";
+        ProgressionUnit pUnitOne = new ProgressionUnit();
+        pUnitOne.setKey(KEY);
+        pUnitOne.initBars(FOUR.getValue());
+        pUnitOne.getProgressionUnitBars().get(0).setChord(new HiveChord("cmaj"));
+        pUnitOne.getProgressionUnitBars().get(1).setChord(new HiveChord("cmaj"));
+        pUnitOne.getProgressionUnitBars().get(2).setChord(new HiveChord("cmaj"));
+        pUnitOne.getProgressionUnitBars().get(3).setChord(new HiveChord("cmaj"));
+
+        QueueItem queueItem = new QueueItem();
+        queueItem.setBpm(77);
+
+        ProgressionDTO progressionDTO = new ProgressionDTO();
+        progressionDTO.setStructure(Arrays.asList(pUnitOne));
+
+        queueItem.setProgression(progressionDTO);
+
+        queueState = new QueueState();
+        queueState.setQueueItem(queueItem);
+    }
+
+    @Test
+    public void shouldSetMelodies(){
+        int NUM_OF_ALT_MELODIES = 2;
+
+        queueState = setMelodicSynthEvent.set(queueState);
+        assertThat(queueState.getStructure().get(0).getMelodies()).isNotEmpty();
+        assertThat(queueState.getStructure().get(0).getMelodies().size()).isEqualTo(NUM_OF_ALT_MELODIES);
+    }
 
     @Test
     public void shouldFindCorrectMatchLengthAndOffset() {
@@ -171,47 +212,6 @@ public class SetMelodicSynthEventTest extends TestCase {
         bFive.setChord("bbdom");
 
         List<BachChorale> bachChorales = Arrays.asList(bOne, bTwo, bThree, bFour, bFive);
-
-//        Map<ProgressionType, List<BachChorale>> typeToBachChorales = setMelodicSynthEvent.createTypeToBachChorales(bachChorales, typeToExtractMap);
-
-//        //VERSE
-//        assertThat(typeToBachChorales.get(ProgressionType.VERSE)).hasSize(4);
-//        assertThat(typeToBachChorales.get(ProgressionType.VERSE).get(0)).isEqualTo(bOne);
-//        assertThat(typeToBachChorales.get(ProgressionType.VERSE).get(1)).isEqualTo(bTwo);
-//        assertThat(typeToBachChorales.get(ProgressionType.VERSE).get(2)).isEqualTo(bThree);
-//        assertThat(typeToBachChorales.get(ProgressionType.VERSE).get(3)).isEqualTo(bThree);
-//
-//        //CHORUS
-//        assertThat(typeToBachChorales.get(ProgressionType.CHORUS)).hasSize(4);
-//        assertThat(typeToBachChorales.get(ProgressionType.CHORUS).get(0)).isEqualTo(bThree);
-//        assertThat(typeToBachChorales.get(ProgressionType.CHORUS).get(1)).isEqualTo(null);
-//        assertThat(typeToBachChorales.get(ProgressionType.CHORUS).get(2)).isEqualTo(bOne);
-//        assertThat(typeToBachChorales.get(ProgressionType.CHORUS).get(3)).isEqualTo(bTwo);
-//
-//        //BRIDGE
-//        assertThat(typeToBachChorales.get(ProgressionType.BRIDGE)).hasSize(4);
-//        assertThat(typeToBachChorales.get(ProgressionType.BRIDGE).get(0)).isEqualTo(bThree);
-//        assertThat(typeToBachChorales.get(ProgressionType.BRIDGE).get(1)).isEqualTo(null);
-//        assertThat(typeToBachChorales.get(ProgressionType.BRIDGE).get(2)).isEqualTo(bOne);
-//        assertThat(typeToBachChorales.get(ProgressionType.BRIDGE).get(3)).isEqualTo(bFive);
-
-
-//        Map<ProgressionUnit.ProgressionType, int[]> longestMatchMap = setMelodicSynthEvent.createTypeToMatchLengthAndOffset(bachChorales, typeToExtractMap);
-//
-//        int[] longestMatchAndOffsetVerse = longestMatchMap.get(ProgressionUnit.ProgressionType.VERSE);
-//
-//        assertThat(longestMatchAndOffsetVerse[0]).isEqualTo(3);
-//        assertThat(longestMatchAndOffsetVerse[1]).isEqualTo(0);
-//
-//        int[] longestMatchAndOffsetChorus = longestMatchMap.get(ProgressionUnit.ProgressionType.CHORUS);
-//
-//        assertThat(longestMatchAndOffsetChorus[0]).isEqualTo(2);
-//        assertThat(longestMatchAndOffsetChorus[1]).isEqualTo(2);
-//
-//        int[] longestMatchAndOffsetBridge = longestMatchMap.get(ProgressionUnit.ProgressionType.BRIDGE);
-//
-//        assertThat(longestMatchAndOffsetBridge[0]).isEqualTo(2);
-//        assertThat(longestMatchAndOffsetBridge[1]).isEqualTo(2);
     }
 
     @Test

@@ -42,7 +42,7 @@ public class ProgressionUnit {
 
     private HashMap<Composition.Layer, Boolean> gatedLayers;
 
-    private String melody;
+    private List<String> melodies;
 
     public ProgressionUnit() {
     }
@@ -135,12 +135,16 @@ public class ProgressionUnit {
         return false;
     }
 
-    public String getMelody() {
-        return melody;
+    public List<String> getMelodies() {
+        return melodies;
     }
 
-    public void setMelody(String melody) {
-        this.melody = melody;
+    public void addMelodies(String melody) {
+        if(this.melodies == null){
+            melodies = new ArrayList<>();
+        }
+
+        this.melodies.add(melody);
     }
 
     public String getKey() {

@@ -1,7 +1,5 @@
 package com.treblemaker.weighters.harmonicloopweighters;
 
-import com.hazelcast.core.IMap;
-import com.treblemaker.Application;
 import com.treblemaker.SpringConfiguration;
 import com.treblemaker.constants.LoopPositions;
 import com.treblemaker.dal.interfaces.IAnalyticsHorizontalDal;
@@ -9,16 +7,15 @@ import com.treblemaker.model.analytics.AnalyticsHorizontal;
 import com.treblemaker.model.*;
 import com.treblemaker.model.progressions.ProgressionUnit;
 import com.treblemaker.model.progressions.ProgressionUnitBar;
+import com.treblemaker.selectors.interfaces.ITemplateSelector;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -27,11 +24,33 @@ import java.util.List;
 import static java.util.Arrays.*;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+
+    /*
+    bypass_rhythm_ratings=${TM_BYPASS_RHYTHM_RATING}
+bypass_bassline_vertical_rating=${TM_BYPASS_BASSLINE_RATING}
+bypass_arpeggio_vertical_rating=${TM_BYPASS_ARPEGGIO_RATING}
+bypass_harmonic_loop_vertical_ratings=${TM_BYPASS_HARMONIC_LOOP_RATING}
+bypass_vertical_beat_ratings=${TM_BYPASS_BEAT_LOOP_RATING}
+bypass_seqence_ratings=${TM_BYPASS_SEQUENCE_RATING}
+bypass_eq_ratings=${TM_BYPASS_EQ_RATING}
+#CANNOT RATE TRACK IF BYPASS ANALYTICS IS SET
+bypass_analytics=${TM_BYPASS_ANALYTICS}
+bypass_eqanalytics=${TM_BYPASS_EQ_ANALYTICS}
+bypass_synthfx_rating=true
+bypass_volume_level_ratings=true
+bypass_healthmonitor=true
+num_of_generated_mixes=${TM_NUM_OF_MIXES}
+num_of_generated_mix_variations=${TM_NUM_OF_MIX_VARIATIONS}
+connect_to_cache = true
+machinelearning_endpoints=${TM_API_URL}
+use_only_first_machinelearn_endpoint = true
+     */
+
 @RunWith(SpringRunner.class)
-@ComponentScan({"com.treblemaker"})
+@ComponentScan({"com.treblemaker", "com.treblemaker.dal"})
 @SpringBootTest(classes = SpringConfiguration.class)
 @TestPropertySource(
-        locations = "classpath:application-test.properties")
+        locations = "classpath:application-test.properties", properties = {"bypass_rhythm_ratings=false", "bypass_harmonic_loop_vertical_ratings=false", "bypass_seqence_ratings=false"})
 public class HarmonicLoopAltWeighterTest extends TestCase {
 
     @Autowired
@@ -39,6 +58,9 @@ public class HarmonicLoopAltWeighterTest extends TestCase {
 
     @Autowired
     private IAnalyticsHorizontalDal analyticsHorizontalDal;
+
+    @Autowired
+    private ITemplateSelector templateSelector;
 
     private ProgressionUnit priorProgressionUnit;
     private ProgressionUnit currentProgressionUnit;
@@ -50,7 +72,6 @@ public class HarmonicLoopAltWeighterTest extends TestCase {
         harmonicLoopAltWeighter.setHarmonicLoopAltWeight(LoopPositions.POSITION_THREE, currentProgressionUnit, priorProgressionUnit, analyticsHorizontals);
 
         for(HarmonicLoop hAltOption : currentProgressionUnit.getProgressionUnitBars().get(LoopPositions.POSITION_THREE).getHarmonicLoopAltOptions()){
-
             assertThat(hAltOption.getVerticalWeight()).isNotNull();
             assertThat(hAltOption.getRhythmicWeight()).isNotNull();
             assertThat(hAltOption.getTimeseriesWeight()).isNotNull();
@@ -58,7 +79,6 @@ public class HarmonicLoopAltWeighterTest extends TestCase {
         }
 
         for(HarmonicLoop hAltOption : currentProgressionUnit.getProgressionUnitBars().get(LoopPositions.POSITION_TWO).getHarmonicLoopAltOptions()){
-
             assertThat(hAltOption.getVerticalWeight()).isNull();
             assertThat(hAltOption.getRhythmicWeight()).isNull();
             assertThat(hAltOption.getTimeseriesWeight()).isNull();
@@ -67,8 +87,12 @@ public class HarmonicLoopAltWeighterTest extends TestCase {
         }
     }
 
+
+
+
+
     @Before
-    public void test() {
+    public void test() throws Exception {
 
         // START BAR
 
@@ -149,11 +173,25 @@ public class HarmonicLoopAltWeighterTest extends TestCase {
         HarmonicLoop hAltLoopOption44 = new HarmonicLoop();
         hAltLoopOption44.setId(444);
 
+        BeatLoop beatLoop = new BeatLoop();
+        beatLoop.setId(0);
+
+        HarmonicLoop harmonicLoop = new HarmonicLoop();
+        harmonicLoop.setId(0);
+
         //SET BAR OPTIONS
         bar1.setHarmonicLoopAltOptions(asList(hAltLoopOption1, hAltLoopOption11));
+        bar1.setBeatLoop(beatLoop);
+        bar1.setHarmonicLoop(harmonicLoop);
         bar2.setHarmonicLoopAltOptions(asList(hAltLoopOption2, hAltLoopOption22));
+        bar2.setBeatLoop(beatLoop);
+        bar2.setHarmonicLoop(harmonicLoop);
         bar3.setHarmonicLoopAltOptions(asList(hAltLoopOption3, hAltLoopOption33));
+        bar3.setBeatLoop(beatLoop);
+        bar3.setHarmonicLoop(harmonicLoop);
         bar4.setHarmonicLoopAltOptions(asList(hAltLoopOption4, hAltLoopOption44));
+        bar4.setBeatLoop(beatLoop);
+        bar4.setHarmonicLoop(harmonicLoop);
 
         List<HarmonicLoop> harmonicAltOptions = asList(hAltLoopOption1, hAltLoopOption2, hAltLoopOption3, hAltLoopOption4);
 
@@ -164,5 +202,13 @@ public class HarmonicLoopAltWeighterTest extends TestCase {
         currentProgressionUnit = new ProgressionUnit();
         currentProgressionUnit.initBars(4);
         currentProgressionUnit.setProgressionUnitBars(asList(bar1, bar2, bar3, bar4));
+
+        setSynthTemplates();
+    }
+
+    private void setSynthTemplates() throws Exception {
+        SynthTemplate synthTemplate = templateSelector.chooseSpecific(11);
+        priorProgressionUnit.getProgressionUnitBars().forEach(pBar -> pBar.setSynthTemplates(Arrays.asList(synthTemplate)));
+        currentProgressionUnit.getProgressionUnitBars().forEach(pBar -> pBar.setSynthTemplates(Arrays.asList(synthTemplate)));
     }
 }
