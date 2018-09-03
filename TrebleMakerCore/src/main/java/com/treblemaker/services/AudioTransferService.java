@@ -53,22 +53,22 @@ public class AudioTransferService {
         switch (loopType) {
 
             case QueueAudioTransfer.LOOP_TYPE_BEAT:
-                BeatLoop beatLoop = beatLoopsDal.findOne(loopId);
+                BeatLoop beatLoop = beatLoopsDal.findById(loopId).get();
                 beatLoop.setLoopTransferComplete(true);
                 beatLoopsDal.save(beatLoop);
                 return;
             case QueueAudioTransfer.LOOP_TYPE_HARMONIC:
-                HarmonicLoop harmonicLoop = harmonicLoopsDal.findOne(loopId);
+                HarmonicLoop harmonicLoop = harmonicLoopsDal.findById(loopId).get();
                 harmonicLoop.setLoopTransferComplete(true);
                 harmonicLoopsDal.save(harmonicLoop);
                 return;
             case QueueAudioTransfer.LOOP_TYPE_AMBIENT:
-                AmbienceLoop ambienceLoop = ambienceLoopsDal.findOne(loopId);
+                AmbienceLoop ambienceLoop = ambienceLoopsDal.findById(loopId).get();
                 ambienceLoop.setLoopTransferComplete(true);
                 ambienceLoopsDal.save(ambienceLoop);
                 return;
             case QueueAudioTransfer.LOOP_TYPE_SOUND_FONT:
-                SoftSynths softSynths = softSynthsDal.findOne(loopId);
+                SoftSynths softSynths = softSynthsDal.findById(loopId).get();
                 softSynths.setLoopTransferComplete(true);
                 softSynthsDal.save(softSynths);
                 return;

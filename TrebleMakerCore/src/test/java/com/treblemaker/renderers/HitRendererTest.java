@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.IntegrationTest;
 //import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.util.Arrays;
@@ -25,8 +28,11 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Ignore
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SpringConfiguration.class, properties ={"connect_to_cache=true", "queue_scheduled_interval=8999999", "queue_scheduled_start_delay=8999999"})
+@RunWith(SpringRunner.class)
+@ComponentScan({"com.treblemaker"})
+@SpringBootTest(classes = SpringConfiguration.class)
+@TestPropertySource(
+        locations = "classpath:application-test.properties")
 public class HitRendererTest extends TestCase {
 
     @Autowired

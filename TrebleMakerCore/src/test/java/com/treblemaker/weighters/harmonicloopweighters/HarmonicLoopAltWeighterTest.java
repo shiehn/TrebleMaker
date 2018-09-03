@@ -4,6 +4,7 @@ import com.hazelcast.core.IMap;
 import com.treblemaker.Application;
 import com.treblemaker.SpringConfiguration;
 import com.treblemaker.constants.LoopPositions;
+import com.treblemaker.dal.interfaces.IAnalyticsHorizontalDal;
 import com.treblemaker.model.analytics.AnalyticsHorizontal;
 import com.treblemaker.model.*;
 import com.treblemaker.model.progressions.ProgressionUnit;
@@ -15,7 +16,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,29 +27,25 @@ import java.util.List;
 import static java.util.Arrays.*;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SpringConfiguration.class, properties ={"queue_scheduled_interval=8999999", "queue_scheduled_start_delay=8999999"})
+@RunWith(SpringRunner.class)
+@ComponentScan({"com.treblemaker"})
+@SpringBootTest(classes = SpringConfiguration.class)
+@TestPropertySource(
+        locations = "classpath:application-test.properties")
 public class HarmonicLoopAltWeighterTest extends TestCase {
 
     @Autowired
     private HarmonicLoopAltWeighter harmonicLoopAltWeighter;
 
-    @Value("${cache_key_hive_cache}")
-    private String cacheKeyHiveCache;
-
-    @Value("${cache_key_timeseries}")
-    private String cacheKeyTimeseries;
+    @Autowired
+    private IAnalyticsHorizontalDal analyticsHorizontalDal;
 
     private ProgressionUnit priorProgressionUnit;
     private ProgressionUnit currentProgressionUnit;
 
     @Test
     public void shouldSetHarmonicLoopAltWeights() {
-
-        IMap hiveCache = Application.client.getMap(cacheKeyHiveCache);
-        Object cachedData = hiveCache.get(cacheKeyTimeseries);
-
-        Iterable<AnalyticsHorizontal> analyticsHorizontals = (Iterable<AnalyticsHorizontal>) cachedData;
+        Iterable<AnalyticsHorizontal> analyticsHorizontals = analyticsHorizontalDal.findAll();
 
         harmonicLoopAltWeighter.setHarmonicLoopAltWeight(LoopPositions.POSITION_THREE, currentProgressionUnit, priorProgressionUnit, analyticsHorizontals);
 

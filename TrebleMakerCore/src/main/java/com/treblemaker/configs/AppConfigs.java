@@ -46,7 +46,7 @@ public class AppConfigs {
 
     public int[] SUPPORTED_BPM = {80, 120};
 
-    public String MOCK_AUDIO_PATH = Paths.get("src", "main", "java", "com", "treblemaker", "tests", "Mocks", "mockAudio").toString();
+    public String MOCK_AUDIO_PATH = Paths.get( "TrebleMakerCore","src", "main", "java", "com", "treblemaker", "tests", "Mocks", "mockAudio").toString();
 
     public String getCompositionOutput() {
         return APPLICATION_ROOT + "/Compositions";
@@ -188,7 +188,7 @@ public class AppConfigs {
     }
 
     public String getMockDataDir() {
-        return APPLICATION_ROOT + "/CapriciousEngine/src/main/java/com/treblemaker/tests/Mocks";
+        return APPLICATION_ROOT + "/TrebleMakerCore/src/main/java/com/treblemaker/tests/Mocks";
     }
 
     public String getMockDataAudioDir() {

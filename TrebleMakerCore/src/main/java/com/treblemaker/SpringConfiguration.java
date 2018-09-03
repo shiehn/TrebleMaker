@@ -3,6 +3,7 @@ package com.treblemaker;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.treblemaker.adapters.ChordAdapter;
 import com.treblemaker.adapters.interfaces.IChordAdapter;
+import com.treblemaker.configs.AppConfigs;
 import com.treblemaker.dal.interfaces.IAmbienceLoopsDal;
 import com.treblemaker.dal.interfaces.IAnalyticsHorizontalDal;
 import com.treblemaker.dal.interfaces.IBachChoraleDal;
@@ -57,7 +58,6 @@ import com.treblemaker.weighters.rhythmweighter.RhythmWeighter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -74,7 +74,7 @@ import javax.sql.DataSource;
 
 @EnableAutoConfiguration
 @Configuration
-@ComponentScan({"com.treblemaker", "com.treblemaker.dal", "com.treblemaker.generators", "com.treblemaker.extractors", "com.treblemaker.scheduledevents", "com.treblemaker.utils",
+@ComponentScan({"com.treblemaker", "com.treblemaker.configs", "com.treblemaker.eventchain", "com.treblemaker.dal", "com.treblemaker.generators", "com.treblemaker.extractors", "com.treblemaker.scheduledevents", "com.treblemaker.utils",
         "com.treblemaker.machinelearning", "com.treblemaker.weighters", "com.treblemaker", "com.treblemaker.machinelearning"})
 public class SpringConfiguration {
 
@@ -130,6 +130,9 @@ public class SpringConfiguration {
 
     @Autowired
     private MelodicExtractor melodicExtractor;
+
+    @Autowired
+    private AppConfigs appConfigs;
 
     @Bean(name = "queueDigester")
     public IQueueDigester queueDigester() {
@@ -432,7 +435,7 @@ public class SpringConfiguration {
 
     @Bean(name = "ambienceGenerator")
     public IAmbienceGenerator ambienceGenerator() {
-        return new AmbienceGenerator(shimGenerator(), ambienceLoopsDal, audioUtils);
+        return new AmbienceGenerator(shimGenerator(), ambienceLoopsDal, audioUtils, appConfigs);
     }
 
     @Bean(name = "beatLoopGenerator")

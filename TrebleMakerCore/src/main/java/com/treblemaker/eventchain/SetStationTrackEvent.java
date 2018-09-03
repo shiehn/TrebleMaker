@@ -40,7 +40,7 @@ public class SetStationTrackEvent implements IEventChain {
         //create track name
         String trackName = stationTrackGenerator.extractTrackName(queueState);
 
-        Station station = stationDal.findOne(queueState.getQueueItem().getStationId());
+        Station station = stationDal.findById(queueState.getQueueItem().getStationId()).get();
         StationTrack stationTrack = stationTrackDal.findAll().stream().filter(st -> st.getFile().equalsIgnoreCase(queueState.getQueueItem().getQueueItemId())).collect(Collectors.toList()).get(0);
 
         stationTrack.setName(trackName);

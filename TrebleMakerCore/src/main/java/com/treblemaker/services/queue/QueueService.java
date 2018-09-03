@@ -279,7 +279,7 @@ public class QueueService {
 
         Application.logger.debug("LOG: attemping composition deleteFile 0f " + composition.getCompositionUid());
         try {
-            compositionDal.delete(composition.getId());
+            compositionDal.delete(composition);
         }catch(Exception e){
             Application.logger.debug("LOG:", e);
         }

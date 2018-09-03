@@ -33,14 +33,13 @@ public class AmbienceGenerator implements IAmbienceGenerator {
     private IShimGenerator shimGenerator;
     private IAmbienceLoopsDal ambienceLoopsDal;
     private IAudioUtils audioUtils;
+    private AppConfigs appConfigs;
 
-    @Autowired
-    public AppConfigs appConfigs;
-
-    public AmbienceGenerator(IShimGenerator shimGenerator, IAmbienceLoopsDal ambienceLoopsDal, IAudioUtils audioUtils) {
+    public AmbienceGenerator(IShimGenerator shimGenerator, IAmbienceLoopsDal ambienceLoopsDal, IAudioUtils audioUtils, AppConfigs appConfigs) {
         this.shimGenerator = shimGenerator;
         this.ambienceLoopsDal = ambienceLoopsDal;
         this.audioUtils = audioUtils;
+        this.appConfigs = appConfigs;
     }
 
     public QueueState generateAndSetAmbienceLoops(QueueState queueState, Composition.Layer layerType) {

@@ -11,9 +11,9 @@ import com.treblemaker.dal.interfaces.IBeatLoopsDal;
 import com.treblemaker.dal.interfaces.IHarmonicLoopsDal;
 import com.treblemaker.model.BeatLoop;
 import com.treblemaker.model.RhythmicAccents;
-import com.treblemaker.utils.AudioUtils;
 import com.treblemaker.utils.LoopUtils;
 import com.treblemaker.model.*;
+import com.treblemaker.utils.interfaces.IAudioUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,30 +24,21 @@ import java.util.stream.Collectors;
 
 @Component
 public class RhythmicExtractionUtil implements OnsetHandler {
-
     private List<Double> onsets;
-
     private IBeatLoopsDal beatLoopsDal;
-
     private IHarmonicLoopsDal harmonicLoopsDal;
-
-    @Autowired
     public AppConfigs appConfigs;
+    public IAudioUtils audioUtils;
 
     @Autowired
-    public RhythmicExtractionUtil(IBeatLoopsDal beatLoopsDal,IHarmonicLoopsDal harmonicLoopsDal) {
+    public RhythmicExtractionUtil(IBeatLoopsDal beatLoopsDal,IHarmonicLoopsDal harmonicLoopsDal, AppConfigs appConfigs, IAudioUtils audioUtils) {
         this.beatLoopsDal = beatLoopsDal;
         this.harmonicLoopsDal = harmonicLoopsDal;
+        this.appConfigs = appConfigs;
+        this.audioUtils = audioUtils;
     }
 
     public void performBeatExtraction() throws Exception {
-
-        //first delete all rhythmic accents
-//        List<BeatLoop> beatLoops = beatLoopsDal.findAll();
-//        for(BeatLoop bLoop : beatLoops){
-//            bLoop.setRhythmicAccents(null);
-//            beatLoopsDal.save(bLoop);
-//        }
 
         List<BeatLoop> beatLoopsNoAccents = getBeatLoopsWithoutRhytmicAccents();
 
@@ -58,7 +49,6 @@ public class RhythmicExtractionUtil implements OnsetHandler {
 
                 String fullAudioPath = appConfigs.getBeatLoopfullPath(beatLoop);
 
-                AudioUtils audioUtils = new AudioUtils();
                 float audioLength = audioUtils.getAudioLength(fullAudioPath);
 
                 File audioFile = new File(fullAudioPath);
@@ -101,13 +91,6 @@ public class RhythmicExtractionUtil implements OnsetHandler {
 
     public void performHarmonicExtraction() throws Exception {
 
-        //first delete all rhythmic accents
-//        List<HarmonicLoop> harmonicLoops = harmonicLoopsDal.findAll();
-//        for(HarmonicLoop hLoop : harmonicLoops){
-//            hLoop.setRhythmicAccents(null);
-//            harmonicLoopsDal.save(hLoop);
-//        }
-
         List<HarmonicLoop> harmonicLoopsNoAccents = getHarmonicLoopsWithoutRhytmicAccents();
 
         if (!harmonicLoopsNoAccents.isEmpty()) {
@@ -117,7 +100,7 @@ public class RhythmicExtractionUtil implements OnsetHandler {
 
                 String fullAudioPath = appConfigs.getHarmonicLoopsFullPath(harmonicLoop);
 
-                float audioLength = (new AudioUtils()).getAudioLength(fullAudioPath);
+                float audioLength = audioUtils.getAudioLength(fullAudioPath);
 
                 File audioFile = new File(fullAudioPath);
                 int size = 512;

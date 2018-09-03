@@ -25,7 +25,7 @@ public class PackagingService {
     }
 
     public void tar(){
-        File src_metadata = new File(appConfigs.getMetadataPath(queueItem.getQueueItemId()));
+         File src_metadata = new File(appConfigs.getMetadataPath(queueItem.getQueueItemId()));
         File src_melody = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MELODIC_FILENAME)).toFile();
         File src_hi = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_HI_FILENAME)).toFile();
         File src_mid = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MID_FILENAME)).toFile();
@@ -59,7 +59,7 @@ public class PackagingService {
         for(File source: filesToTar) {
             File dest = Paths.get(appConfigs.getTarPackage(), queueItem.getQueueItemId(), source.getName()).toFile();
             try {
-                FileUtils.copyDirectory(source, dest);
+                FileUtils.copyFile(source, dest);
             } catch (IOException e) {
                 Application.logger.debug("LOG: ERROR : FAILED TO CREATE UNTARED PACKAGE: " + dest);
             }

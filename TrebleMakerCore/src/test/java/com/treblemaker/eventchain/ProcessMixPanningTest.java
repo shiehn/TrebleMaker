@@ -10,11 +10,18 @@ import com.treblemaker.model.queues.QueueItem;
 import com.treblemaker.model.queues.QueueState;
 import com.treblemaker.utils.AudioUtils;
 import com.treblemaker.utils.FileStructure;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +32,12 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SpringConfiguration.class, properties ={"connect_to_cache=true", "queue_scheduled_interval=8999999", "queue_scheduled_start_delay=8999999"})
+@Ignore
+@RunWith(SpringRunner.class)
+@ComponentScan({"com.treblemaker"})
+@SpringBootTest(classes = SpringConfiguration.class)
+@TestPropertySource(
+        locations = "classpath:application-test.properties")
 public class ProcessMixPanningTest extends TestBase {
 
     @Autowired
@@ -82,11 +93,13 @@ public class ProcessMixPanningTest extends TestBase {
 
     private final String TRACK_GUID = "3F7SAD7F88SADF";
 
-    private final String AUDIO_PART_FILE_PATH = appConfigs.getMockDataAudioDir();
+    String AUDIO_PART_FILE_PATH;
 
     //C:\HiveComposeWeb\CapriciousEngine\src\main\java\com\treblemaker\tests\Mocks\mockAudio\monoProcessPanningTest.wav
 
     private void setup() {
+
+        AUDIO_PART_FILE_PATH = appConfigs.getMockDataAudioDir();
 
         //FIRST TRY TO DELETE EVERYTHING ..
 

@@ -150,7 +150,7 @@ public class ChordMelodyDecoderTest {
 
         List<String> chords = decoder.extractChordPredictionToArray(chordPrediction);
 
-        List<String> expected = Arrays.asList("125","415","713","713");
+        List<String> expected = Arrays.asList("a#dom7", "ddom7", "gmaj7", "gmaj7");
 
         assertThat(chords).isEqualTo(expected);
     }

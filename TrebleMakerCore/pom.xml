@@ -30,7 +30,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>1.3.2.RELEASE</version>
+                    <version>2.0.4.RELEASE</version>
                     <configuration>
                     <!-- FOR PROD: WHEN JVM ARGS ARE PASSED THE PROCESS FORKS AND DEBUGGER IS NOT ATTACHED -->
                     <!--<jvmArguments>-->
@@ -59,11 +59,10 @@
     </build>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>1.5.7.RELEASE</version>
+            <version>2.0.4.RELEASE</version>
         </dependency>
 
         <!-- Logging -->
@@ -91,7 +90,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>1.5.7.RELEASE</version>
+            <version>2.0.4.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -103,31 +102,31 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>1.5.7.RELEASE</version>
+            <version>2.0.4.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.6.1</version>
+            <version>2.9.6</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.6.1</version>
+            <version>2.9.6</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.6.1</version>
+            <version>2.9.6</version>
         </dependency>
 
         <!-- MYSQL -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.8-dmr</version>
+            <version>8.0.12</version>
         </dependency>
 
         <!-- AMAZON S3 -->

@@ -2,6 +2,7 @@ package com.treblemaker.renderers;
 
 import com.treblemaker.Application;
 import com.treblemaker.SpringConfiguration;
+import com.treblemaker.configs.AppConfigs;
 import com.treblemaker.model.kick.KickPattern;
 import com.treblemaker.model.kick.KickSample;
 import com.treblemaker.model.progressions.ProgressionDTO;
@@ -15,7 +16,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -24,12 +28,18 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SpringConfiguration.class, properties ={"connect_to_cache=true", "queue_scheduled_interval=8999999", "queue_scheduled_start_delay=8999999"})
+@RunWith(SpringRunner.class)
+@ComponentScan({"com.treblemaker"})
+@SpringBootTest(classes = SpringConfiguration.class)
+@TestPropertySource(
+        locations = "classpath:application-test.properties")
 public class KickPatternRendererTest extends TestCase {
 
     @Autowired
     private KickPatternRenderer kickPatternRenderer;
+
+    @Autowired
+    private AppConfigs appConfigs;
 
     private QueueState queueState;
     private KickPattern kickPatternOne;
@@ -162,8 +172,8 @@ public class KickPatternRendererTest extends TestCase {
         patternsToRender.add(kickPatternTwo);
         patternsToRender.add(kickPatternThree);
 
-        String shimpath = Paths.get("/","signalsandsorcery", "TrebleMaker","Loops","2","Kicks","shim_kick_80.wav").toString();
-        String kickpath = Paths.get("/","signalsandsorcery", "TrebleMaker","Loops","2","Kicks","kick17.wav").toString();
+        String shimpath = Paths.get(appConfigs.getApplicationRoot(),"Loops","2","Kicks","shim_kick_80.wav").toString();
+        String kickpath = Paths.get(appConfigs.getApplicationRoot(),"Loops","2","Kicks","kick17.wav").toString();
 
         KickSample kickSample = new KickSample();
         kickSample.setStationId("2");
@@ -184,7 +194,7 @@ public class KickPatternRendererTest extends TestCase {
         BaseRenderer baseRenderer = new BaseRenderer();
 
         try {
-            baseRenderer.concatenateFiles(kickPatternFilePaths, Paths.get("/","signalsandsorcery","TrebleMaker","Loops","2","SUNDAY_KICK.wav").toString());
+            baseRenderer.concatenateFiles(kickPatternFilePaths, Paths.get(appConfigs.getApplicationRoot(),"Loops","2","SUNDAY_KICK.wav").toString());
         } catch (Exception e) {
             Application.logger.debug("LOG:", e);
         }

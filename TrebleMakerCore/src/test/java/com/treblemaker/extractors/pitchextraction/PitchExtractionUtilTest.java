@@ -1,6 +1,7 @@
 package com.treblemaker.extractors.pitchextraction;
 
 import com.treblemaker.SpringConfiguration;
+import com.treblemaker.configs.AppConfigs;
 import com.treblemaker.model.HarmonicLoop;
 import com.treblemaker.model.PitchExtractions;
 import junit.framework.TestCase;
@@ -8,7 +9,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
@@ -19,12 +23,18 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SpringConfiguration.class, properties ={"connect_to_cache=true", "queue_scheduled_interval=8999999", "queue_scheduled_start_delay=8999999"})
+@RunWith(SpringRunner.class)
+@ComponentScan({"com.treblemaker"})
+@SpringBootTest(classes = SpringConfiguration.class)
+@TestPropertySource(
+        locations = "classpath:application-test.properties")
 public class PitchExtractionUtilTest extends TestCase {
 
     @Autowired
     PitchExtractionUtil pitchExtractionUtil;
+
+    @Autowired
+    AppConfigs appConfigs;
 
     @Test
     public void shouldFindLoopsWherePitchExtractionAreNullOrEmpty(){
@@ -54,7 +64,7 @@ public class PitchExtractionUtilTest extends TestCase {
         hlOneBarEightyBpm.setBarCount(1);
         hlOneBarEightyBpm.setAudioLength(2.0f);
         hlOneBarEightyBpm.setBpm(120);
-        hlOneBarEightyBpm.setFileName(Paths.get("src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_1b_120.wav").toString());
+        hlOneBarEightyBpm.setFileName(Paths.get(appConfigs.getApplicationRoot(), "TrebleMakerCore", "src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_1b_120.wav").toString());
 
         List<PitchExtractions> extractedPitchs = pitchExtractionUtil.extractPitchs(hlOneBarEightyBpm, new File(hlOneBarEightyBpm.getFileName()));
 
@@ -97,7 +107,7 @@ public class PitchExtractionUtilTest extends TestCase {
         hlOneBarEightyBpm.setBarCount(2);
         hlOneBarEightyBpm.setAudioLength(4.0f);
         hlOneBarEightyBpm.setBpm(120);
-        hlOneBarEightyBpm.setFileName(Paths.get("src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_2b_120.wav").toString());
+        hlOneBarEightyBpm.setFileName(Paths.get(appConfigs.getApplicationRoot(),"TrebleMakerCore","src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_2b_120.wav").toString());
 
         List<PitchExtractions> extractedPitchs = pitchExtractionUtil.extractPitchs(hlOneBarEightyBpm, new File(hlOneBarEightyBpm.getFileName()));
 
@@ -112,7 +122,7 @@ public class PitchExtractionUtilTest extends TestCase {
         hlOneBarEightyBpm.setBarCount(4);
         hlOneBarEightyBpm.setAudioLength(8.0f);
         hlOneBarEightyBpm.setBpm(120);
-        hlOneBarEightyBpm.setFileName(Paths.get("src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_4b_120.wav").toString());
+        hlOneBarEightyBpm.setFileName(Paths.get(appConfigs.getApplicationRoot(),"TrebleMakerCore","src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_4b_120.wav").toString());
 
         List<PitchExtractions> extractedPitchs = pitchExtractionUtil.extractPitchs(hlOneBarEightyBpm, new File(hlOneBarEightyBpm.getFileName()));
 
@@ -127,7 +137,7 @@ public class PitchExtractionUtilTest extends TestCase {
         hlOneBarEightyBpm.setBarCount(1);
         hlOneBarEightyBpm.setAudioLength(3.0f);
         hlOneBarEightyBpm.setBpm(80);
-        hlOneBarEightyBpm.setFileName(Paths.get("src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_1b_80.wav").toString());
+        hlOneBarEightyBpm.setFileName(Paths.get(appConfigs.getApplicationRoot(),"TrebleMakerCore","src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_1b_80.wav").toString());
 
         List<PitchExtractions> extractedPitchs = pitchExtractionUtil.extractPitchs(hlOneBarEightyBpm, new File(hlOneBarEightyBpm.getFileName()));
 
@@ -170,7 +180,7 @@ public class PitchExtractionUtilTest extends TestCase {
         hlOneBarEightyBpm.setBarCount(2);
         hlOneBarEightyBpm.setAudioLength(6.0f);
         hlOneBarEightyBpm.setBpm(80);
-        hlOneBarEightyBpm.setFileName(Paths.get("src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_2b_80.wav").toString());
+        hlOneBarEightyBpm.setFileName(Paths.get(appConfigs.getApplicationRoot(),"TrebleMakerCore","src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_2b_80.wav").toString());
 
         List<PitchExtractions> extractedPitchs = pitchExtractionUtil.extractPitchs(hlOneBarEightyBpm, new File(hlOneBarEightyBpm.getFileName()));
 
@@ -185,7 +195,7 @@ public class PitchExtractionUtilTest extends TestCase {
         hlOneBarEightyBpm.setBarCount(4);
         hlOneBarEightyBpm.setAudioLength(12.0f);
         hlOneBarEightyBpm.setBpm(80);
-        hlOneBarEightyBpm.setFileName(Paths.get("src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_4b_80.wav").toString());
+        hlOneBarEightyBpm.setFileName(Paths.get(appConfigs.getApplicationRoot(),"TrebleMakerCore","src","main","java","com","treblemaker","tests","Mocks","pitchDetectionTest","pitch_test_4b_80.wav").toString());
 
         List<PitchExtractions> extractedPitchs = pitchExtractionUtil.extractPitchs(hlOneBarEightyBpm, new File(hlOneBarEightyBpm.getFileName()));
 

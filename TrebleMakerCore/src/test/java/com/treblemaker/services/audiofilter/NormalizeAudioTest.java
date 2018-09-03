@@ -11,7 +11,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +27,11 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SpringConfiguration.class, properties ={"connect_to_cache=true", "queue_scheduled_interval=8999999", "queue_scheduled_start_delay=8999999"})
+@RunWith(SpringRunner.class)
+@ComponentScan({"com.treblemaker"})
+@SpringBootTest(classes = SpringConfiguration.class)
+@TestPropertySource(
+        locations = "classpath:application-test.properties")
 public class NormalizeAudioTest extends TestCase {
 
     @Autowired
@@ -41,9 +46,8 @@ public class NormalizeAudioTest extends TestCase {
     private List<Path> filePaths_original = new ArrayList<>();
     private List<Path> filePaths = new ArrayList<>();
 
-    private final String ORIGINAL_PATH = Paths.get("src","main","java","com","treblemaker","tests","Mocks","meanLoopTest").toString();
-
-    private final String PATH = Paths.get("src","main","java","com","treblemaker","tests","Mocks","meanLoopTestTemp").toString();
+    String ORIGINAL_PATH;
+    String PATH;
 
     private final String file1_p = "70_A_RevPad_01_SP_processing.wav";
     private final String file2_p = "70_Am_Chords_02_SP_processing.wav";
@@ -67,11 +71,17 @@ public class NormalizeAudioTest extends TestCase {
     private final String file9 = "70_Cs_m_MovingSynth_02_SP.wav";
     private final String file10 = "70_Dm_ProcessedChords_02_SP.wav";
 
-    String originalAudioPath = Paths.get(appConfigs.getMockDataAudioDir(),"normalize_test.mp3").toString();
-    String copiedAudioPath = Paths.get(appConfigs.getMockDataAudioDir(),"normalize_test_copy.mp3").toString();
+    String originalAudioPath;
+    String copiedAudioPath;
 
     @Before
     public void setup() throws IOException {
+        originalAudioPath = Paths.get(appConfigs.getMockDataAudioDir(),"normalize_test.mp3").toString();
+        copiedAudioPath = Paths.get(appConfigs.getMockDataAudioDir(),"normalize_test_copy.mp3").toString();
+
+        ORIGINAL_PATH = Paths.get(appConfigs.getApplicationRoot(),"TrebleMakerCore","src","main","java","com","treblemaker","tests","Mocks","meanLoopTest").toString();
+        PATH = Paths.get(appConfigs.getApplicationRoot(),"TrebleMakerCore","src","main","java","com","treblemaker","tests","Mocks","meanLoopTestTemp").toString();
+
         List<String> pathStrings_p = Arrays.asList(file1_p, file2_p, file3_p, file4_p, file5_p, file6_p, file7_p, file8_p, file9_p, file10_p);
         for (String strPath : pathStrings_p) {
             filePaths_original.add(Paths.get(PATH, strPath));

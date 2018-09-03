@@ -5,23 +5,25 @@ import com.treblemaker.model.HarmonicLoop;
 import com.treblemaker.model.HiveChord;
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = SpringConfiguration.class, properties ={
-        "return_queue_early_for_tests=true",
-        "queue_scheduled_interval=8999999",
-        "queue_scheduled_start_delay=8999999",
-        "spring.datasource.url=jdbc:mysql://localhost:3306/hivecomposedb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        "spring.datasource.username=root",
-        "spring.datasource.password=redrobes79D"})
+@Ignore
+@RunWith(SpringRunner.class)
+@ComponentScan({"com.treblemaker"})
+@SpringBootTest(classes = SpringConfiguration.class)
+@TestPropertySource(
+        locations = "classpath:application-test.properties")
 public class IHarmonicLoopsDalTest extends TestCase {
     @Autowired
     private IHarmonicLoopsDal iHarmonicLoopsDal;

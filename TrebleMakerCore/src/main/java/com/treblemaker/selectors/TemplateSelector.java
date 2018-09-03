@@ -67,7 +67,7 @@ public class TemplateSelector implements ITemplateSelector {
 
         SynthTemplate synthTemplate = null;
         try {
-            synthTemplate = synthTemplateDal.findOne(templateId);
+            synthTemplate = synthTemplateDal.findById(templateId).get();
         } catch (Exception e) {
             Application.logger.debug("LOG:",e);
         }
