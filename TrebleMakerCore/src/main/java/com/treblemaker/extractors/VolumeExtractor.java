@@ -13,7 +13,6 @@ import java.util.Map;
 
 @Component
 public class VolumeExtractor {
-
     private IAudioUtils audioUtils;
 
     @Autowired
@@ -22,19 +21,15 @@ public class VolumeExtractor {
     }
 
     public List<Map<String, Double>> getVolumeMeans(List<Map<String, File>> roleToFileMaps) {
-
         List<Map<String, Double>> roleToMeanMapList = new ArrayList<>();
 
         for(Map<String, File> roleToFileMap : roleToFileMaps) {
             Map<String, Double> roleToMeanMap = new HashMap<>();
 
             for (Map.Entry<String, File> entry : roleToFileMap.entrySet()) {
-
                 try {
-
                     double mean = audioUtils.getMeanVolume(entry.getValue());
                     roleToMeanMap.put(entry.getKey(), mean);
-
                 } catch (InterruptedException e) {
                     Application.logger.debug("LOG:", e);
                 }

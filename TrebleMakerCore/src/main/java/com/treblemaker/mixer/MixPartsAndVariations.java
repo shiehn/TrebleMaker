@@ -11,6 +11,7 @@ public class MixPartsAndVariations {
 
     public enum MixParts {
         audioPartMelodic,
+        audioPartMelodicAlt,
         audioPartRhythm,
         audioPartRhythmAlt,
         audioPartAmbience,
@@ -31,6 +32,7 @@ public class MixPartsAndVariations {
 
     public enum MixTypes {
         fullMix,
+        fullAltMelodyMix,
         noBottomMix,
         ambientMix
     }
@@ -39,6 +41,7 @@ public class MixPartsAndVariations {
     static {
         mixTypeExtentions = new HashMap<>();
         mixTypeExtentions.put(fullMix, "_1.mp3");
+        mixTypeExtentions.put(fullAltMelodyMix, "_1_alt_melody.mp3");
         mixTypeExtentions.put(noBottomMix, "_2.mp3");
         mixTypeExtentions.put(ambientMix, "_3.mp3");
     }
@@ -48,6 +51,26 @@ public class MixPartsAndVariations {
         mixVariations = new HashMap<>();
         mixVariations.put("fullMix", Arrays.asList(
                 MixParts.audioPartMelodic.toString(),
+                MixParts.audioPartRhythm.toString(),
+                MixParts.audioPartRhythmAlt.toString(),
+                MixParts.audioPartAmbience.toString(),
+                MixParts.audioPartHarmonic.toString(),
+                MixParts.audioPartHarmonicAlt.toString(),
+                MixParts.audioPartHi.toString(),
+                MixParts.audioPartAltHi.toString(),
+                MixParts.audioPartMid.toString(),
+                MixParts.audioPartAltMid.toString(),
+                MixParts.audioPartLow.toString(),
+                MixParts.audioPartAltLow.toString(),
+                MixParts.audioPartHits.toString(),
+                MixParts.audioPartFills.toString(),
+                MixParts.audioPartKick.toString(),
+                MixParts.audioPartSnare.toString(),
+                MixParts.audioPartHat.toString()
+        ));
+
+        mixVariations.put("fullAltMelodyMix", Arrays.asList(
+                MixParts.audioPartMelodicAlt.toString(),
                 MixParts.audioPartRhythm.toString(),
                 MixParts.audioPartRhythmAlt.toString(),
                 MixParts.audioPartAmbience.toString(),

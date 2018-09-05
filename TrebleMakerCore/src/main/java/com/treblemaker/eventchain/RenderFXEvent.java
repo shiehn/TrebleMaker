@@ -5,6 +5,7 @@ import com.treblemaker.fx.FXHelper;
 import com.treblemaker.fx.IFXRenderer;
 import com.treblemaker.model.queues.QueueState;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.treblemaker.configs.*;
 
@@ -18,6 +19,9 @@ public class RenderFXEvent implements IEventChain {
 
     @Autowired
     private AppConfigs appConfigs;
+
+    @Value("${num_of_alt_melodies}")
+    int numOfAltMelodies;
 
     @Override
     public QueueState set(QueueState queueState) {
@@ -48,8 +52,10 @@ public class RenderFXEvent implements IEventChain {
             fxRenderer.renderReverbFx(queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_ALT_HI_AUDIO_FILENAME,
                     queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_ALT_HI_FX_NO_EQ_AUDIO_FILENAME);
 
-            fxRenderer.renderReverbFx(queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_NO_FX,
-                    queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX_NO_EQ);
+            for(int j=0; j<numOfAltMelodies; j++) {
+                fxRenderer.renderReverbFx(queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_NO_FX.replace(".wav", "_"+j+".wav"),
+                        queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX_NO_EQ.replace(".wav", "_"+j+".wav"));
+            }
         }
 
 

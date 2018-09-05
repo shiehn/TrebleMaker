@@ -29,7 +29,7 @@ public class AudioMixer extends BaseRenderer implements IAudioMixer {
     @Autowired
     private AppConfigs appConfigs;
 
-    public void createMixes(String audioPartMelodic, String audioPartHi,
+    public void createMixes(String audioPartMelodic, String audioPartMelodicAlt, String audioPartHi,
                             String audioPartAltHi, String audioPartMid,
                             String audioPartAltMid, String audioPartLow,
                             String audioPartAltLow, String audioPartRhythm,
@@ -41,6 +41,7 @@ public class AudioMixer extends BaseRenderer implements IAudioMixer {
 
         Map<String, String> MixPartToPath = new HashMap<>();
         MixPartToPath.put(MixParts.audioPartMelodic.toString(), audioPartMelodic.replace("//", "\\"));
+        MixPartToPath.put(MixParts.audioPartMelodicAlt.toString(), audioPartMelodic.replace("//", "\\"));
         MixPartToPath.put(MixParts.audioPartHi.toString(), audioPartHi.replace("//", "\\"));
         MixPartToPath.put(MixParts.audioPartAltHi.toString(), audioPartAltHi.replace("//", "\\"));
         MixPartToPath.put(MixParts.audioPartMid.toString(),audioPartMid.replace("//", "\\"));
@@ -61,6 +62,8 @@ public class AudioMixer extends BaseRenderer implements IAudioMixer {
         targetPath = targetPath.replace("\"", "");
 
         createMix(getPartPathsForMix(mixVariations.get(fullMix.toString()), MixPartToPath),
+                targetPath.replace(".wav", "_" + index + mixTypeExtentions.get(fullMix)));
+        createMix(getPartPathsForMix(mixVariations.get(fullAltMelodyMix.toString()), MixPartToPath),
                 targetPath.replace(".wav", "_" + index + mixTypeExtentions.get(fullMix)));
         createMix(getPartPathsForMix(mixVariations.get(noBottomMix.toString()), MixPartToPath),
                 targetPath.replace(".wav", "_" + index + mixTypeExtentions.get(noBottomMix)));

@@ -1,5 +1,6 @@
 package com.treblemaker.generators;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.util.*;
 import com.treblemaker.constants.*;
@@ -10,11 +11,17 @@ public class VolumeLevelGenerator {
     public final int DB_RANGE = 1;
     public final int NUM_OF_MIXES = 1;
 
+    @Value("${num_of_generated_mixes}")
+    int numOfGeneratedMixes;
+
+    @Value("${num_of_alt_melodies}")
+    int numOfAltMelodies;
+
     public List<Map<String, Double>> generatePotentialMixes(){
 
         List<Map<String, Double>> potentialMixes = new ArrayList<>();
 
-        for(int i=0; i<NUM_OF_MIXES; i++){
+        for(int i=0; i<numOfGeneratedMixes; i++){
             potentialMixes.add(generatePotentialMix());
         }
 
@@ -24,7 +31,6 @@ public class VolumeLevelGenerator {
     public Map<String, Double> generatePotentialMix(){
 
         Map<String, Double> potenialMix = new HashMap<>();
-        potenialMix.put(MixRoles.COMP_MELODY, 23.0);
         potenialMix.put(MixRoles.COMP_HI_FX, 18.0);
         potenialMix.put(MixRoles.COMP_HI_ALT_FX, 18.0);
         potenialMix.put(MixRoles.COMP_MID, 10.0);
@@ -41,6 +47,10 @@ public class VolumeLevelGenerator {
         potenialMix.put(MixRoles.KICK, 17.0);
         potenialMix.put(MixRoles.SNARE, 14.0);
         potenialMix.put(MixRoles.HAT, 14.0);
+
+        for(int i=0; i<numOfAltMelodies; i++){
+            potenialMix.put(MixRoles.COMP_MELODY+i, 23.0);
+        }
 
         return potenialMix;
     }

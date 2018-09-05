@@ -100,10 +100,7 @@ public class RenderAndSetFinalVolumeMixEvent implements IEventChain {
         List<Map<String, File>> roleToFileMaps = new ArrayList<>();
 
         for (int i = 0; i < numOfVariations; i++) {
-
             Map<String, File> roleToFileMap = new HashMap<>();
-
-            roleToFileMap.put(MixRoles.COMP_MELODY, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX));
             roleToFileMap.put(MixRoles.COMP_HI_FX, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_HI_FX_AUDIO_FILENAME));
             roleToFileMap.put(MixRoles.COMP_HI_ALT_FX, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_ALT_HI_FX_AUDIO_FILENAME));
             roleToFileMap.put(MixRoles.COMP_MID, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MID_AUDIO_FILENAME));
@@ -120,6 +117,10 @@ public class RenderAndSetFinalVolumeMixEvent implements IEventChain {
             roleToFileMap.put(MixRoles.KICK, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + appConfigs.KICK_FILENAME));
             roleToFileMap.put(MixRoles.SNARE, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + appConfigs.SNARE_FILENAME));
             roleToFileMap.put(MixRoles.HAT, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + appConfigs.HAT_FILENAME));
+
+            for(int j=0; j<numOfGeneratedMixes; j++){
+                roleToFileMap.put(MixRoles.COMP_MELODY + j, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav", "_"+j+".wav")));
+            }
 
             roleToFileMaps.add(roleToFileMap);
         }

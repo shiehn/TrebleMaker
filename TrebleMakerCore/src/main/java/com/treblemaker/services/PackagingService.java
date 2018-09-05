@@ -29,14 +29,11 @@ public class PackagingService {
     public void tar(){
         List<File> melodies = new ArrayList<>();
         for(int i=0; i<numOfMelodies; i++){
-            File src_melody = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MELODIC_FILENAME.replace(".wav", "_"+i+".wav"))).toFile();
+            File src_melody = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_"+i+".mid"))).toFile();
             melodies.add(src_melody);
         }
 
         File src_metadata = new File(appConfigs.getMetadataPath(queueItem.getQueueItemId()));
-
-        File src_melody = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MELODIC_FILENAME)).toFile();
-
 
         File src_hi = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_HI_FILENAME)).toFile();
         File src_mid = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MID_FILENAME)).toFile();

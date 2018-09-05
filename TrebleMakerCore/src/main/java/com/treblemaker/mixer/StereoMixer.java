@@ -4,6 +4,7 @@ import com.treblemaker.Application;
 import com.treblemaker.model.queues.QueueItem;
 import com.treblemaker.configs.AppConfigs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -18,6 +19,9 @@ public class StereoMixer {
 
     @Autowired
     AppConfigs appConfigs;
+
+    @Value("${num_of_alt_melodies}")
+    int numOfAltMelodies;
 
     public StereoMixer(AppConfigs appConfigs){
         appConfigs = appConfigs;
@@ -38,7 +42,9 @@ public class StereoMixer {
         monoPartsSource.add(appConfigs.SNARE_FILENAME);
 
         for (int i = 0; i < numOfGeneratedMixes; i++) {
-            monoPartsSource.add(i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX);
+            for(int j=0; j<numOfAltMelodies; j++) {
+                monoPartsSource.add(i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav","_"+j+".wav"));
+            }
             monoPartsSource.add(i + appConfigs.COMP_HI_FX_AUDIO_FILENAME);
             monoPartsSource.add(i + appConfigs.COMP_ALT_HI_FX_AUDIO_FILENAME);
             monoPartsSource.add(i + appConfigs.COMP_MID_AUDIO_FILENAME);

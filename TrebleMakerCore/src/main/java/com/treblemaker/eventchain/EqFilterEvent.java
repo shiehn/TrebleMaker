@@ -22,7 +22,10 @@ public class EqFilterEvent implements IEventChain {
     public AppConfigs appConfigs;
 
     @Value("${num_of_generated_mixes}")
-    Integer numOfGeneratedMixes;
+    int numOfGeneratedMixes;
+
+    @Value("${num_of_alt_melodies}")
+    int numOfAltMelodies;
 
     @Override
     public QueueState set(QueueState queueState) {
@@ -36,8 +39,10 @@ public class EqFilterEvent implements IEventChain {
             eqFilterRenderer.render(queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_ALT_HI_FX_NO_EQ_AUDIO_FILENAME,
                     queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_ALT_HI_FX_AUDIO_FILENAME, CUTOFF_FREQUENCY);
 
-            eqFilterRenderer.render(queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX_NO_EQ,
-                    queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX, CUTOFF_FREQUENCY);
+            for(int j=0; j<numOfAltMelodies; j++) {
+                eqFilterRenderer.render(queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX_NO_EQ.replace(".wav", "_"+j+".wav"),
+                        queueState.getQueueItem().getAudioPartFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav", "_"+j+".wav"), CUTOFF_FREQUENCY);
+            }
         }
 
         return queueState;

@@ -20,6 +20,8 @@ public class PackagingServiceTest {
     private PackagingService packagingService;
     private String tempDir;
 
+
+
     @Before
     public void setup(){
         queueItem = new QueueItem();
@@ -49,7 +51,7 @@ public class PackagingServiceTest {
         metadata.txt is not supported
         */
 
-        packagingService = new PackagingService(appConfigs, queueItem);
+        packagingService = new PackagingService(appConfigs, queueItem, 2);
 
         System.out.println("STEVE: " + appConfigs.COMP_HATS_FILENAME);
     }

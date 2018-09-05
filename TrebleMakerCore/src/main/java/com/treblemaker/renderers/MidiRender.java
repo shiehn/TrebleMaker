@@ -19,6 +19,7 @@ import com.treblemaker.configs.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +36,10 @@ public class MidiRender implements IEventChain {
     private FileStructure fileStructure;
 
     @Value("${num_of_generated_mixes}")
-    Integer numOfGeneratedMixes;
+    int numOfGeneratedMixes;
 
     @Value("${num_of_alt_melodies}")
-    Integer numOfAltMelodies;
+    int numOfAltMelodies;
 
     //TODO THIS IS JUST FOR TESTING ...
     @Autowired
@@ -164,7 +165,9 @@ public class MidiRender implements IEventChain {
             for (int j = 0; j < numOfGeneratedMixes; j++) {
                 try {
                     Pattern melodicPattern = new Pattern(melodicStrings.get(i));
-                    MidiFileManager.save(new Player().getSequence(melodicPattern.setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + j + appConfigs.COMP_MELODIC_FILENAME.replace(".wav", "_"+i+".wav")));
+
+                    String targetPath = Paths.get(MIDI_FILE_PATH,Integer.toString(i),appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_"+j+".mid")).toString();
+                    MidiFileManager.save(new Player().getSequence(melodicPattern.setTempo(queueState.getQueueItem().getBpm())), new File(targetPath));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }

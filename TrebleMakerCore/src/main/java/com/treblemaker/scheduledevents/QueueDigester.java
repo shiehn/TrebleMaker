@@ -398,7 +398,11 @@ public class QueueDigester implements IQueueDigester {
 
             SynthTemplate selectedSynthTemplate = queueItem.getProgression().getStructure().get(0).getProgressionUnitBars().get(0).getSynthTemplates().get(i);
 
-            RenderTask renderMelodicTask = new RenderTask(queueItem.getMidiFilePath() + "/" + i + appConfigs.COMP_MELODIC_FILENAME, queueItem.getAudioPartFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_NO_FX, AudioRender.Spectrum.MELODIC, selectedSynthTemplate, queueItem.getBpm());
+            for(int j=0; j<numOfAltMelodies; j++) {
+                RenderTask renderMelodicTask = new RenderTask(queueItem.getMidiFilePath() + "/" + i + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_"+j+".mid"), queueItem.getAudioPartFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_NO_FX.replace(".wav", "_"+j+".wav"), AudioRender.Spectrum.MELODIC, selectedSynthTemplate, queueItem.getBpm());
+                collection.add(renderMelodicTask);
+            }
+
             RenderTask renderHiTask = new RenderTask(queueItem.getMidiFilePath() + "/" + i + appConfigs.COMP_HI_FILENAME, queueItem.getAudioPartFilePath() + "/" + i + appConfigs.COMP_HI_AUDIO_FILENAME, AudioRender.Spectrum.HI, selectedSynthTemplate, queueItem.getBpm());
             RenderTask renderHiAltTask = new RenderTask(queueItem.getMidiFilePath() + "/" + i + appConfigs.COMP_ALT_HI_FILENAME, queueItem.getAudioPartFilePath() + "/" + i + appConfigs.COMP_ALT_HI_AUDIO_FILENAME, AudioRender.Spectrum.ALT_HI, selectedSynthTemplate, queueItem.getBpm());
             RenderTask renderMidTask = new RenderTask(queueItem.getMidiFilePath() + "/" + i + appConfigs.COMP_MID_FILENAME, queueItem.getAudioPartFilePath() + "/" + i + appConfigs.COMP_MID_AUDIO_FILENAME, AudioRender.Spectrum.MID, selectedSynthTemplate, queueItem.getBpm());
@@ -406,7 +410,7 @@ public class QueueDigester implements IQueueDigester {
             RenderTask renderLowTask = new RenderTask(queueItem.getMidiFilePath() + "/" + i + appConfigs.COMP_LOW_FILENAME, queueItem.getAudioPartFilePath() + "/" + i + appConfigs.COMP_LOW_AUDIO_FILENAME, AudioRender.Spectrum.LOW, selectedSynthTemplate, queueItem.getBpm());
             RenderTask renderMidAltLowTask = new RenderTask(queueItem.getMidiFilePath() + "/" + i + appConfigs.COMP_ALT_LOW_FILENAME, queueItem.getAudioPartFilePath() + "/" + i + appConfigs.COMP_ALT_LOW_AUDIO_FILENAME, AudioRender.Spectrum.ALT_LOW, selectedSynthTemplate, queueItem.getBpm());
 
-            collection.add(renderMelodicTask);
+
             collection.add(renderHiTask);
             collection.add(renderHiAltTask);
             collection.add(renderMidTask);
@@ -504,9 +508,6 @@ public class QueueDigester implements IQueueDigester {
         fillsRenderer.render(queueState);
         Application.logger.debug("LOG: END FILL LOOP RENDER");
 
-
-
-
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         Application.logger.debug("LOG: PHASE : NORMALIZE AUDIO");
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
@@ -590,8 +591,14 @@ public class QueueDigester implements IQueueDigester {
         final String output = appConfigs.getFinalMixOutput() + "/" + songName;
 
         for (int i = 0; i < numOfGeneratedMixes; i++) {
+            String melodyAlt = "";
+            if(numOfAltMelodies > 1){
+                melodyAlt = queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav", "_0.wav");
+            }
+
             audioMixer.createMixes(
-                    queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX,
+                    queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav","_0.wav"),
+                    melodyAlt,
                     queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_HI_FX_AUDIO_FILENAME,
                     queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_ALT_HI_FX_AUDIO_FILENAME,
                     queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MID_AUDIO_FILENAME,
@@ -1085,7 +1092,10 @@ public class QueueDigester implements IQueueDigester {
     String[] machineLearningEndpoints;
 
     @Value("${num_of_generated_mixes}")
-    Integer numOfGeneratedMixes;
+    int numOfGeneratedMixes;
+
+    @Value("${num_of_alt_melodies}")
+    int numOfAltMelodies;
 
     @Autowired
     private AppConfigs appConfigs;
