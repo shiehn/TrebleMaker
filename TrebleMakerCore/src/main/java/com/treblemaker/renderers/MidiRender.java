@@ -57,7 +57,7 @@ public class MidiRender implements IEventChain {
         for (int i = 0; i < numOfGeneratedMixes; i++) {
             Application.logger.debug("LOG: jPatternHi : " + jPatternHi.get(i).toString());
             try {
-                MidiFileManager.save(new Player().getSequence(jPatternHi.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_HI_FILENAME));
+                MidiFileManager.save(new Player().getSequence(jPatternHi.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + i + appConfigs.COMP_HI_FILENAME));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -68,7 +68,7 @@ public class MidiRender implements IEventChain {
         for (int i = 0; i < numOfGeneratedMixes; i++) {
             Application.logger.debug("LOG: jPatternAltHi : " + jPatternAltHi.get(i).toString());
             try {
-                MidiFileManager.save(new Player().getSequence(jPatternAltHi.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_ALT_HI_FILENAME));
+                MidiFileManager.save(new Player().getSequence(jPatternAltHi.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + i + appConfigs.COMP_ALT_HI_FILENAME));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -79,7 +79,7 @@ public class MidiRender implements IEventChain {
             Application.logger.debug("LOG: jPatternMid : " + jPatternMid.get(i).toString());
             try {
                 System.out.println(MIDI_FILE_PATH + i + appConfigs.COMP_MID_FILENAME);
-                MidiFileManager.save(new Player().getSequence(jPatternMid.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_MID_FILENAME));
+                MidiFileManager.save(new Player().getSequence(jPatternMid.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + i + appConfigs.COMP_MID_FILENAME));
                 System.out.println(MIDI_FILE_PATH + i + appConfigs.COMP_MID_FILENAME);
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -90,7 +90,7 @@ public class MidiRender implements IEventChain {
         for (int i = 0; i < numOfGeneratedMixes; i++) {
             Application.logger.debug("LOG: jPatternAltMid : " + jPatternAltMid.get(i).toString());
             try {
-                MidiFileManager.save(new Player().getSequence(jPatternAltMid.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_ALT_MID_FILENAME));
+                MidiFileManager.save(new Player().getSequence(jPatternAltMid.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + i + appConfigs.COMP_ALT_MID_FILENAME));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -100,7 +100,7 @@ public class MidiRender implements IEventChain {
         for (int i = 0; i < numOfGeneratedMixes; i++) {
             Application.logger.debug("LOG: jPatternLow : " + jPatternLow.get(i).toString());
             try {
-                MidiFileManager.save(new Player().getSequence(jPatternLow.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_LOW_FILENAME));
+                MidiFileManager.save(new Player().getSequence(jPatternLow.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + i + appConfigs.COMP_LOW_FILENAME));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -110,7 +110,7 @@ public class MidiRender implements IEventChain {
         for (int i = 0; i < numOfGeneratedMixes; i++) {
             Application.logger.debug("LOG: jPatternLowAlt : " + jPatternLowAlt.get(i).toString());
             try {
-                MidiFileManager.save(new Player().getSequence(jPatternLowAlt.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_ALT_LOW_FILENAME));
+                MidiFileManager.save(new Player().getSequence(jPatternLowAlt.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + i + appConfigs.COMP_ALT_LOW_FILENAME));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -120,7 +120,7 @@ public class MidiRender implements IEventChain {
         for (int i = 0; i < numOfGeneratedMixes; i++) {
             Application.logger.debug("LOG: jPatternKick : " + jPatternKick.get(i).toString());
             try {
-                MidiFileManager.save(new Player().getSequence(jPatternKick.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_KICK_FILENAME));
+                MidiFileManager.save(new Player().getSequence(jPatternKick.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + i + appConfigs.COMP_KICK_FILENAME));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -130,7 +130,7 @@ public class MidiRender implements IEventChain {
         for (int i = 0; i < numOfGeneratedMixes; i++) {
             Application.logger.debug("LOG: jPatternSnare : " + jPatternSnare.get(i).toString());
             try {
-                MidiFileManager.save(new Player().getSequence(jPatternSnare.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_SNARE_FILENAME));
+                MidiFileManager.save(new Player().getSequence(jPatternSnare.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + i + appConfigs.COMP_SNARE_FILENAME));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -140,7 +140,7 @@ public class MidiRender implements IEventChain {
         for (int i = 0; i < numOfGeneratedMixes; i++) {
             Application.logger.debug("LOG: jPatternHats : " + jPatternHats.get(i).toString());
             try {
-                MidiFileManager.save(new Player().getSequence(jPatternHats.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + "/" + i + appConfigs.COMP_HATS_FILENAME));
+                MidiFileManager.save(new Player().getSequence(jPatternHats.get(i).setTempo(queueState.getQueueItem().getBpm())), new File(MIDI_FILE_PATH + i + appConfigs.COMP_HATS_FILENAME));
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -160,19 +160,21 @@ public class MidiRender implements IEventChain {
         }
 
         //2)RENDER PATTERN
-        for(int i=0; i<numOfAltMelodies; i++) {
-            Application.logger.debug("LOG: jPatternMelodic : " + melodicStrings.get(i));
-            for (int j = 0; j < numOfGeneratedMixes; j++) {
-                try {
-                    Pattern melodicPattern = new Pattern(melodicStrings.get(i));
 
-                    String targetPath = Paths.get(MIDI_FILE_PATH,Integer.toString(i),appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_"+j+".mid")).toString();
+        for (int i = 0; i < numOfGeneratedMixes; i++) {
+            Application.logger.debug("LOG: jPatternMelodic : " + melodicStrings.get(i));
+            for(int j=0; j<numOfAltMelodies; j++) {
+                try {
+                    Pattern melodicPattern = new Pattern(melodicStrings.get(j));
+
+                    String targetPath = Paths.get(MIDI_FILE_PATH, Integer.toString(i) + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_" + j + ".mid")).toString();
                     MidiFileManager.save(new Player().getSequence(melodicPattern.setTempo(queueState.getQueueItem().getBpm())), new File(targetPath));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
         }
+
 
         return queueState;
     }

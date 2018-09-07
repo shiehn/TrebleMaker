@@ -55,71 +55,71 @@ public class ProcessMixPanning implements IEventChain {
 
     String getPancode(String fileName, QueueState queueState) {
 
-        if (fileName.toLowerCase().contains("compmelodicfx.wav") || fileName.toLowerCase().contains("compmelodic.wav")) {
+        if (fileName.toLowerCase().contains("compmelodicfx") || fileName.toLowerCase().contains("compmelodic")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getCompMelody();
         }
 
-        if (fileName.toLowerCase().contains("comphifx.wav") || fileName.toLowerCase().contains("comphi.wav")) {
+        if (fileName.toLowerCase().contains("comphifx") || fileName.toLowerCase().contains("comphi")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getCompHi();
         }
 
-        if (fileName.toLowerCase().contains("compalthifx.wav") || fileName.toLowerCase().contains("compalthi.wav")) {
+        if (fileName.toLowerCase().contains("compalthifx") || fileName.toLowerCase().contains("compalthi")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getCompHiAlt();
         }
 
-        if (fileName.toLowerCase().contains("compmid.wav")) {
+        if (fileName.toLowerCase().contains("compmid")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getCompMid();
         }
 
-        if (fileName.toLowerCase().contains("compaltmid.wav")) {
+        if (fileName.toLowerCase().contains("compaltmid")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getCompMidAlt();
         }
 
-        if (fileName.toLowerCase().contains("complow.wav")) {
+        if (fileName.toLowerCase().contains("complow")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getCompLow();
         }
 
-        if (fileName.toLowerCase().contains("compaltlow.wav")) {
+        if (fileName.toLowerCase().contains("compaltlow")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getCompLowAlt();
         }
 
-        if (fileName.toLowerCase().contains("compharmonic.wav")) {
+        if (fileName.toLowerCase().contains("compharmonic")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getHarmonic();
         }
 
-        if (fileName.toLowerCase().contains("compharmonicalt.wav")) {
+        if (fileName.toLowerCase().contains("compharmonicalt")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getHarmonicAlt();
         }
 
-        if (fileName.toLowerCase().contains("comprhythm.wav")) {
+        if (fileName.toLowerCase().contains("comprhythm")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getBeat();
         }
 
-        if (fileName.toLowerCase().contains("comprhythmalt.wav")) {
+        if (fileName.toLowerCase().contains("comprhythmalt")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getBeatAlt();
         }
 
-        if (fileName.toLowerCase().contains("compambience.wav")) {
+        if (fileName.toLowerCase().contains("compambience")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getAmbient();
         }
 
-        if (fileName.toLowerCase().contains("hit.wav")) {
+        if (fileName.toLowerCase().contains("hit")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getHits();
         }
 
-        if (fileName.toLowerCase().contains("fill.wav")) {
+        if (fileName.toLowerCase().contains("fill")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getFills();
         }
 
-        if (fileName.toLowerCase().contains("kick.wav")) {
+        if (fileName.toLowerCase().contains("kick")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getKick();
         }
 
-        if (fileName.toLowerCase().contains("hat.wav")) {
+        if (fileName.toLowerCase().contains("hat")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getHat();
         }
 
-        if (fileName.toLowerCase().contains("snare.wav")) {
+        if (fileName.toLowerCase().contains("snare")) {
             return queueState.getStructure().get(0).getProgressionUnitBars().get(0).getCompositionTimeSlotPanning().getSnare();
         }
 

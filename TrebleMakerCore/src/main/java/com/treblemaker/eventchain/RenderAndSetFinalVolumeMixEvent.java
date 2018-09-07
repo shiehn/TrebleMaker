@@ -30,6 +30,9 @@ public class RenderAndSetFinalVolumeMixEvent implements IEventChain {
     @Value("${num_of_generated_mixes}")
     Integer numOfGeneratedMixes;
 
+    @Value("${num_of_alt_melodies}")
+    Integer numOfAltMelodies;
+
     @Override
     public QueueState set(QueueState queueState) {
 
@@ -118,7 +121,7 @@ public class RenderAndSetFinalVolumeMixEvent implements IEventChain {
             roleToFileMap.put(MixRoles.SNARE, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + appConfigs.SNARE_FILENAME));
             roleToFileMap.put(MixRoles.HAT, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + appConfigs.HAT_FILENAME));
 
-            for(int j=0; j<numOfGeneratedMixes; j++){
+            for(int j=0; j<numOfAltMelodies; j++){
                 roleToFileMap.put(MixRoles.COMP_MELODY + j, new File(queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav", "_"+j+".wav")));
             }
 
