@@ -39,11 +39,7 @@ public class SetMelodicSynthEvent implements IEventChain {
 
     @Override
     public QueueState set(QueueState queueState) {
-        if(this.numOfAltMelodies == null){
-            this.numOfAltMelodies = 1;
-        }
 
-        for(int i=0; i<this.numOfAltMelodies; i++) {
             Map<ProgressionType, List<HiveChord>> pTypeToChords = new HashMap<>();
             for (ProgressionUnit progressionUnit : queueState.getStructure()) {
                 List<HiveChord> chords = new ArrayList<>();
@@ -53,16 +49,20 @@ public class SetMelodicSynthEvent implements IEventChain {
                 pTypeToChords.put(progressionUnit.getType(), chords);
             }
 
-            Map<ProgressionType, String> pTypeToMelody = new HashMap<>();
+            Map<ProgressionType, List<String>> pTypeToMelody = new HashMap<>();
             for (Map.Entry<ProgressionType, List<HiveChord>> entry : pTypeToChords.entrySet()) {
-                String jFugueMelody = melodydGenerator.generate(entry.getValue());
-                pTypeToMelody.put(entry.getKey(), "T" + queueState.getQueueItem().getBpm() + " " + jFugueMelody);
+                List<String> jFugueMelody = melodydGenerator.generate(entry.getValue(), numOfAltMelodies);List<String> melodies = new ArrayList<>();
+                for (String melody: jFugueMelody) {
+                    melodies.add("T" + queueState.getQueueItem().getBpm() + " " + melody);
+                }
+
+                pTypeToMelody.put(entry.getKey(), melodies);
             }
 
             for (ProgressionUnit progressionUnit : queueState.getStructure()) {
                 progressionUnit.addMelodies(pTypeToMelody.get(progressionUnit.getType()));
             }
-        }
+
 
         return queueState;
     }

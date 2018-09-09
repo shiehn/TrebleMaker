@@ -137,12 +137,14 @@ public class ProgressionUnit {
         return melodies;
     }
 
-    public void addMelodies(String melody) {
+    public void addMelodies(List<String> melodies) {
         if(this.melodies == null){
-            melodies = new ArrayList<>();
+            this.melodies = new ArrayList<>();
         }
 
-        this.melodies.add(melody);
+        for(String melody: melodies) {
+            this.melodies.add(melody);
+        }
     }
 
     public String getKey() {

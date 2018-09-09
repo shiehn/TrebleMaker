@@ -152,7 +152,7 @@ public class MidiRender implements IEventChain {
         for(int i=0; i<numOfAltMelodies; i++) {
             String melodicString = "";
             for (ProgressionUnit progressionUnit : queueState.getStructure()) {
-                if (!progressionUnit.getMelodies().get(i).isEmpty()) {
+                if (progressionUnit.getMelodies().get(i) != null) {
                     melodicString = melodicString + progressionUnit.getMelodies().get(i) + " ";
                 }
             }
@@ -162,8 +162,8 @@ public class MidiRender implements IEventChain {
         //2)RENDER PATTERN
 
         for (int i = 0; i < numOfGeneratedMixes; i++) {
-            Application.logger.debug("LOG: jPatternMelodic : " + melodicStrings.get(i));
             for(int j=0; j<numOfAltMelodies; j++) {
+                Application.logger.debug("LOG: jPatternMelodic : " + melodicStrings.get(j));
                 try {
                     Pattern melodicPattern = new Pattern(melodicStrings.get(j));
 

@@ -99,7 +99,7 @@ public class MelodyGenerator {
             throw new RuntimeException("cannot decode ROOTNOTE: " + rootNote);
     }
 
-    public String generate(List<HiveChord> chords) {
+    public List<String> generate(List<HiveChord> chords, int numOfAltMelodies) {
 
         String keyAndChords = "";
 
@@ -163,16 +163,25 @@ public class MelodyGenerator {
 
         ChordMelodyDecoder decoder = new ChordMelodyDecoder(config);
 
+        List<String> validSamples = new ArrayList<>();
+
         String validString = "";
         for(int i=0; i<samples.length; i++){
             validString = decoder.extractValidMelody(samples[i]);
             if(!validString.contains("invalid")){
-                break;
+                validSamples.add(validString);
             }
         }
 
-        String jFugueStr = decoder.decodeMelody(validString, decoder.getKey(validString));
-        return jFugueStr;
+        List<String> jFugueStrs = new ArrayList<>();
+
+        for (int i=0; i<numOfAltMelodies; i++) {
+            validString = validSamples.get(new Random().nextInt(validSamples.size()));
+            String jFugueStr = decoder.decodeMelody(validString, decoder.getKey(validString));
+            jFugueStrs.add(jFugueStr);
+        }
+
+        return jFugueStrs;
     }
 
     private static String[] sampleCharactersFromNetwork(String keyAndChords, String initialization, MultiLayerNetwork net,

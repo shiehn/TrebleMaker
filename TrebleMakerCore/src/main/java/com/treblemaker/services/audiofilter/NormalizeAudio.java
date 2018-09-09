@@ -32,6 +32,9 @@ public class NormalizeAudio {
     @Autowired
     public AppConfigs appConfigs;
 
+    @Value("${num_of_alt_melodies}")
+    Integer numOfAltMelodies;
+
     private final double TARGET_RANGE = 0.5;
 
     private final double TARGET_VOLUME = 0.0;
@@ -458,59 +461,33 @@ public class NormalizeAudio {
         int numberOfTrackVariations = 3;
 
         for (int i = 0; i < numOfGeneratedMixes; i++) {
-
             for (int j = 1; j < numberOfTrackVariations + 1; j++) {
+                for(int k=0; k<numOfAltMelodies; k++) {
 
-                //1) GET THE NAME OF THE FILE and hold onto it
-                String mixFileNameProcessing = mixFileName + "_" + i + "_" + j + "_processing.mp3";
+                    String mixFileNameProcessing = mixFileName + "_" + i + "_" + j + "_processing.mp3";
+                    String mixFileNameCopy = mixFileName + "_" + i + "_" + j + ".mp3";
 
-                String mixFileNameCopy = mixFileName + "_" + i + "_" + j + ".mp3";
+                    if(k > 0) {
+                        mixFileNameProcessing = mixFileName + "_" + i + "_" + j + "_alt_melody_processing.mp3";
+                        mixFileNameCopy = mixFileName + "_" + i + "_" + j + "_alt_melody.mp3";
+                    }
 
-                //2) RENAME THE original FILE ..
-                new File(mixFilePath + "/" + mixFileNameCopy).renameTo(new File(mixFilePath + "/" + mixFileNameProcessing));
+                    new File(mixFilePath + "/" + mixFileNameCopy).renameTo(new File(mixFilePath + "/" + mixFileNameProcessing));
 
-                //3) NORMALIZE THE FILE & SAVE AS ORIGINAL NAME ..
+                    double maxVolume = audioUtils.getMaxVolume(new File(mixFilePath + "/" + mixFileNameProcessing));
 
-                //GET the MEAN volume
-                double maxVolume = audioUtils.getMaxVolume(new File(mixFilePath + "/" + mixFileNameProcessing));
+                    double difference = getDifference(maxVolume);
 
-                //GET THE DIFFERNCE IN TARGET ..
-                double difference = getDifference(maxVolume);
+                    adjustVolumeLevel(mixFilePath + "/" + mixFileNameProcessing, mixFilePath + "/" + mixFileNameCopy, difference);
 
-                //adjust the volume
-                adjustVolumeLevel(mixFilePath + "/" + mixFileNameProcessing, mixFilePath + "/" + mixFileNameCopy, difference);
+                    //TODO DELETE THE ORIGINAL
+                    File fileToDelete = new File(mixFilePath + "/" + mixFileNameProcessing);
+                    try {
+                        FileStructure.deleteFile(fileToDelete);
+                    } catch (Exception e) {
+                        Application.logger.debug("LOG:", "ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
+                    }
 
-                //TODO DELETE THE ORIGINAL
-                File fileToDelete = new File(mixFilePath + "/" + mixFileNameProcessing);
-                try {
-                    FileStructure.deleteFile(fileToDelete);
-                }catch (Exception e){
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    Application.logger.debug("LOG:","ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
                 }
             }
         }

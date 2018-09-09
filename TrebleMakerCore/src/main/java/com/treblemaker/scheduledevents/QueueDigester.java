@@ -410,7 +410,6 @@ public class QueueDigester implements IQueueDigester {
             RenderTask renderLowTask = new RenderTask(queueItem.getMidiFilePath() + "/" + i + appConfigs.COMP_LOW_FILENAME, queueItem.getAudioPartFilePath() + "/" + i + appConfigs.COMP_LOW_AUDIO_FILENAME, AudioRender.Spectrum.LOW, selectedSynthTemplate, queueItem.getBpm());
             RenderTask renderMidAltLowTask = new RenderTask(queueItem.getMidiFilePath() + "/" + i + appConfigs.COMP_ALT_LOW_FILENAME, queueItem.getAudioPartFilePath() + "/" + i + appConfigs.COMP_ALT_LOW_AUDIO_FILENAME, AudioRender.Spectrum.ALT_LOW, selectedSynthTemplate, queueItem.getBpm());
 
-
             collection.add(renderHiTask);
             collection.add(renderHiAltTask);
             collection.add(renderMidTask);
@@ -593,7 +592,8 @@ public class QueueDigester implements IQueueDigester {
         for (int i = 0; i < numOfGeneratedMixes; i++) {
             String melodyAlt = "";
             if(numOfAltMelodies > 1){
-                melodyAlt = queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav", "_0.wav");
+                int indexOfAltMel = 1; //TODO THIS IS BULL SHIT- ITS HARD CODED TO ONE ALT MELODY - IT SHOULD INTERATE THE NUMBER OF ALT MELODIES
+                melodyAlt = queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav", "_" + indexOfAltMel + ".wav");
             }
 
             audioMixer.createMixes(
