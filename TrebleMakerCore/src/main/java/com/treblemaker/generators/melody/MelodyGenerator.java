@@ -149,7 +149,7 @@ public class MelodyGenerator {
         int exampleLength = 355;
         Random rng = new Random(12345);
         int nCharactersToSample = 320;
-        int nSamplesToGenerate = 20;
+        int nSamplesToGenerate = 30;
 
         try {
             if(characterIterator == null) {
