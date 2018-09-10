@@ -46,18 +46,17 @@ public class PackagingService {
         File src_snare = (Paths.get(queueItem.getStereoPartsFilePath(), appConfigs.SNARE_FILENAME)).toFile();
         File src_hat = (Paths.get(queueItem.getStereoPartsFilePath(), appConfigs.HAT_FILENAME)).toFile();
 
-        List<File> filesToTar = Arrays.asList(
-                src_metadata,
-                src_hi,
-                src_mid,
-                src_low,
-                src_kick_midi,
-                src_snare_midi,
-                src_hat_midi,
-                src_kick,
-                src_snare,
-                src_hat
-        );
+        List<File> filesToTar = new ArrayList<>();
+        filesToTar.add(src_metadata);
+        filesToTar.add(src_hi);
+                filesToTar.add(src_mid);
+                        filesToTar.add(src_low);
+                                filesToTar.add(src_kick_midi);
+                                        filesToTar.add(src_snare_midi);
+                                                filesToTar.add(src_hat_midi);
+                                                        filesToTar.add(src_kick);
+                                                                filesToTar.add(src_snare);
+                                                                        filesToTar.add(src_hat);
 
         for (File melody:melodies) {
             filesToTar.add(melody);
@@ -82,7 +81,7 @@ public class PackagingService {
         try {
             TAR.compress(tarTarget,filesToTar.toArray(new File[filesToTar.size()]));
         } catch (IOException e) {
-            Application.logger.debug("LOG: ERROR : FAILED TO PACKAGE TAR !!!");
+            Application.logger.debug("LOG: ERROR : FAILED TO PACKAGE TAR !!! " + e);
         }
     }
 }

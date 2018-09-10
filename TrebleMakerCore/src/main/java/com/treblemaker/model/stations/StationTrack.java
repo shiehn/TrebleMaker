@@ -34,6 +34,9 @@ public class StationTrack {
     @Column(name = "api_version")
     private int apiVersion;
 
+    @Column(name = "selected_melody")
+    private Integer selectedMelody;
+
     @ManyToOne
     @JoinColumn(name = "station_id", insertable = false, updatable = false)
     private Station station;
@@ -117,4 +120,13 @@ public class StationTrack {
     public void setApiVersion(int apiVersion) {
         this.apiVersion = apiVersion;
     }
+
+    public Integer getSelectedMelody() {
+        return selectedMelody;
+    }
+
+    public void setSelectedMelody(Integer selectedMelody) {
+        this.selectedMelody = selectedMelody;
+    }
 }
+

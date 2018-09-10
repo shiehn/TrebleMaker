@@ -29,7 +29,6 @@ public class QueueItemCustomDal implements IQueueItemCustomDal {
         Iterable<QueueItem> queueItems = queueItemsDal.findAll();
 
         for(QueueItem queueItem : queueItems){
-
             if(queueItem.getJobStatus() == 0 && queueItem.isRefactor() == false){
                 return queueItem;
             }

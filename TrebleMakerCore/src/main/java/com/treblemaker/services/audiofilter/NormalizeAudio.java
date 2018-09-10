@@ -457,39 +457,46 @@ public class NormalizeAudio {
     }
 
     public void normalizeMix(String mixFilePath, String mixFileName, int numOfGeneratedMixes) throws InterruptedException, IOException {
-
         int numberOfTrackVariations = 3;
 
         for (int i = 0; i < numOfGeneratedMixes; i++) {
             for (int j = 1; j < numberOfTrackVariations + 1; j++) {
-                for(int k=0; k<numOfAltMelodies; k++) {
+                if(j == 1){ // only MIX one has alt melodies
+                    for(int k=0; k<numOfAltMelodies; k++) {
+                        String mixFileNameProcessing = mixFileName + "_" + i + "_" + j + "_processing.mp3";
+                        String mixFileNameCopy = mixFileName + "_" + i + "_" + j + ".mp3";
 
+                        if(k > 0) {
+                            mixFileNameProcessing = mixFileName + "_" + i + "_" + j + "_alt_melody_processing.mp3";
+                            mixFileNameCopy = mixFileName + "_" + i + "_" + j + "_alt_melody.mp3";
+                        }
+
+                        performNormalize(mixFilePath, mixFileNameProcessing, mixFileNameCopy);
+                    }
+                } else {
                     String mixFileNameProcessing = mixFileName + "_" + i + "_" + j + "_processing.mp3";
                     String mixFileNameCopy = mixFileName + "_" + i + "_" + j + ".mp3";
 
-                    if(k > 0) {
-                        mixFileNameProcessing = mixFileName + "_" + i + "_" + j + "_alt_melody_processing.mp3";
-                        mixFileNameCopy = mixFileName + "_" + i + "_" + j + "_alt_melody.mp3";
-                    }
-
-                    new File(mixFilePath + "/" + mixFileNameCopy).renameTo(new File(mixFilePath + "/" + mixFileNameProcessing));
-
-                    double maxVolume = audioUtils.getMaxVolume(new File(mixFilePath + "/" + mixFileNameProcessing));
-
-                    double difference = getDifference(maxVolume);
-
-                    adjustVolumeLevel(mixFilePath + "/" + mixFileNameProcessing, mixFilePath + "/" + mixFileNameCopy, difference);
-
-                    //TODO DELETE THE ORIGINAL
-                    File fileToDelete = new File(mixFilePath + "/" + mixFileNameProcessing);
-                    try {
-                        FileStructure.deleteFile(fileToDelete);
-                    } catch (Exception e) {
-                        Application.logger.debug("LOG:", "ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
-                    }
-
+                    performNormalize(mixFilePath, mixFileNameProcessing, mixFileNameCopy);
                 }
             }
+        }
+    }
+
+    private void performNormalize(String mixFilePath, String mixFileNameProcessing, String mixFileNameCopy) throws InterruptedException {
+        new File(mixFilePath + "/" + mixFileNameCopy).renameTo(new File(mixFilePath + "/" + mixFileNameProcessing));
+
+        double maxVolume = audioUtils.getMaxVolume(new File(mixFilePath + "/" + mixFileNameProcessing));
+
+        double difference = getDifference(maxVolume);
+
+        adjustVolumeLevel(mixFilePath + "/" + mixFileNameProcessing, mixFilePath + "/" + mixFileNameCopy, difference);
+
+        File fileToDelete = new File(mixFilePath + "/" + mixFileNameProcessing);
+        try {
+            FileStructure.deleteFile(fileToDelete);
+        } catch (Exception e) {
+            Application.logger.debug("LOG:", "ERROR!! NOT ABLE TO DELETE: " + fileToDelete.getAbsolutePath());
         }
     }
 

@@ -628,10 +628,6 @@ public class QueueDigester implements IQueueDigester {
 
         QueueItem queueItemDb = queueItemCustomDal.getQueueItemById(Long.toString(queueItem.getId()));
 
-        //TODO WHY THE FUCK IS THIS HERE???
-        queueItemCustomDal.setQueueItemComplete(Long.toString(queueItemDb.getId()), songName);
-        //TODO WHY THE FUCK IS THIS HERE???
-
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         Application.logger.debug("LOG: PHASE : CREATE METADATA");
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
@@ -807,6 +803,10 @@ public class QueueDigester implements IQueueDigester {
 
         executorPool.shutdown();
         */
+
+        //TODO WHY THE FUCK IS THIS HERE???
+        queueItemCustomDal.setQueueItemComplete(Long.toString(queueItemDb.getId()), songName);
+        //TODO WHY THE FUCK IS THIS HERE???
 
         Application.logger.debug("LOG: *** COMPLETELY FINISHED :) ***");
 

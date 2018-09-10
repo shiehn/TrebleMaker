@@ -98,21 +98,21 @@ public class ScheduledTasks {
 
         //UPLOAD any completed tracks to stations
         //ALSO UPLOADS TAR FILES
-//        stationUploadService.fetchAndUploadTrack();
+        stationUploadService.fetchAndUploadTrack();
 
         //SYNC COMPLETED TRACKS WITH FEED BACK INTERFACE ...
-//        File folder = new File(appConfigs.getFinalMixOutput());
-//        if(folder.exists()) {
-//            File[] listOfFiles = folder.listFiles();
-//
-//            for (File file : listOfFiles) {
-//                if (file.isFile()) {
-//                    feedBackFileSync.sync(file);
-//                }
-//            }
-//        }else{
-//            Application.logger.debug("LOG: FINAL MIX DIRECTORY DOES NOT EXIST");
-//        }
+        File folder = new File(appConfigs.getFinalMixOutput());
+        if(folder.exists()) {
+            File[] listOfFiles = folder.listFiles();
+
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    feedBackFileSync.sync(file);
+                }
+            }
+        }else{
+            Application.logger.debug("LOG: FINAL MIX DIRECTORY DOES NOT EXIST");
+        }
 
         if (GlobalState.getInstance().isHealthMonitorInProgress()) {
             Application.logger.debug("LOG: HEALTH MONITOR STILL ACTIVE !!");

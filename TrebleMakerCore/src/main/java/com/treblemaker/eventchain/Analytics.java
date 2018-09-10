@@ -29,6 +29,9 @@ public class Analytics implements IAnalyticsEvent {
     @Value("${bypass_analytics}")
     boolean bypassAnalytics;
 
+    @Value("${num_of_alt_melodies}")
+    Integer numOfAltMelodies;
+
     @Autowired
     private ICompositionDal compositionDal;
 
@@ -75,6 +78,7 @@ public class Analytics implements IAnalyticsEvent {
         Composition composition = new Composition();
         composition.setCompositionUid(queueState.getQueueItem().getQueueItemId());
         composition.setDate(new SimpleDateFormat().format(new Date()));
+        composition.setNumOfMelodies(numOfAltMelodies);
 
         compositionDal.save(composition);
 

@@ -18,6 +18,9 @@ public class Composition {
     @Column(name = "date")
     private String date;
 
+    @Column(name = "num_of_melodies")
+    private Integer numOfMelodies;
+
     @OneToMany(mappedBy = "compositionId", fetch = FetchType.EAGER)
     private List<CompositionTimeSlot> compositionTimeSlots;
 
@@ -56,5 +59,13 @@ public class Composition {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public Integer getNumOfMelodies() {
+        return numOfMelodies;
+    }
+
+    public void setNumOfMelodies(Integer numOfMelodies) {
+        this.numOfMelodies = numOfMelodies;
     }
 }
