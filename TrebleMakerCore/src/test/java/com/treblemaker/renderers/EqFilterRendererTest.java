@@ -3,6 +3,7 @@ package com.treblemaker.renderers;
 import com.treblemaker.SpringConfiguration;
 import junit.framework.TestCase;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class EqFilterRendererTest extends TestCase {
         Files.copy(new File(testSourceFile).toPath(), new File(sourcePath).toPath());
     }
 
+    @Ignore
     @Test
     public void shouldRenderMelodyWithReverb(){
         final Integer frequencyCutoff = 1000;
