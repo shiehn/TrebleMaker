@@ -25,4 +25,4 @@ https://github.com/shiehn/TrebleMakerDocker
     * this Angular web GUI offers a way to 'rate' the generated audio files and decide which of files will be uploaded to TrebleMakerWeb
 
 * **TrebleMakerWeb**
-    * this Angular web GUI offers a user a way to listen and download the generated audio from the CDN (currently S3) https://github.com/shiehn/TrebleMakerWeb    
+    * this Angular web GUI offers a user a way to render, listen and download the generated midi https://github.com/shiehn/TrebleMakerClientSynths.git    
