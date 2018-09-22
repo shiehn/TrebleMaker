@@ -13,6 +13,7 @@ import com.treblemaker.utils.CloneUtils;
 import com.treblemaker.weighters.enums.WeightClass;
 import com.treblemaker.weighters.rhythmweighter.RhythmWeighter;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -102,6 +103,7 @@ public class HarmonicLoopWeighterTest extends TestBase {
         return Arrays.asList(progressionUnitOne, progressionUnitTwo);
     }
 
+    @Ignore
     @Test
     public void should_set_harmonicLoopWeights_for_bar() throws CloneNotSupportedException {
 
@@ -230,6 +232,7 @@ public class HarmonicLoopWeighterTest extends TestBase {
                 .getThemeWeight()).isEqualTo(WeightClass.GOOD);
     }
 
+    @Ignore
     @Test
     public void should_setTimeSeriesWeights() throws CloneNotSupportedException {
 

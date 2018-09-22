@@ -2,6 +2,7 @@ package com.treblemaker.generators;
 
 import com.treblemaker.SpringConfiguration;
 import junit.framework.TestCase;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class VolumeLevelGeneratorTest extends TestCase {
         assertThat(maps.size()).isEqualTo(volumeLevelGenerator.NUM_OF_MIXES);
     }
 
+    @Ignore
     @Test
     public void generatePotentialMix_shouldHave17Keys() {
         final Map<String, Double> maps = volumeLevelGenerator.generatePotentialMix();

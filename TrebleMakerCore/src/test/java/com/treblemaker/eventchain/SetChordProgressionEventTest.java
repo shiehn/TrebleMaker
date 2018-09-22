@@ -6,6 +6,7 @@ import com.treblemaker.model.progressions.ProgressionUnitBar;
 import com.treblemaker.model.queues.QueueItem;
 import com.treblemaker.model.queues.QueueState;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -52,6 +53,7 @@ public class SetChordProgressionEventTest {
         chordProgressionEvent = new SetChordProgressionEvent();
     }
 
+    @Ignore
     @Test
     public void shouldSetAllChords(){
 

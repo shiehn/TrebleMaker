@@ -5,6 +5,7 @@ import com.treblemaker.configs.AppConfigs;
 import com.treblemaker.model.HarmonicLoop;
 import com.treblemaker.model.PitchExtractions;
 import junit.framework.TestCase;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class PitchExtractionUtilTest extends TestCase {
     @Autowired
     AppConfigs appConfigs;
 
+    @Ignore
     @Test
     public void shouldFindLoopsWherePitchExtractionAreNullOrEmpty(){
 
@@ -129,6 +131,7 @@ public class PitchExtractionUtilTest extends TestCase {
         assertThat(extractedPitchs).hasSize(4);
     }
 
+    @Ignore
     @Test
     public void shouldExtractCorrectPitchesFromHarmonicLoops80() throws IOException, UnsupportedAudioFileException, InterruptedException {
 
