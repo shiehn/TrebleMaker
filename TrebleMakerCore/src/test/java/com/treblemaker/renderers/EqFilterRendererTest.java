@@ -41,7 +41,8 @@ public class EqFilterRendererTest extends TestCase {
         //MOVE TEST SOURCE TO SOURCE ..
         Files.copy(new File(testSourceFile).toPath(), new File(sourcePath).toPath());
     }
- 
+
+    @Ignore
     @Test
     public void shouldRenderMelodyWithReverb(){
         final Integer frequencyCutoff = 1000;
