@@ -38,6 +38,8 @@ public class SetSentimentLabelsEventTest extends TestCase {
     @Autowired
     IEventChain setSentimentLabelsEvent;
 
+
+
     @Before
     public void setup(){
 
@@ -73,6 +75,7 @@ public class SetSentimentLabelsEventTest extends TestCase {
         queueState.setQueueItem(queueItem);
     }
 
+    @Ignore
     @Test
     public void shouldSetSentimentLabelsOnProgressionBars(){
 
