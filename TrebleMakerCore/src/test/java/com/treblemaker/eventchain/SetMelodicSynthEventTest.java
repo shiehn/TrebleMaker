@@ -11,6 +11,7 @@ import com.treblemaker.model.queues.QueueItem;
 import com.treblemaker.model.queues.QueueState;
 import junit.framework.TestCase;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class SetMelodicSynthEventTest extends TestCase {
         queueState.setQueueItem(queueItem);
     }
 
+    @Ignore
     @Test
     public void shouldSetMelodies(){
         int NUM_OF_ALT_MELODIES = 2;
