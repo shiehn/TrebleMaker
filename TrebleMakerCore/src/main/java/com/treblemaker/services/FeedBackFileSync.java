@@ -52,6 +52,7 @@ public class FeedBackFileSync {
         ResponseEntity<String> response = restTemplate.exchange(apiUploadEndpoint,
                 HttpMethod.POST, requestEntity, String.class);
 
+        System.out.println("request : " + requestEntity.getHeaders());
         System.out.println("response status: " + response.getStatusCode());
         System.out.println("response body: " + response.getBody());
     }

@@ -7,6 +7,7 @@ import com.treblemaker.utils.interfaces.IAudioUtils;
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+@Ignore
 @RunWith(SpringRunner.class)
 @ComponentScan({"com.treblemaker"})
 @SpringBootTest(classes = SpringConfiguration.class)

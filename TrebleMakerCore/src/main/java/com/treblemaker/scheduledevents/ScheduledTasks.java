@@ -92,7 +92,7 @@ public class ScheduledTasks {
 
     @Scheduled(fixedRateString = "${queue_scheduled_interval}", initialDelayString = "${queue_scheduled_start_delay}")
     public void startQueuedEvent() throws Exception {
-        Application.logger.debug("LOG: ******************************************");
+         Application.logger.debug("LOG: ******************************************");
         Application.logger.debug("LOG: QUEUE EVENT FIRED ************************");
         Application.logger.debug("LOG: ******************************************");
 

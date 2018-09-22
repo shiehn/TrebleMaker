@@ -9,6 +9,7 @@ import org.jfugue.theory.Chord;
 import org.jfugue.theory.Note;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 
 import static com.treblemaker.model.progressions.ProgressionUnit.BarCount.FOUR;
 import static org.assertj.core.api.Assertions.assertThat;
-
+@Ignore
 @RunWith(SpringRunner.class)
 @ComponentScan({"com.treblemaker"})
 @SpringBootTest(classes = SpringConfiguration.class)

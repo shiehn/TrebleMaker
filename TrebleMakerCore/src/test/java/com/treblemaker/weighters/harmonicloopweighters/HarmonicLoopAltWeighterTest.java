@@ -10,6 +10,7 @@ import com.treblemaker.model.progressions.ProgressionUnitBar;
 import com.treblemaker.selectors.interfaces.ITemplateSelector;
 import junit.framework.TestCase;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ machinelearning_endpoints=${TM_API_URL}
 use_only_first_machinelearn_endpoint = true
      */
 
+@Ignore
 @RunWith(SpringRunner.class)
 @ComponentScan({"com.treblemaker", "com.treblemaker.dal"})
 @SpringBootTest(classes = SpringConfiguration.class)
