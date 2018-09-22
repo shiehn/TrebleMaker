@@ -60,6 +60,9 @@ public class QueueDigester implements IQueueDigester {
     @Autowired
     private FileStructure fileStructure;
 
+    @Value("${tm.app.root}")
+    String appRoot;
+
     @Override
     public QueueItem digest(QueueItem queueItem) throws Exception {
 
@@ -75,6 +78,7 @@ public class QueueDigester implements IQueueDigester {
         Application.logger.debug("LOG: THREAD A THREAD A THREAD A THREAD A THREAD A THREAD A THREAD A THREAD A THREAD A ");
 
         QueueState queueState = new QueueState();
+        queueState.setAppRoot(appRoot);
         queueState.setQueueItem(queueItem);
         queueState.setDataSource(queueHelpers.getSourceData());
 

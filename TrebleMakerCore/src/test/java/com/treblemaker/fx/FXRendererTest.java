@@ -44,7 +44,6 @@ public class FXRendererTest extends TestCase {
         Files.copy(new File(TEST_SOURCE_FILE).toPath(), new File(SOURCE_PATH).toPath());
     }
 
-    @Ignore
     @Test
     public void shouldRenderMelodyWithReverb(){
         fxRenderer.renderReverbFx(SOURCE_PATH, TARGETPATH);

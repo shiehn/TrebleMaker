@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class SetChordProgressionEvent implements IEventChain {
 
-    ChordProgressionGenerator chordProgressionGenerator = new ChordProgressionGenerator();
+    //ChordProgressionGenerator chordProgressionGenerator = new ChordProgressionGenerator();
 
     @Override
     public QueueState set(QueueState queueState) {
@@ -30,13 +30,13 @@ public class SetChordProgressionEvent implements IEventChain {
         HiveChord chordOne = chords.get((new Random().nextInt(chords.size())));
         HiveChord chordTwo = chords.get((new Random().nextInt(chords.size())));
 
-        List<String> verseChords = getChordForProgressionUnit(encodedKey, chordOne, chordTwo);
+        List<String> verseChords = getChordForProgressionUnit(encodedKey, chordOne, chordTwo, queueState.getAppRoot());
         List<HiveChord> verseHiveChords = verseChords.stream().map(c -> new HiveChord(c)).collect(Collectors.toList());
 
-        List<String> chorusChords = getChordForProgressionUnit(encodedKey, new HiveChord(verseChords.get(2)), new HiveChord(verseChords.get(3)));
+        List<String> chorusChords = getChordForProgressionUnit(encodedKey, new HiveChord(verseChords.get(2)), new HiveChord(verseChords.get(3)), queueState.getAppRoot());
         List<HiveChord> chorusHiveChords = chorusChords.stream().map(c -> new HiveChord(c)).collect(Collectors.toList());
 
-        List<String> bridgeChords = getChordForProgressionUnit(encodedKey, new HiveChord(chorusChords.get(2)), new HiveChord(chorusChords.get(3)));
+        List<String> bridgeChords = getChordForProgressionUnit(encodedKey, new HiveChord(chorusChords.get(2)), new HiveChord(chorusChords.get(3)), queueState.getAppRoot());
         List<HiveChord> bridgeHiveChords = bridgeChords.stream().map(c -> new HiveChord(c)).collect(Collectors.toList());
 
         for(ProgressionUnit progressionUnit : queueState.getStructure()){
@@ -66,7 +66,7 @@ public class SetChordProgressionEvent implements IEventChain {
         return queueState;
     }
 
-    public List<String> getChordForProgressionUnit(String key, HiveChord chordOne, HiveChord chordTwo){
+    public List<String> getChordForProgressionUnit(String key, HiveChord chordOne, HiveChord chordTwo, String appRoot){
         ChordMelodyDecoder decoder = new ChordMelodyDecoder(null);
         KeyExtractor keyExtractor = new KeyExtractor();
 
@@ -78,6 +78,7 @@ public class SetChordProgressionEvent implements IEventChain {
         String chordTypeTwo = chordTwo.getChordName().replace(chordTwo.extractRoot(chordTwo.getChordName()), "");
         String chordTypeTwoEncoded = decoder.encodeChordType(chordTypeTwo);
 
+        ChordProgressionGenerator chordProgressionGenerator = new ChordProgressionGenerator(appRoot);
         List<List<String>> progressions = chordProgressionGenerator.getChords(key,
                 (chordRootOne + chordTypeOneEncoded),
                 (chordRootTwo + chordTypeTwoEncoded));

@@ -73,7 +73,6 @@ public class SetSentimentLabelsEventTest extends TestCase {
         queueState.setQueueItem(queueItem);
     }
 
-    @Ignore
     @Test
     public void shouldSetSentimentLabelsOnProgressionBars(){
 

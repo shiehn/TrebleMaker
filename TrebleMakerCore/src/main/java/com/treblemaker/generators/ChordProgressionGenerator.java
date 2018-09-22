@@ -8,19 +8,20 @@ import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class ChordProgressionGenerator {
-    String savedLocation = "/TrebleMaker/TrebleMakerCore/trained-chords-model.zip";
+    String savedLocation = "/TrebleMakerCore/trained-chords-model.zip";
     MultiLayerNetwork restored = null;
     CharacterIterator characterIterator = null;
 
-    public ChordProgressionGenerator() {
+    public ChordProgressionGenerator(String appRoot) {
         try {
-            restored = ModelSerializer.restoreMultiLayerNetwork(savedLocation);
-            System.out.println("MODEL RESTORED!: " + savedLocation);
+            restored = ModelSerializer.restoreMultiLayerNetwork(Paths.get(appRoot, savedLocation).toString());
+            System.out.println("MODEL RESTORED!: " + Paths.get(appRoot, savedLocation).toString());
         } catch (Exception e) {
             System.out.println("COULD NOT LOAD SAVED MODEL");
         }

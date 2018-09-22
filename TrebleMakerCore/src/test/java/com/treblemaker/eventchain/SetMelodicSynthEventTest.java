@@ -64,7 +64,6 @@ public class SetMelodicSynthEventTest extends TestCase {
         queueState.setQueueItem(queueItem);
     }
 
-    @Ignore
     @Test
     public void shouldSetMelodies(){
         int NUM_OF_ALT_MELODIES = 2;

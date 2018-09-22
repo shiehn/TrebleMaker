@@ -78,6 +78,8 @@ import javax.sql.DataSource;
         "com.treblemaker.machinelearning", "com.treblemaker.weighters", "com.treblemaker", "com.treblemaker.machinelearning"})
 public class SpringConfiguration {
 
+    @Value("${tm.app.root}")
+    String appRoot;
     @Value("${bypass_seqence_ratings}")
     boolean bypassSeqenceRatings;
     @Value("${cache_key_hive_cache}")
@@ -353,7 +355,7 @@ public class SpringConfiguration {
     @Bean(name = "setMelodicSynthEvent")
     public IEventChain setMelodicSynthEvent() {
         Config config = new Config(true);
-        MelodyGenerator melodyGenerator = new MelodyGenerator(config);
+        MelodyGenerator melodyGenerator = new MelodyGenerator(config, appRoot);
 
         return new SetMelodicSynthEvent(melodyGenerator, melodicExtractor, bachChoraleDal);
     }

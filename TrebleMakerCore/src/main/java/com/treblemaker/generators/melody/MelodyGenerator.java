@@ -7,24 +7,25 @@ import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class MelodyGenerator {
 
-    String savedLocation = "/TrebleMaker/TrebleMakerCore/trained-melody-model.zip";
+    String savedLocation = "/TrebleMakerCore/trained-melody-model.zip";
 
     MultiLayerNetwork restored = null;
     Config config;
     CharacterIterator characterIterator = null;
 
-    public MelodyGenerator(Config config) {
+    public MelodyGenerator(Config config, String appRoot) {
 
         this.config = config;
         try {
-            restored = ModelSerializer.restoreMultiLayerNetwork(savedLocation);
-            System.out.println("MODEL RESTORED!: " + savedLocation);
+            restored = ModelSerializer.restoreMultiLayerNetwork(Paths.get(appRoot, savedLocation).toString());
+            System.out.println("MODEL RESTORED!: " + Paths.get(appRoot, savedLocation).toString());
         } catch (Exception e) {
             System.out.println("COULD NOT LOAD SAVED MODEL");
         }

@@ -9,6 +9,8 @@ import java.util.List;
 
 public class QueueState {
 
+    private String appRoot;
+
     private QueueItem queueItem;
 
     private SourceData dataSource;
@@ -66,5 +68,13 @@ public class QueueState {
         }
 
         return new ArrayList<>();
+    }
+
+    public String getAppRoot() {
+        return appRoot;
+    }
+
+    public void setAppRoot(String appRoot) {
+        this.appRoot = appRoot;
     }
 }

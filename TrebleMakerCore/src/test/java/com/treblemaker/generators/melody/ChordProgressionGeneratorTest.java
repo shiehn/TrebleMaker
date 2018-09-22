@@ -1,23 +1,37 @@
 package com.treblemaker.generators.melody;
 
+import com.treblemaker.SpringConfiguration;
 import com.treblemaker.generators.ChordProgressionGenerator;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+@RunWith(SpringRunner.class)
+@ComponentScan({"com.treblemaker"})
+@SpringBootTest(classes = SpringConfiguration.class)
+@TestPropertySource(
+        locations = "classpath:application-test.properties")
 public class ChordProgressionGeneratorTest {
     ChordProgressionGenerator chordProgressionGenerator;
 
+    @Value("${tm.app.root}")
+    String appRoot;
+
     @Before
     public void setup(){
-        chordProgressionGenerator = new ChordProgressionGenerator();
+        chordProgressionGenerator = new ChordProgressionGenerator(appRoot);
     }
 
-    @Ignore
     @Test
     public void returnsArrayOfLegitChords(){
 
