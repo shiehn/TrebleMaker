@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="99eec670-ee20-454a-94d4-b1aaa4a3bbda" name="Default" comment="" />
+    <list default="true" id="99eec670-ee20-454a-94d4-b1aaa4a3bbda" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TrebleMakerCore/src/main/java/com/treblemaker/scheduledevents/QueueDigester.java" beforeDir="false" afterPath="$PROJECT_DIR$/TrebleMakerCore/src/main/java/com/treblemaker/scheduledevents/QueueDigester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TrebleMakerCore/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/TrebleMakerCore/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TrebleMakerCore/target/classes/delaytest.wav" beforeDir="false" afterPath="$PROJECT_DIR$/TrebleMakerCore/target/classes/delaytest.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TrebleMakerCore/target/classes/delaytestoutput.wav" beforeDir="false" afterPath="$PROJECT_DIR$/TrebleMakerCore/target/classes/delaytestoutput.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TrebleMakerCore/treblemaker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TrebleMakerCore/treblemaker.iml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,7 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -30,8 +37,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="402" />
-    <option name="y" value="143" />
+    <option name="x" value="588" />
+    <option name="y" value="204" />
     <option name="width" value="1278" />
     <option name="height" value="797" />
   </component>
@@ -43,6 +50,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -54,13 +62,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/TrebleMakerCore" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -154,7 +161,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="402" y="143" width="1278" height="797" extended-state="0" />
+    <frame x="588" y="204" width="1278" height="797" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -168,8 +175,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.4012945" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32943925" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18122977" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -181,6 +187,7 @@
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32943925" />
     </layout>
   </component>
   <component name="UnknownFeatures">
@@ -217,9 +224,6 @@
           <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/server-key.pem">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">

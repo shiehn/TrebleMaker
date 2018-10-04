@@ -7,6 +7,9 @@ import com.treblemaker.model.queues.QueueState;
 import org.jfugue.pattern.Pattern;
 
 public class SetKickMidiPatternEvent implements IEventChain {
+
+    private String KICK_OCTAVE = "0";
+
     @Override
     public QueueState set(QueueState queueState) {
 
@@ -30,7 +33,7 @@ public class SetKickMidiPatternEvent implements IEventChain {
         if (intgr == 0) {
             return "r" + duration;
         } else if (intgr == 1) {
-            return key + duration;
+            return key + KICK_OCTAVE + duration;
         }
 
         throw new RuntimeException("UNEXPECTED KICK PATTERN DURATION");

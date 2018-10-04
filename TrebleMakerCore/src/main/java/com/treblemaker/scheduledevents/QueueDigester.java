@@ -87,11 +87,11 @@ public class QueueDigester implements IQueueDigester {
 
         // THIS REALLY NEED TO BE THOUGHT THROUGH?
         // THIS MEANS IF TEMPO IS LESS THAN 120 it WILL NEVER HAVE A 4 BAR LOOP ????
-        if(queueItem.getBpm() < 120){
+        //if(queueItem.getBpm() < 120){
             processingState.setProcessingPattern(ProcessingPattern.TWO_BAR);
-        }else {
-            processingState.setProcessingPattern(ProcessingPattern.FOUR_BAR);
-        }
+        //}else {
+        //    processingState.setProcessingPattern(ProcessingPattern.FOUR_BAR);
+        //}
 
         queueState.setProcessingState(processingState);
         queueState = analyticsEvent.initAnalytics(queueState);
