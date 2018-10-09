@@ -24,6 +24,12 @@ public class MidiWeighter implements IMidiWeighter {
     private boolean bypassArpeggioVerticalRating;
     private ArpeggioHelpers arpeggioHelpers;
 
+    @Value("${api.user}")
+    String apiUser;
+
+    @Value("${api.password}")
+    String apiPassword;
+
     @Autowired
     public MidiWeighter(@Value("${bypass_arpeggio_vertical_rating}") boolean bypassArpeggioVerticalRating){
 
@@ -121,7 +127,7 @@ public class MidiWeighter implements IMidiWeighter {
         Application.logger.debug("LOG: " + url + "/classify/arpeggio?arpeggio=" + arpeggioInputs);
 
         HttpUtils httpUtils = new HttpUtils();
-        String response = httpUtils.sendGet(url + "/classify/arpeggio?arpeggio=" + arpeggioInputs);
+        String response = httpUtils.sendGet(url + "/classify/arpeggio?arpeggio=" + arpeggioInputs,   apiUser,   apiPassword);
 
         WeightClass weightClass = arpeggioHelpers.stringToWeight(response);
         Application.logger.debug("LOG: Arpeggio_WeightClass=" + weightClass);

@@ -18,9 +18,9 @@ public class HttpUtils {
         return sendGet(url, null, null, timeout);
     }
 
-    public String sendGet(String url) {
-        return sendGet(url, null, null, DEFAULT_TIMEOUT);
-    }
+//    public String sendGet(String url) {
+//        return sendGet(url, null, null, DEFAULT_TIMEOUT);
+//    }
 
     public String sendGet(String url, String username, String password) {
         return sendGet(url, username, password, DEFAULT_TIMEOUT);

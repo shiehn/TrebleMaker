@@ -12,9 +12,13 @@ import java.util.Map;
 public class VolumeLevelClassifier {
 
     private boolean bypassRatings;
+    private String apiUser;
+    private String apiPassword;
 
-    public VolumeLevelClassifier(boolean bypassRatings) {
+    public VolumeLevelClassifier(boolean bypassRatings, String apiUser, String apiPassword) {
         this.bypassRatings = bypassRatings;
+        this.apiUser = apiUser;
+        this.apiPassword = apiPassword;
     }
 
     public WeightClass classify(Map<String, Double> potentialMix) {
@@ -54,7 +58,7 @@ public class VolumeLevelClassifier {
 
         String url = LoadBalancer.getInstance().getUrl() + "/classify/volume" + requestParams.toString();
         HttpUtils httpUtils = new HttpUtils();
-        String classResult = httpUtils.sendGet(url);
+        String classResult = httpUtils.sendGet(url,   apiUser,   apiPassword);
 
         Application.logger.debug("LOG: RATING_VOLUME as : " + classResult);
 

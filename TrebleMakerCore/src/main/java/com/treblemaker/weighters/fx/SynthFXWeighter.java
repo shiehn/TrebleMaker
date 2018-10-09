@@ -10,6 +10,7 @@ import com.treblemaker.model.progressions.ProgressionUnitBar;
 import com.treblemaker.model.queues.QueueState;
 import com.treblemaker.weighters.interfaces.ISynthFXWeighter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -24,6 +25,12 @@ public class SynthFXWeighter implements ISynthFXWeighter {
 
     private DurationAnalysis durationAnalysis;
     private boolean bypassSynthFXRating;
+
+    @Value("${api.user}")
+    String apiUser;
+
+    @Value("${api.password}")
+    String apiPassword;
 
     @Autowired
     public SynthFXWeighter(DurationAnalysis durationAnalysis, boolean bypassSynthFXRating) {
@@ -50,7 +57,7 @@ public class SynthFXWeighter implements ISynthFXWeighter {
                             progressionUnitBar.getHiSynthId().get(variationIndex),
                             progressionUnitBar,
                             durationAnalysis,
-                            bypassSynthFXRating);
+                            bypassSynthFXRating, apiUser, apiPassword);
 
                     taskCollection.add(synthFXWeightTask);
                 }

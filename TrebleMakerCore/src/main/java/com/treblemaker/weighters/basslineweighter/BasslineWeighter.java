@@ -4,6 +4,7 @@ import com.treblemaker.Application;
 import com.treblemaker.factory.ExecutorPoolFactory;
 import com.treblemaker.model.bassline.BasslineWithRating;
 import com.treblemaker.model.progressions.ProgressionUnitBar;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,6 +20,12 @@ public class BasslineWeighter implements IBasslineWeighter {
 
     private final int THREAD_TIMEOUT = 60;
 
+    @Value("${api.user}")
+    String apiUser;
+
+    @Value("${api.password}")
+    String apiPassword;
+
     @Override
     public List<BasslineWithRating> rateBasslines(boolean bypassBasslineVerticalRating, List<BasslineWithRating> basslineWithRatings, ProgressionUnitBar barOne, ProgressionUnitBar barTwo){
 
@@ -26,7 +33,7 @@ public class BasslineWeighter implements IBasslineWeighter {
 
         for (BasslineWithRating basslineRating: basslineWithRatings) {
 
-            BasslineWeightTask basslineWeightTask = new BasslineWeightTask(bypassBasslineVerticalRating, barOne, barTwo, basslineRating);
+            BasslineWeightTask basslineWeightTask = new BasslineWeightTask(bypassBasslineVerticalRating, barOne, barTwo, basslineRating, apiUser, apiPassword);
 
             taskList.add(basslineWeightTask);
         }

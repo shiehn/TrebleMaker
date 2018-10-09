@@ -6,6 +6,7 @@ import com.treblemaker.utils.Http.HttpUtils;
 import com.treblemaker.weighters.WeightClassificationUtils;
 import com.treblemaker.weighters.WeightTaskResponse;
 import com.treblemaker.weighters.enums.WeightClass;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.concurrent.Callable;
 
@@ -14,11 +15,15 @@ public class HarmonicLoopEqWeightTask implements Callable<WeightTaskResponse> {
     private int beatLoopId;
     private int harmonicLoopId;
     private boolean bypassEqRatings;
+    String apiUser;
+    String apiPassword;
 
-    public HarmonicLoopEqWeightTask(int beatLoopId, int harmonicLoopId,  boolean bypassEqRatings) {
+    public HarmonicLoopEqWeightTask(int beatLoopId, int harmonicLoopId,  boolean bypassEqRatings, String apiUser, String apiPassword) {
         this.beatLoopId = beatLoopId;
         this.harmonicLoopId = harmonicLoopId;
         this.bypassEqRatings = bypassEqRatings;
+        this.apiUser = apiUser;
+        this.apiPassword =apiPassword;
     }
 
     @Override
@@ -37,7 +42,7 @@ public class HarmonicLoopEqWeightTask implements Callable<WeightTaskResponse> {
             WeightClass weightClass;
 
             HttpUtils httpUtils = new HttpUtils();
-            String classResult = httpUtils.sendGet(url);
+            String classResult = httpUtils.sendGet(url, apiUser, apiPassword);
 
             weightClass = WeightClassificationUtils.verticalWeightToClass(classResult);
 

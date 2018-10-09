@@ -16,6 +16,12 @@ public class VolumeWeighter {
 
     private boolean bypassRatings;
 
+    @Value("${api.user}")
+    String apiUser;
+
+    @Value("${api.password}")
+    String apiPassword;
+
     @Autowired
     public VolumeWeighter(@Value("${bypass_volume_level_ratings}") boolean bypassRatings) {
         this.bypassRatings = bypassRatings;
@@ -28,7 +34,7 @@ public class VolumeWeighter {
         Collection<VolumeWeightTask> taskCollection = new ArrayList<>();
 
         for (Map<String, Double> potentialMix : potentialMixes) {
-            taskCollection.add(new VolumeWeightTask(potentialMix, bypassRatings));
+            taskCollection.add(new VolumeWeightTask(potentialMix, bypassRatings, apiUser, apiPassword));
         }
 
         ExecutorService executorPool = ExecutorPoolFactory.getPool();

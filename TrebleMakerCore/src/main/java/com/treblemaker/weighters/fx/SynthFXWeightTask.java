@@ -9,6 +9,7 @@ import com.treblemaker.model.progressions.ProgressionUnitBar;
 import com.treblemaker.utils.Http.HttpUtils;
 import com.treblemaker.weighters.basslineweighter.ArpeggioHelpers;
 import com.treblemaker.weighters.enums.WeightClass;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.concurrent.Callable;
 
@@ -21,14 +22,18 @@ public class SynthFXWeightTask implements Callable<SynthFXWeightResponse> {
     private DurationAnalysis durationAnalysis;
     private boolean bypassSynthFXRating;
     private ArpeggioHelpers arpeggioHelpers;
+    String apiUser;
+    String apiPassword;
 
-    public SynthFXWeightTask(FXArpeggioWithRating fxArpeggioWithRating, Arpeggio arpeggio, int synthId, ProgressionUnitBar progressionUnitBar, DurationAnalysis durationAnalysis, boolean bypassSynthFXRating) {
+    public SynthFXWeightTask(FXArpeggioWithRating fxArpeggioWithRating, Arpeggio arpeggio, int synthId, ProgressionUnitBar progressionUnitBar, DurationAnalysis durationAnalysis, boolean bypassSynthFXRating, String apiUser, String apiPassword) {
         this.fxArpeggioWithRating = fxArpeggioWithRating;
         this.arpeggio = arpeggio;
         this.synthId = synthId;
         this.progressionUnitBar = progressionUnitBar;
         this.durationAnalysis = durationAnalysis;
         this.bypassSynthFXRating = bypassSynthFXRating;
+        this.apiUser = apiUser;
+        this.apiPassword = apiPassword;
         arpeggioHelpers = new ArpeggioHelpers();
     }
 
@@ -119,7 +124,7 @@ public class SynthFXWeightTask implements Callable<SynthFXWeightResponse> {
             String url = LoadBalancer.getInstance().getUrl() + "/classify/synthfx" + params.toString();
 
             HttpUtils httpUtils = new HttpUtils();
-            String response = httpUtils.sendGet(url);
+            String response = httpUtils.sendGet(url, apiUser, apiPassword);
             WeightClass weightClass = arpeggioHelpers.stringToWeight(response);
             synthFXWeightResponse = new SynthFXWeightResponse(fxArpeggioWithRating.getFxArpeggioDelay().getId(), synthId, weightClass);
 

@@ -33,6 +33,12 @@ public class HarmonicLoopWeighter {
 
     private final int THREAD_TIMEOUT = 60;
 
+    @Value("${api.user}")
+    String apiUser;
+
+    @Value("${api.password}")
+    String apiPassword;
+
     @Autowired
     public HarmonicLoopWeighter(IRhythmWeighter rhythmWeighter, HarmonicLoopTimeseriesClassifier harmonicLoopTimeseriesClassifier, @Value("${bypass_eq_ratings}") boolean bypassEqRatings) {
 
@@ -78,7 +84,7 @@ public class HarmonicLoopWeighter {
 
         //SET EQ & rhythmical weights ..
         for (int i = 0; i < progressionUnitBar.getHarmonicLoopOptions().size(); i++) {
-            HarmonicLoopEqWeightTask task = new HarmonicLoopEqWeightTask(progressionUnitBar.getBeatLoop().getId(), progressionUnitBar.getHarmonicLoopOptions().get(i).getId(), bypassEqRatings);
+            HarmonicLoopEqWeightTask task = new HarmonicLoopEqWeightTask(progressionUnitBar.getBeatLoop().getId(), progressionUnitBar.getHarmonicLoopOptions().get(i).getId(), bypassEqRatings, apiUser, apiPassword);
             taskList.add(task);
         }
 

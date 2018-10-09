@@ -21,13 +21,17 @@ public class BasslineWeightTask implements Callable<BasslineWithRating> {
     private ProgressionUnitBar barTwo;
     private BasslineWithRating basslineWithRating;
     private ArpeggioHelpers arpeggioHelpers;
+    private String apiUser;
+    private String apiPassword;
 
-    public BasslineWeightTask(boolean bypassBasslineVerticalRating, ProgressionUnitBar barOne, ProgressionUnitBar barTwo, BasslineWithRating basslineWithRating){
+    public BasslineWeightTask(boolean bypassBasslineVerticalRating, ProgressionUnitBar barOne, ProgressionUnitBar barTwo, BasslineWithRating basslineWithRating, String apiUser, String apiPassword){
         this.bypassBasslineVerticalRating = bypassBasslineVerticalRating;
         this.barOne = barOne;
         this.barTwo = barTwo;
         this.basslineWithRating = basslineWithRating;
         this.arpeggioHelpers = new ArpeggioHelpers();
+        this.apiUser = apiUser;
+        this.apiPassword = apiPassword;
     }
 
 
@@ -66,7 +70,7 @@ public class BasslineWeightTask implements Callable<BasslineWithRating> {
         String url = LoadBalancer.getInstance().getUrl();
         Application.logger.debug("LOG: " + url + "/classify/bass?bass=" + neuralInput);
         HttpUtils httpUtils = new HttpUtils();
-        String response = httpUtils.sendGet(url + "/classify/bass?bass=" + neuralInput);
+        String response = httpUtils.sendGet(url + "/classify/bass?bass=" + neuralInput,   apiUser,   apiPassword);
 
         WeightClass weightClass = arpeggioHelpers.stringToWeight(response);
         Application.logger.debug("LOG: Bassline_WeightClass=" + weightClass);

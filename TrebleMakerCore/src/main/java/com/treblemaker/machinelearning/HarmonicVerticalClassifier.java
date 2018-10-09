@@ -19,6 +19,12 @@ public class HarmonicVerticalClassifier implements IVerticalClassifier {
 
     private boolean bypassRatings;
 
+    @Value("${api.user}")
+    String apiUser;
+
+    @Value("${api.password}")
+    String apiPassword;
+
     @Autowired
     public HarmonicVerticalClassifier(@Value("${bypass_harmonic_loop_vertical_ratings}") boolean bypassRatings,
                                       ICompositionTimeSlotDal compositionTimeSlotDal ){
@@ -41,7 +47,7 @@ public class HarmonicVerticalClassifier implements IVerticalClassifier {
 
         String url = LoadBalancer.getInstance().getUrl() + "/classify/harmalt" + payload;
         HttpUtils httpUtils = new HttpUtils();
-        String classResult = httpUtils.sendGet(url);
+        String classResult = httpUtils.sendGet(url, apiUser, apiPassword);
 
         Application.logger.debug("LOG: RATING_HARM_L_ALT as : " + classResult);
 

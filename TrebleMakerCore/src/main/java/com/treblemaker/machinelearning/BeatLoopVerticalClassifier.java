@@ -19,10 +19,15 @@ public class BeatLoopVerticalClassifier implements IVerticalClassifier {
 
     private boolean bypassRatings;
 
+    @Value("${api.user}")
+    String apiUser;
+
+    @Value("${api.password}")
+    String apiPassword;
+
     @Autowired
     public BeatLoopVerticalClassifier(@Value("${bypass_vertical_beat_ratings}") boolean bypassRatings,
                                       ICompositionTimeSlotDal compositionTimeSlotDal ){
-
         this.bypassRatings = bypassRatings;
     }
 
@@ -37,7 +42,7 @@ public class BeatLoopVerticalClassifier implements IVerticalClassifier {
 
         String url = LoadBalancer.getInstance().getUrl() + "/classify/beatalt" + requestParams;
         HttpUtils httpUtils = new HttpUtils();
-        String classResult = httpUtils.sendGet(url);
+        String classResult = httpUtils.sendGet(url, apiUser, apiPassword);
 
         Application.logger.debug("LOG: RATING_BEAT_L_ALT as : " + classResult);
 

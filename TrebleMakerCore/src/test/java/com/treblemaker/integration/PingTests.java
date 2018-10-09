@@ -27,6 +27,12 @@ public class PingTests {
 
     @Value("${machinelearning_endpoints}") String[] mlEndpoints;
 
+    @Value("${api.user}")
+    String apiUser;
+
+    @Value("${api.password}")
+    String apiPassword;
+
     @Test
     public void shouldFindEnpoints(){
 
@@ -39,7 +45,7 @@ public class PingTests {
 
         for (String endpoint : mlEndpoints) {
             HttpUtils httpUtils = new HttpUtils();
-            String eqReponseString = httpUtils.sendGet(endpoint + pythonEndpoint);
+            String eqReponseString = httpUtils.sendGet(endpoint + pythonEndpoint, apiUser, apiPassword);
             assertThat(eqReponseString).contains("ok");
         }
     }
