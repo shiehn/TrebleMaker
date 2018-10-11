@@ -62,8 +62,8 @@ public class SetKickMidiPatternEventTest {
         Pattern p1b1 = queueState.getQueueItem().getProgression().getStructure().get(0).getProgressionUnitBars().get(0).getKickMidiPattern();
         Pattern p2b1 = queueState.getQueueItem().getProgression().getStructure().get(1).getProgressionUnitBars().get(0).getKickMidiPattern();
 
-        assertThat(p1b1.toString()).isEqualToIgnoringCase("T77 f#s rs f#s rs f#s rs f#s rs f#s rs f#s rs f#s rs f#s rs ");
-        assertThat(p2b1.toString()).isEqualToIgnoringCase("T77 rs rs f#s f#s rs rs f#s f#s rs rs f#s f#s rs rs f#s f#s ");
+        assertThat(p1b1.toString()).isEqualToIgnoringCase("T77 f#0s rs f#0s rs f#0s rs f#0s rs f#0s rs f#0s rs f#0s rs f#0s rs ");
+        assertThat(p2b1.toString()).isEqualToIgnoringCase("T77 rs rs f#0s f#0s rs rs f#0s f#0s rs rs f#0s f#0s rs rs f#0s f#0s ");
     }
 
     public KickPattern getKickPatternOnOFF(){
