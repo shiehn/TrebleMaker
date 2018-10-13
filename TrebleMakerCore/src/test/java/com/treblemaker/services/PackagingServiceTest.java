@@ -2,12 +2,15 @@ package com.treblemaker.services;
 
 import com.treblemaker.configs.AppConfigs;
 import com.treblemaker.model.queues.QueueItem;
+import com.treblemaker.model.stations.StationTrack;
 import com.treblemaker.utils.FileStructure;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -19,8 +22,6 @@ public class PackagingServiceTest {
     private QueueItem queueItem;
     private PackagingService packagingService;
     private String tempDir;
-
-
 
     @Before
     public void setup(){
@@ -36,30 +37,11 @@ public class PackagingServiceTest {
         (new File(appConfigs.getCompositionOutput())).mkdirs();
         (new File(appConfigs.getTarPackage())).mkdirs();
 
-        //create each file
-        /*
-        0compmelodic.mid is not supported
-        0comphi.mid is not supported
-        0compmid.mid is not supported
-        0complow.mid is not supported
-        0compkick.mid is not supported
-        0compsnare.mid is not supported
-        0comphats.mid is not supported
-        kick.wav is not supported
-        snare.wav is not supported
-        hat.wav is not supported
-        metadata.txt is not supported
-        */
-
         packagingService = new PackagingService(appConfigs, queueItem, 2);
-
-        System.out.println("STEVE: " + appConfigs.COMP_HATS_FILENAME);
     }
 
     @Test
     public void shouldTarPackage(){
-
-
         assertThat(appConfigs).isNotNull();
         assertThat(new File(tempDir)).isDirectory();
         packagingService.tar();
@@ -87,6 +69,68 @@ public class PackagingServiceTest {
         hat.wav is not supported
         metadata.txt is not supported
         */
+    }
+
+    @Test
+    public void shouldRemoveUnusedMelody() throws IOException {
+        Path assetPath = Paths.get("src", "main", "java", "com", "treblemaker", "tests", "Mocks");
+        File sourceTar = Paths.get(assetPath.toString(), "testasset.tar").toFile();
+        assertThat(sourceTar).exists();
+
+       //duplicate the file
+        File tmpTar = Paths.get(assetPath.toString(), "tmp.tar").toFile();
+        cleanUpTar(tmpTar);
+        Files.copy(sourceTar.toPath(), tmpTar.toPath());
+        assertThat(tmpTar).exists();
+
+        //confirm it contains 0compmelodic_0.mid & 0compmelodic_1.mid
+        assertThat(tarContainsFile("0compmelodic_0.mid",tmpTar)).isTrue();
+        assertThat(tarContainsFile("0compmelodic_1.mid",tmpTar)).isTrue();
+
+        StationTrack stationTrack = new StationTrack();
+        stationTrack.setSelectedMelody(1);
+        packagingService.removeUnusedFiles(stationTrack , tmpTar);
+
+        //confirm it no LONGER contains 0compmelodic_0.mid
+        assertThat(tarContainsFile("0compmelodic_0.mid",tmpTar)).isFalse();
+        assertThat(tarContainsFile("0compmelodic_1.mid",tmpTar)).isTrue();
+
+        cleanUpTar(tmpTar);
+    }
+
+    private boolean tarContainsFile(String fileName, File tar){
+        String command = "tar tf " + tar.getAbsolutePath() + " ./" + fileName;
+        Process p = null;
+        try {
+            p = Runtime.getRuntime().exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            p.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        int exitStatus = p.exitValue();
+        return exitStatus == 0;
+    }
+
+    /*
+    String command = "diff "+mp.get("directory")+"/"+fileName+" "+mp.get("outdir")+"/"+fileName;
+Process p = Runtime.getRuntime().exec(command);
+p.waitFor();
+int exitStatus = p.exitValue();
+     */
+
+
+
+
+    private void cleanUpTar(File tarFile){
+        try {
+            Files.deleteIfExists(tarFile.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @After

@@ -3,6 +3,7 @@ package com.treblemaker.services;
 import com.treblemaker.Application;
 import com.treblemaker.configs.AppConfigs;
 import com.treblemaker.model.queues.QueueItem;
+import com.treblemaker.model.stations.StationTrack;
 import com.treblemaker.utils.TAR;
 import org.apache.commons.io.FileUtils;
 
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PackagingService {
@@ -83,5 +83,37 @@ public class PackagingService {
         } catch (IOException e) {
             Application.logger.debug("LOG: ERROR : FAILED TO PACKAGE TAR !!! " + e);
         }
+    }
+
+    public void removeUnusedFiles(StationTrack stationTrack, File tmpTar) {
+        String fileToDelete;
+
+        if(stationTrack.getSelectedMelody() == 0) {
+            fileToDelete = "./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_1.mid");
+        }else if(stationTrack.getSelectedMelody() == 1){
+            fileToDelete = "./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_0.mid");
+        }else{
+            throw new RuntimeException("unexpected selected melody - cannot remove file");
+        }
+
+        String command = "tar --delete --file=" + tmpTar.getAbsolutePath() + " " + fileToDelete;
+        Process p = null;
+        try {
+            p = Runtime.getRuntime().exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            p.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        int exitStatus = p.exitValue();
+
+        if(exitStatus != 0){
+            throw new RuntimeException("error removing file from tar");
+        }
+
+        return;
     }
 }

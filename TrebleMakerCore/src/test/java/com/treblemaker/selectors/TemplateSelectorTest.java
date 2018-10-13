@@ -30,7 +30,6 @@ public class TemplateSelectorTest extends TestCase {
 
     @Test
     public void shouldSetTemplate() throws Exception {
-
         SynthTemplate synthTemplate = templateSelector.chooseRandom();
 
         Assert.assertTrue(synthTemplate.getHiSynthId() != 0);

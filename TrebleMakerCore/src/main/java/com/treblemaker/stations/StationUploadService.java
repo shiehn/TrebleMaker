@@ -6,10 +6,12 @@ import com.treblemaker.configs.AppConfigs;
 import com.treblemaker.dal.interfaces.IStationTrackDal;
 import com.treblemaker.model.stations.StationTrack;
 import com.treblemaker.services.AudioTransferService;
+import com.treblemaker.services.PackagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -33,13 +35,12 @@ public class StationUploadService {
 
     public void fetchAndUploadTrack() {
         Application.logger.debug("LOG: UPLOADING: STARTED *************************");
-        StationTrack stationTrack = fetchStationTrack();
+        StationTrack stationTrack = fetchStationTrackToUpload();
 
         uploadTrack(appConfigs.getAwsBucketName(), stationTrack);
     }
 
-    public StationTrack fetchStationTrack() {
-
+    public StationTrack fetchStationTrackToUpload() {
         List<StationTrack> stationTracks = stationTrackDal.findAll();
 
         for (StationTrack stationTrack : stationTracks) {
@@ -64,22 +65,23 @@ public class StationUploadService {
         Application.logger.debug("LOG: UPLOADING: STATION TRACK: " + stationTrack.getFile());
 
         try {
-            //stationTrack.getFile() + ".wav", FINAL_MIX_OUTPUT_WITH_ESCAPE_QUOTES + stationTrackName
-            //audioTransferService.uploadAudioFile(s3Bin, "3652c2c7-1d28-4b9d-8997-5c49f0e450c5.wav", "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.0\\webapps\\audio\\3652c2c7-1d28-4b9d-8997-5c49f0e450c5.wav");
-
             File[] outputFiles = getFilesInOutputDirectory(appConfigs.getFinalMixOutput());
             Application.logger.debug("LOG: UPLOADING: NUM OF OUTPUT FILES: " + outputFiles.length);
 
             for (File file : outputFiles) {
                 if (file.getName().contains(stationTrack.getFile()) && (file.getName().contains("_0_1.mp3"))) {
+                    String itemId = file.getName().replace("_0_1.mp3", "");
+                    Path tarSource = Paths.get(appConfigs.getTarPackage(), itemId + ".tar");
+
+                    PackagingService packagingService = new PackagingService(appConfigs,null, null);
+                    packagingService.removeUnusedFiles(stationTrack, tarSource.toFile());
+
                     //upload mp3
                     audioTransferService.uploadAudioFile(s3Bin, file.getName(), appConfigs.getFinalMixOutput() + "/" + file.getName());
 
-                    //upload tar package
-                    String itemId = file.getName().replace("_0_1.mp3", "");
-                    String tarSource = Paths.get(appConfigs.getTarPackage(), itemId + ".tar").toString();
+                    //upload tar
                     audioTransferService.uploadAudioFile(s3Bin, itemId + ".tar",
-                            tarSource);
+                            tarSource.toString());
 
                     //upload untared package
                     audioTransferService.uploadAudioDirectory(s3Bin, itemId, Paths.get(appConfigs.getTarPackage(), itemId).toFile());
