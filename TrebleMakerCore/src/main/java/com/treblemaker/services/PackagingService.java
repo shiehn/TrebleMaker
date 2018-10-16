@@ -88,9 +88,9 @@ public class PackagingService {
     public void removeUnusedFiles(StationTrack stationTrack, File tmpTar) {
         String fileToDelete;
 
-        if(stationTrack.getSelectedMelody() == 0) {
+        if(stationTrack.getSelectedMelody() == 1) {
             fileToDelete = "./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_1.mid");
-        }else if(stationTrack.getSelectedMelody() == 1){
+        }else if(stationTrack.getSelectedMelody() == 2){
             fileToDelete = "./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_0.mid");
         }else{
             throw new RuntimeException("unexpected selected melody - cannot remove file");
