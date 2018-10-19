@@ -86,32 +86,55 @@ public class PackagingService {
     }
 
     public void removeUnusedFiles(StationTrack stationTrack, File tmpTar) {
-        String fileToDelete;
+        List<String> filesToDelete = new ArrayList<>();
 
         if(stationTrack.getSelectedMelody() == 1) {
-            fileToDelete = "./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_1.mid");
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_1.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_2.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_3.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_4.mid"));
         }else if(stationTrack.getSelectedMelody() == 2){
-            fileToDelete = "./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_0.mid");
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_0.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_2.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_3.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_4.mid"));
+        }else if(stationTrack.getSelectedMelody() == 3){
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_0.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_1.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_3.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_4.mid"));
+        }else if(stationTrack.getSelectedMelody() == 4){
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_0.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_1.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_2.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_4.mid"));
+        }else if(stationTrack.getSelectedMelody() == 5){
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_0.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_1.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_2.mid"));
+            filesToDelete.add("./0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_3.mid"));
         }else{
             throw new RuntimeException("unexpected selected melody - cannot remove file");
         }
 
-        String command = "tar --delete --file=" + tmpTar.getAbsolutePath() + " " + fileToDelete;
-        Process p = null;
-        try {
-            p = Runtime.getRuntime().exec(command);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            p.waitFor();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        int exitStatus = p.exitValue();
+        for(String fileToDelete : filesToDelete) {
+            String command = "tar --delete --file=" + tmpTar.getAbsolutePath() + " " + fileToDelete;
+            Process p = null;
+            try {
+                p = Runtime.getRuntime().exec(command);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                p.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            int exitStatus = p.exitValue();
 
-        if(exitStatus != 0){
-            throw new RuntimeException("error removing file from tar");
+            if (exitStatus != 0) {
+                throw new RuntimeException("error removing file from tar");
+            }
         }
 
         return;

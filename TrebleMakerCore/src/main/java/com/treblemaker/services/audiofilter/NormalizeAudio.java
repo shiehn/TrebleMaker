@@ -460,26 +460,13 @@ public class NormalizeAudio {
         int numberOfTrackVariations = 3;
 
         for (int i = 0; i < numOfGeneratedMixes; i++) {
-            for (int j = 1; j < numberOfTrackVariations + 1; j++) {
-                if(j == 1){ // only MIX one has alt melodies
-                    for(int k=0; k<numOfAltMelodies; k++) {
-                        String mixFileNameProcessing = mixFileName + "_" + i + "_" + j + "_processing.mp3";
-                        String mixFileNameCopy = mixFileName + "_" + i + "_" + j + ".mp3";
-
-                        if(k > 0) {
-                            mixFileNameProcessing = mixFileName + "_" + i + "_" + j + "_alt_melody_processing.mp3";
-                            mixFileNameCopy = mixFileName + "_" + i + "_" + j + "_alt_melody.mp3";
-                        }
-
+            //for (int j = 1; j < numberOfTrackVariations + 1; j++) {
+                    for(int k=1; k<numOfAltMelodies + 1; k++) {
+                        String mixFileNameProcessing = mixFileName + "_" + i + "_" + k + "_processing.mp3";
+                        String mixFileNameCopy = mixFileName + "_" + i + "_" + k + ".mp3";
                         performNormalize(mixFilePath, mixFileNameProcessing, mixFileNameCopy);
                     }
-                } else {
-                    String mixFileNameProcessing = mixFileName + "_" + i + "_" + j + "_processing.mp3";
-                    String mixFileNameCopy = mixFileName + "_" + i + "_" + j + ".mp3";
-
-                    performNormalize(mixFilePath, mixFileNameProcessing, mixFileNameCopy);
-                }
-            }
+            //}
         }
     }
 

@@ -74,6 +74,8 @@ public class StationUploadService {
                     Path tarSource = Paths.get(appConfigs.getTarPackage(), itemId + ".tar");
 
                     PackagingService packagingService = new PackagingService(appConfigs,null, null);
+
+                    //update tar
                     packagingService.removeUnusedFiles(stationTrack, tarSource.toFile());
 
                     //upload mp3

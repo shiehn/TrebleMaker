@@ -594,15 +594,13 @@ public class QueueDigester implements IQueueDigester {
         final String output = appConfigs.getFinalMixOutput() + "/" + songName;
 
         for (int i = 0; i < numOfGeneratedMixes; i++) {
-            String melodyAlt = "";
-            if(numOfAltMelodies > 1){
-                int indexOfAltMel = 1; //TODO THIS IS BULL SHIT- ITS HARD CODED TO ONE ALT MELODY - IT SHOULD INTERATE THE NUMBER OF ALT MELODIES
-                melodyAlt = queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav", "_" + indexOfAltMel + ".wav");
-            }
 
             audioMixer.createMixes(
                     queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav","_0.wav"),
-                    melodyAlt,
+                    queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav","_1.wav"),
+                    queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav","_2.wav"),
+                    queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav","_3.wav"),
+                    queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MELODIC_AUDIO_FILENAME_FX.replace(".wav","_4.wav"),
                     queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_HI_FX_AUDIO_FILENAME,
                     queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_ALT_HI_FX_AUDIO_FILENAME,
                     queueState.getQueueItem().getStereoPartsFilePath() + "/" + i + appConfigs.COMP_MID_AUDIO_FILENAME,
@@ -691,122 +689,6 @@ public class QueueDigester implements IQueueDigester {
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 
         sentimentEvent.saveSenimentLabels(queueState);
-
-
-//        saveMixVolumeAnalytics(). ..  ..
-//        queueState = null;
-/*
-        System.gc();
-
-        Collection<ExtractEqTask_OLD> eqTasks = new ArrayList<>();
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_HI_AUDIO_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractHiEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" + "0" + appConfigs.COMP_HI_AUDIO_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_SYNTH_HI, parametricEqCompositionLayerDal);
-
-        eqTasks.add(extractHiEqTask);
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_ALT_HI_AUDIO_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractHiAltEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" + "0" +  appConfigs.COMP_ALT_HI_AUDIO_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_SYNTH_HI_ALT, parametricEqCompositionLayerDal);
-        eqTasks.add(extractHiAltEqTask);
-
-        eqTaskDigester(executorPool, eqTasks);
-        eqTasks = new ArrayList<>();
-
-        System.gc();
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_MID_AUDIO_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractMidEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" + "0" +  appConfigs.COMP_MID_AUDIO_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_SYNTH_MID, parametricEqCompositionLayerDal);
-        eqTasks.add(extractMidEqTask);
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_ALT_MID_AUDIO_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractMidAltEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" +"0" +  appConfigs.COMP_ALT_MID_AUDIO_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_SYNTH_MID_ALT, parametricEqCompositionLayerDal);
-        eqTasks.add(extractMidAltEqTask);
-
-        eqTaskDigester(executorPool, eqTasks);
-        eqTasks = new ArrayList<>();
-
-        System.gc();
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_LOW_AUDIO_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractLowEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" +"0" +  appConfigs.COMP_LOW_AUDIO_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_SYNTH_LOW, parametricEqCompositionLayerDal);
-        eqTasks.add(extractLowEqTask);
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_ALT_LOW_AUDIO_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractLowAltEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" + "0" +  appConfigs.COMP_ALT_LOW_AUDIO_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_SYNTH_LOW_ALT, parametricEqCompositionLayerDal);
-        eqTasks.add(extractLowAltEqTask);
-
-        eqTaskDigester(executorPool, eqTasks);
-        eqTasks = new ArrayList<>();
-
-        System.gc();
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_RHYTHM_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractRhythmEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" + appConfigs.COMP_RHYTHM_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_BEAT_LOOP, parametricEqCompositionLayerDal);
-        eqTasks.add(extractRhythmEqTask);
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_RHYTHM_ALT_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractRhythmAltEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" + appConfigs.COMP_RHYTHM_ALT_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_BEAT_LOOP_ALT, parametricEqCompositionLayerDal);
-        eqTasks.add(extractRhythmAltEqTask);
-
-        eqTaskDigester(executorPool, eqTasks);
-        eqTasks = new ArrayList<>();
-
-        System.gc();
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_AMBIENCE_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractAmbiEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" + appConfigs.COMP_AMBIENCE_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_AMBIENCE, parametricEqCompositionLayerDal);
-        eqTasks.add(extractAmbiEqTask);
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_HARMONIC_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractHarmonicEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" + appConfigs.COMP_HARMONIC_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_HARMONIC_LOOP, parametricEqCompositionLayerDal);
-        eqTasks.add(extractHarmonicEqTask);
-
-        eqTaskDigester(executorPool, eqTasks);
-        eqTasks = new ArrayList<>();
-
-        System.gc();
-
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        Application.logger.debug("LOG: PHASE : frequencyAnalysis.extractEq(AUDIO_PART_FILE_PATH + appConfigs.COMP_HARMONIC_ALT_FILENAME)");
-        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-
-        ExtractEqTask_OLD extractHarmonicAltEqTask = new ExtractEqTask_OLD(queueState.getQueueItem().getAudioPartFilePath() + "/" + appConfigs.COMP_HARMONIC_ALT_FILENAME, compositionId, ParametricEqCompositionLayer.LAYER_TYPE_HARMONIC_LOOP_ALT, parametricEqCompositionLayerDal);
-        eqTasks.add(extractHarmonicAltEqTask);
-
-        eqTaskDigester(executorPool, eqTasks);
-
-        executorPool.shutdown();
-        */
 
         //TODO WHY THE FUCK IS THIS HERE???
         queueItemCustomDal.setQueueItemComplete(Long.toString(queueItemDb.getId()), songName);
