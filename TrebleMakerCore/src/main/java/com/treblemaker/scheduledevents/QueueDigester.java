@@ -631,6 +631,12 @@ public class QueueDigester implements IQueueDigester {
         QueueItem queueItemDb = queueItemCustomDal.getQueueItemById(Long.toString(queueItem.getId()));
 
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        Application.logger.debug("LOG: PHASE : SAVE METADATA STATE");
+        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+
+        queueState = setMetaDataStateEvent.set(queueState);
+        /*
+        Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         Application.logger.debug("LOG: PHASE : CREATE METADATA");
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 
@@ -641,6 +647,7 @@ public class QueueDigester implements IQueueDigester {
         Application.logger.debug("LOG: ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 
         packagingEvent.set(queueState);
+        */
 
         stationSaveService.save(queueItem.getQueueItemId());
 
@@ -895,6 +902,9 @@ public class QueueDigester implements IQueueDigester {
 
     @Autowired
     private IEventChain packagingEvent;
+
+    @Autowired
+    private IEventChain setMetaDataStateEvent;
 
     @Autowired
     private IBeatLoopRenderer beatLoopRenderer;

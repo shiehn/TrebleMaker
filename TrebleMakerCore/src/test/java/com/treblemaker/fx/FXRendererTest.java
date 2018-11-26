@@ -37,14 +37,12 @@ public class FXRendererTest extends TestCase {
 
     @Before
     public void setup() throws IOException {
-
         cleanup();
 
         //MOVE TEST SOURCE TO SOURCE ..
         Files.copy(new File(TEST_SOURCE_FILE).toPath(), new File(SOURCE_PATH).toPath());
     }
 
-    @Ignore
     @Test
     public void shouldRenderMelodyWithReverb(){
         fxRenderer.renderReverbFx(SOURCE_PATH, TARGETPATH);

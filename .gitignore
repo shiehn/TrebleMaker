@@ -6,7 +6,6 @@
 # Package Files #
 *.war
 *.ear
-*.tar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
@@ -18,9 +17,9 @@ TrebleMaker/target/*
 target/*
 Loops/* 
 Compositions/*
-signalsandsorcery/TrebleMaker/Compositions/*
-signalsandsorcery/HiveComposeCore/Compositions/audioshims/*
-signalsandsorcery/HiveComposeCore/Compositions/*
+/TrebleMaker/Compositions/*
+/TrebleMaker/HiveComposeCore/Compositions/audioshims/*
+/TrebleMaker/HiveComposeCore/Compositions/*
 
 SoundFonts/*
 TrebleMakerCore/.idea/*
