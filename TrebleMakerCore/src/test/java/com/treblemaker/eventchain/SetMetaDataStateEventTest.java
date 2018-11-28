@@ -1,5 +1,7 @@
 package com.treblemaker.eventchain;
 
+import com.treblemaker.SpringConfiguration;
+import com.treblemaker.dal.interfaces.IMetaDataChordInfoDal;
 import com.treblemaker.dal.interfaces.IMetaDataTrackInfoDal;
 import com.treblemaker.model.HiveChord;
 import com.treblemaker.model.metadata.MetaDataChordInfo;
@@ -12,6 +14,7 @@ import com.treblemaker.model.queues.QueueState;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -3,9 +3,8 @@ package com.treblemaker.scheduledevents;
 // region imports
 
 import com.treblemaker.Application;
-import com.treblemaker.dal.interfaces.IParametricEqCompositionLayerDal;
-import com.treblemaker.dal.interfaces.IQueueItemCustomDal;
-import com.treblemaker.dal.interfaces.IQueueItemsDal;
+import com.treblemaker.dal.interfaces.*;
+import com.treblemaker.eventchain.SetMetaDataStateEvent;
 import com.treblemaker.eventchain.SetStationTrackEvent;
 import com.treblemaker.eventchain.analytics.SentimentEvent;
 import com.treblemaker.eventchain.interfaces.IAnalyticsEvent;
@@ -16,6 +15,8 @@ import com.treblemaker.mixer.interfaces.IAudioMixer;
 import com.treblemaker.model.HarmonicLoop;
 import com.treblemaker.model.ProcessingState;
 import com.treblemaker.model.SynthTemplate;
+import com.treblemaker.model.metadata.MetaDataChordInfo;
+import com.treblemaker.model.metadata.MetaDataTrackInfo;
 import com.treblemaker.model.progressions.ProgressionUnit;
 import com.treblemaker.model.progressions.ProgressionUnitBar;
 import com.treblemaker.model.queues.QueueItem;
@@ -63,9 +64,17 @@ public class QueueDigester implements IQueueDigester {
     @Value("${tm.app.root}")
     String appRoot;
 
+
+    @Autowired
+    IMetaDataChordInfoDal metaDataChordInfoDal;
+
+    @Autowired
+    IMetaDataTrackInfoDal metaDataTrackInfoDal;
+
+
+
     @Override
     public QueueItem digest(QueueItem queueItem) throws Exception {
-
         //SHOULD THIS FOLDER BE BASED ON THE STATION ID
         //SHOULD THIS FOLDER BE BASED ON THE STATION ID
         //SHOULD THIS FOLDER BE BASED ON THE STATION ID
@@ -896,12 +905,6 @@ public class QueueDigester implements IQueueDigester {
 
     @Autowired
     private IEventChain setSentimentLabelsEvent;
-
-    @Autowired
-    private IEventChain createMetaDataFile;
-
-    @Autowired
-    private IEventChain packagingEvent;
 
     @Autowired
     private IEventChain setMetaDataStateEvent;

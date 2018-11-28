@@ -4,10 +4,12 @@ import com.amazonaws.AmazonClientException;
 import com.treblemaker.Application;
 import com.treblemaker.configs.AppConfigs;
 import com.treblemaker.dal.interfaces.IStationTrackDal;
+import com.treblemaker.eventchain.interfaces.IEventChain;
 import com.treblemaker.model.stations.StationTrack;
 import com.treblemaker.services.AudioTransferService;
 import com.treblemaker.services.PackagingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -27,6 +29,9 @@ public class StationUploadService {
     @Autowired
     public AppConfigs appConfigs;
 
+    @Value("${num_of_alt_melodies}")
+    int numOfAltMelodies;
+
     @Autowired
     public StationUploadService(AudioTransferService audioTransferService, IStationTrackDal stationTrackDal) {
         this.audioTransferService = audioTransferService;
@@ -37,6 +42,11 @@ public class StationUploadService {
         Application.logger.debug("LOG: UPLOADING: STARTED *************************");
         StationTrack stationTrack = fetchStationTrackToUpload();
 
+        if(stationTrack != null){
+            PackagingService packagingService = new PackagingService(appConfigs,stationTrack, numOfAltMelodies);
+            packagingService.tar();
+        }
+
         uploadTrack(appConfigs.getAwsBucketName(), stationTrack);
     }
 
@@ -44,7 +54,6 @@ public class StationUploadService {
         List<StationTrack> stationTracks = stationTrackDal.findAll();
 
         for (StationTrack stationTrack : stationTracks) {
-
             if (stationTrack.getAddToStation() == 1 && stationTrack.getUploaded() == 0) {
                 return stationTrack;
             }
@@ -73,10 +82,10 @@ public class StationUploadService {
                     String itemId = file.getName().replace("_0_1.mp3", "");
                     Path tarSource = Paths.get(appConfigs.getTarPackage(), itemId + ".tar");
 
-                    PackagingService packagingService = new PackagingService(appConfigs,null, null);
+                    //PackagingService packagingService = new PackagingService(appConfigs,null, null);
 
                     //update tar
-                    packagingService.removeUnusedFiles(stationTrack, tarSource.toFile());
+                    //packagingService.removeUnusedFiles(stationTrack, tarSource.toFile());
 
                     //upload mp3
                     audioTransferService.uploadAudioFile(s3Bin, file.getName(), appConfigs.getFinalMixOutput() + "/" + file.getName());

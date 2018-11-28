@@ -96,6 +96,7 @@ public class ScheduledTasks {
         Application.logger.debug("LOG: QUEUE EVENT FIRED ************************");
         Application.logger.debug("LOG: ******************************************");
 
+
         //UPLOAD any completed tracks to stations
         //ALSO UPLOADS TAR FILES
         stationUploadService.fetchAndUploadTrack();

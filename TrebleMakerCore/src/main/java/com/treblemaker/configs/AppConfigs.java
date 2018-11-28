@@ -65,7 +65,8 @@ public class AppConfigs {
     }
 
     public String getSoxLocation() {
-        return APPLICATION_ROOT + "/sox1442/sox";
+        //return APPLICATION_ROOT + "/sox1442/sox";
+        return "sox";
     }
 
     public String getVSTPluginDir() {

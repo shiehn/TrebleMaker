@@ -7,6 +7,5 @@ import java.util.List;
 
 @Repository
 public interface ICompRhythmDal extends CrudRepository<CompRhythm, Integer> {
-
     List<CompRhythm> findAll();
 }

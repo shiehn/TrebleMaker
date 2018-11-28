@@ -58,7 +58,6 @@ public class SetMetaDataStateEvent implements IEventChain {
         for(String type : trackTypes){
             MetaDataTrackInfo metaDataTrackInfo = new MetaDataTrackInfo();
             metaDataTrackInfo.setTrackId(queueState.getQueueItem().getQueueItemId());
-            metaDataTrackInfo.setTrackNum("null");
             metaDataTrackInfo.setTrackType(type);
 
             trackInfoList.add(metaDataTrackInfo);
@@ -81,6 +80,7 @@ public class SetMetaDataStateEvent implements IEventChain {
             metaDataChordInfo.setTrackId(queueState.getQueueItem().getQueueItemId());
             metaDataChordInfo.setPartType(pUnit.getType().toString());
             metaDataChordInfo.setPartKey(pUnit.getKey());
+            metaDataChordInfo.setTrackKey("error");
             for (ProgressionUnitBar pBar : pUnit.getProgressionUnitBars()) {
                 String chords = metaDataChordInfo.getPartChords();
 

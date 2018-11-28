@@ -17,57 +17,51 @@ import java.util.List;
 public class PackagingService {
 
     AppConfigs appConfigs;
-    QueueItem queueItem;
+    StationTrack stationTrack;
     Integer numOfMelodies;
 
-    public PackagingService(AppConfigs appConfigs, QueueItem queueItem, Integer numOfMelodies){
+    public PackagingService(AppConfigs appConfigs, StationTrack stationTrack, Integer numOfMelodies){
         this.appConfigs = appConfigs;
-        this.queueItem = queueItem;
+        this.stationTrack = stationTrack;
         this.numOfMelodies = numOfMelodies;
     }
 
     public void tar(){
-        List<File> melodies = new ArrayList<>();
-        for(int i=0; i<numOfMelodies; i++){
-            File src_melody = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_"+i+".mid"))).toFile();
-            melodies.add(src_melody);
-        }
+        File src_melody = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", stationTrack.getFile(), "0" + appConfigs.COMP_MELODIC_FILENAME.replace(".mid", "_"+(stationTrack.getSelectedMelody()-1)+".mid"))).toFile();
 
-        File src_metadata = new File(appConfigs.getMetadataPath(queueItem.getQueueItemId()));
+        File src_metadata = new File(appConfigs.getMetadataPath(stationTrack.getFile()));
 
-        File src_hi = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_HI_FILENAME)).toFile();
-        File src_mid = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_MID_FILENAME)).toFile();
-        File src_low = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_LOW_FILENAME)).toFile();
-        File src_kick_midi  = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_KICK_FILENAME)).toFile();
-        File src_snare_midi  = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_SNARE_FILENAME)).toFile();
-        File src_hat_midi  = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", queueItem.getQueueItemId(), "0" + appConfigs.COMP_HATS_FILENAME)).toFile();
+        File src_hi = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", stationTrack.getFile(), "0" + appConfigs.COMP_HI_FILENAME)).toFile();
+        File src_mid = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", stationTrack.getFile(), "0" + appConfigs.COMP_MID_FILENAME)).toFile();
+        File src_low = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", stationTrack.getFile(), "0" + appConfigs.COMP_LOW_FILENAME)).toFile();
+        File src_kick_midi  = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", stationTrack.getFile(), "0" + appConfigs.COMP_KICK_FILENAME)).toFile();
+        File src_snare_midi  = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", stationTrack.getFile(), "0" + appConfigs.COMP_SNARE_FILENAME)).toFile();
+        File src_hat_midi  = (Paths.get(appConfigs.getCompositionOutput(), "midioutput", stationTrack.getFile(), "0" + appConfigs.COMP_HATS_FILENAME)).toFile();
 
-        File src_kick = (Paths.get(queueItem.getStereoPartsFilePath(), appConfigs.KICK_FILENAME)).toFile();
-        File src_snare = (Paths.get(queueItem.getStereoPartsFilePath(), appConfigs.SNARE_FILENAME)).toFile();
-        File src_hat = (Paths.get(queueItem.getStereoPartsFilePath(), appConfigs.HAT_FILENAME)).toFile();
+        String stereoPartsPath = appConfigs.getCompositionOutput() + "/stereoparts/" + stationTrack.getFile();
+        File src_kick = (Paths.get(stereoPartsPath, appConfigs.KICK_FILENAME)).toFile();
+        File src_snare = (Paths.get(stereoPartsPath, appConfigs.SNARE_FILENAME)).toFile();
+        File src_hat = (Paths.get(stereoPartsPath, appConfigs.HAT_FILENAME)).toFile();
 
         List<File> filesToTar = new ArrayList<>();
         filesToTar.add(src_metadata);
         filesToTar.add(src_hi);
-                filesToTar.add(src_mid);
-                        filesToTar.add(src_low);
-                                filesToTar.add(src_kick_midi);
-                                        filesToTar.add(src_snare_midi);
-                                                filesToTar.add(src_hat_midi);
-                                                        filesToTar.add(src_kick);
-                                                                filesToTar.add(src_snare);
-                                                                        filesToTar.add(src_hat);
-
-        for (File melody:melodies) {
-            filesToTar.add(melody);
-        }
+        filesToTar.add(src_mid);
+        filesToTar.add(src_low);
+        filesToTar.add(src_kick_midi);
+        filesToTar.add(src_snare_midi);
+        filesToTar.add(src_hat_midi);
+        filesToTar.add(src_kick);
+        filesToTar.add(src_snare);
+        filesToTar.add(src_hat);
+        filesToTar.add(src_melody);
 
         //MAKE UNTARED PACKAGE
-        Path unTaredDir = Paths.get(appConfigs.getTarPackage(), queueItem.getQueueItemId());
+        Path unTaredDir = Paths.get(appConfigs.getTarPackage(), stationTrack.getFile());
         unTaredDir.toFile().mkdirs();
 
         for(File source: filesToTar) {
-            File dest = Paths.get(appConfigs.getTarPackage(), queueItem.getQueueItemId(), source.getName()).toFile();
+            File dest = Paths.get(appConfigs.getTarPackage(), stationTrack.getFile(), source.getName()).toFile();
             try {
                 FileUtils.copyFile(source, dest);
             } catch (IOException e) {
@@ -76,7 +70,7 @@ public class PackagingService {
         }
 
         //TAR THE PACKAGE
-        String tarTarget = Paths.get(appConfigs.getTarPackage(), queueItem.getQueueItemId() + ".tar").toString();
+        String tarTarget = Paths.get(appConfigs.getTarPackage(), stationTrack.getFile() + ".tar").toString();
 
         try {
             TAR.compress(tarTarget,filesToTar.toArray(new File[filesToTar.size()]));

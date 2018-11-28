@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.treblemaker.adapters.ChordAdapter;
 import com.treblemaker.adapters.interfaces.IChordAdapter;
 import com.treblemaker.configs.AppConfigs;
-import com.treblemaker.dal.interfaces.IAmbienceLoopsDal;
-import com.treblemaker.dal.interfaces.IAnalyticsHorizontalDal;
-import com.treblemaker.dal.interfaces.IBachChoraleDal;
-import com.treblemaker.dal.interfaces.IFXArpeggioDelayDal;
+import com.treblemaker.dal.interfaces.*;
 import com.treblemaker.eventchain.*;
 import com.treblemaker.eventchain.analytics.*;
 import com.treblemaker.eventchain.interfaces.IEventChain;
@@ -117,6 +114,12 @@ public class SpringConfiguration {
 
     @Autowired
     private IAmbienceLoopsDal ambienceLoopsDal;
+
+    @Autowired
+    private IMetaDataTrackInfoDal metaDataTrackInfoDal;
+
+    @Autowired
+    private IMetaDataChordInfoDal metaDataChordInfoDal;
 
     @Autowired
     private DurationAnalysis durationAnalysis;
@@ -307,6 +310,11 @@ public class SpringConfiguration {
         return new SetChordStructureAndHarmonicLoops();
     }
 
+    @Bean(name = "setMetaDataStateEvent")
+    public IEventChain setMetaDataStateEvent() {
+        return new SetMetaDataStateEvent(metaDataChordInfoDal, metaDataTrackInfoDal);
+    }
+
     @Bean(name = "setFXEvent")
     public IEventChain setFXEvent() {
         return new SetFXEvent(ifxArpeggioDelayDal, synthFXWeighter(), synthFXSelector());
@@ -368,11 +376,6 @@ public class SpringConfiguration {
     @Bean(name = "createMetaDataFile")
     public IEventChain createMetaDataFile() {
         return new CreateMetaDataFile();
-    }
-
-    @Bean(name = "packagingEvent")
-    public IEventChain packagingEvent() {
-        return new PackagingEvent();
     }
 
     @Autowired

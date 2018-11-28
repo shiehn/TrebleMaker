@@ -20,9 +20,6 @@ public class MetaDataTrackInfo implements Serializable {
     @Column(name = "track_type")
     private String trackType;
 
-    @Column(name = "track_num")
-    private String trackNum;
-
     public String getTrackId() {
         return trackId;
     }
@@ -37,13 +34,5 @@ public class MetaDataTrackInfo implements Serializable {
 
     public void setTrackType(String trackType) {
         this.trackType = trackType;
-    }
-
-    public String getTrackNum() {
-        return trackNum;
-    }
-
-    public void setTrackNum(String trackNum) {
-        this.trackNum = trackNum;
     }
 }
