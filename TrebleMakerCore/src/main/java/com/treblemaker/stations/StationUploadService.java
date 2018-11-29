@@ -3,8 +3,11 @@ package com.treblemaker.stations;
 import com.amazonaws.AmazonClientException;
 import com.treblemaker.Application;
 import com.treblemaker.configs.AppConfigs;
+import com.treblemaker.dal.interfaces.IMetaDataChordInfoDal;
+import com.treblemaker.dal.interfaces.IMetaDataTrackInfoDal;
 import com.treblemaker.dal.interfaces.IStationTrackDal;
 import com.treblemaker.eventchain.interfaces.IEventChain;
+import com.treblemaker.generators.MetaDataGenerator;
 import com.treblemaker.model.stations.StationTrack;
 import com.treblemaker.services.AudioTransferService;
 import com.treblemaker.services.PackagingService;
@@ -20,22 +23,26 @@ import java.util.List;
 @Component
 public class StationUploadService {
 
-    @Autowired
-    AudioTransferService audioTransferService;
-
-    @Autowired
-    IStationTrackDal stationTrackDal;
-
-    @Autowired
     public AppConfigs appConfigs;
+    private AudioTransferService audioTransferService;
+    private IStationTrackDal stationTrackDal;
+    private IMetaDataTrackInfoDal metaDataTrackInfoDal;
+    private IMetaDataChordInfoDal metaDataChordInfoDal;
 
     @Value("${num_of_alt_melodies}")
     int numOfAltMelodies;
 
     @Autowired
-    public StationUploadService(AudioTransferService audioTransferService, IStationTrackDal stationTrackDal) {
+    public StationUploadService(AppConfigs appConfigs,
+                                AudioTransferService audioTransferService,
+                                IStationTrackDal stationTrackDal,
+                                IMetaDataTrackInfoDal metaDataTrackInfoDal,
+                                IMetaDataChordInfoDal metaDataChordInfoDal) {
         this.audioTransferService = audioTransferService;
         this.stationTrackDal = stationTrackDal;
+        this.metaDataTrackInfoDal = metaDataTrackInfoDal;
+        this.metaDataChordInfoDal = metaDataChordInfoDal;
+        this.appConfigs = appConfigs;
     }
 
     public void fetchAndUploadTrack() {
@@ -43,7 +50,12 @@ public class StationUploadService {
         StationTrack stationTrack = fetchStationTrackToUpload();
 
         if(stationTrack != null){
-            PackagingService packagingService = new PackagingService(appConfigs,stationTrack, numOfAltMelodies);
+
+            //create metadata
+            MetaDataGenerator metaDataGenerator = new MetaDataGenerator(appConfigs, stationTrack, metaDataTrackInfoDal.findAll(), metaDataChordInfoDal.findAll());
+            metaDataGenerator.generate(appConfigs.getMetadataPath(stationTrack.getFile()));
+
+            PackagingService packagingService = new PackagingService(appConfigs, stationTrack, numOfAltMelodies);
             packagingService.tar();
         }
 

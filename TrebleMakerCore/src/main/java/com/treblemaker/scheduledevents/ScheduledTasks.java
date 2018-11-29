@@ -15,16 +15,13 @@ import com.treblemaker.services.FeedBackFileSync;
 import com.treblemaker.services.queue.QueueService;
 import com.treblemaker.stations.StationUploadService;
 import com.treblemaker.utils.loopcorrection.*;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -95,7 +92,6 @@ public class ScheduledTasks {
         Application.logger.debug("LOG: ******************************************");
         Application.logger.debug("LOG: QUEUE EVENT FIRED ************************");
         Application.logger.debug("LOG: ******************************************");
-
 
         //UPLOAD any completed tracks to stations
         //ALSO UPLOADS TAR FILES
