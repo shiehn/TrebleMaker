@@ -9,6 +9,7 @@ import com.treblemaker.model.progressions.ProgressionUnit;
 import com.treblemaker.model.progressions.ProgressionUnitBar;
 import com.treblemaker.model.queues.QueueState;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,11 +20,13 @@ public class SetMetaDataStateEvent implements IEventChain {
 
     private IMetaDataChordInfoDal metaDataChordInfoDal;
     private IMetaDataTrackInfoDal metaDataTrackInfoDal;
+    private String API_VERSION;
 
     @Autowired
-    public SetMetaDataStateEvent(IMetaDataChordInfoDal metaDataChordInfoDal, IMetaDataTrackInfoDal metaDataTrackInfoDal){
+    public SetMetaDataStateEvent(IMetaDataChordInfoDal metaDataChordInfoDal, IMetaDataTrackInfoDal metaDataTrackInfoDal, @Value("${api.version}") String api_version){
         this.metaDataChordInfoDal = metaDataChordInfoDal;
         this.metaDataTrackInfoDal = metaDataTrackInfoDal;
+        this.API_VERSION = api_version;
     }
 
     @Override
@@ -59,6 +62,7 @@ public class SetMetaDataStateEvent implements IEventChain {
             MetaDataTrackInfo metaDataTrackInfo = new MetaDataTrackInfo();
             metaDataTrackInfo.setTrackId(queueState.getQueueItem().getQueueItemId());
             metaDataTrackInfo.setTrackType(type);
+            metaDataTrackInfo.setVersion(API_VERSION);
 
             trackInfoList.add(metaDataTrackInfo);
         }

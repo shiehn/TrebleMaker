@@ -99,6 +99,9 @@ public class SpringConfiguration {
     boolean bypassEqRatings;
     @Value("${bypass_synthfx_rating}")
     boolean bypassSynthFXRating;
+    @Value("${api.version}")
+    String apiVersion;
+
 
     @Autowired
     private SentimentMixExtraction sentimentMixExtraction;
@@ -312,7 +315,7 @@ public class SpringConfiguration {
 
     @Bean(name = "setMetaDataStateEvent")
     public IEventChain setMetaDataStateEvent() {
-        return new SetMetaDataStateEvent(metaDataChordInfoDal, metaDataTrackInfoDal);
+        return new SetMetaDataStateEvent(metaDataChordInfoDal, metaDataTrackInfoDal, apiVersion);
     }
 
     @Bean(name = "setFXEvent")

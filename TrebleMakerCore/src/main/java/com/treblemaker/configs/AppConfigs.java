@@ -243,7 +243,7 @@ public class AppConfigs {
     public String EMPTY_TEST_MIDI = "empty_test_midi.mid";
     public String EMPTY_TEST_WAV = "empty_test_wav.wav";
 
-    public String METADATA_FILENAME = "metadata.txt";
+    public String METADATA_FILENAME = "metadata.json";
 }
 
 

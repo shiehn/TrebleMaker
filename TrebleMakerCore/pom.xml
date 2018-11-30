@@ -18,6 +18,7 @@
         <dependency.tritonus_aos>${env.TM_ROOT_DIR}/libs/tritonus_aos.jar</dependency.tritonus_aos>
         <dependency.tritonus_share>${env.TM_ROOT_DIR}/libs/tritonus_share.jar</dependency.tritonus_share>
         <dependency.TarsosDSP-latest>${env.TM_ROOT_DIR}/libs/TarsosDSP-latest.jar</dependency.TarsosDSP-latest>
+        -->
         <org.slf4j-version>1.7.5</org.slf4j-version>
         <nd4j.version>1.0.0-alpha</nd4j.version>
         <dl4j.version>1.0.0-alpha</dl4j.version>

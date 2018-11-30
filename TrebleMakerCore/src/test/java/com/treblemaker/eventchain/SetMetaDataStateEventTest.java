@@ -14,7 +14,6 @@ import com.treblemaker.model.queues.QueueState;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +33,7 @@ public class SetMetaDataStateEventTest {
     public void setup(){
         metaDataTrackInfoDal = Mockito.mock(IMetaDataTrackInfoDal.class);
         //make sure save does nothing
-        setMetaDataState = new SetMetaDataStateEvent(null, metaDataTrackInfoDal);
+        setMetaDataState = new SetMetaDataStateEvent(null, metaDataTrackInfoDal, "2.1");
 
         queueState = new QueueState();
 
@@ -98,6 +97,7 @@ public class SetMetaDataStateEventTest {
         for(MetaDataTrackInfo trackInfo : trackInfos){
             assertThat(trackInfo.getTrackId()).isEqualToIgnoringCase(queueState.getQueueItem().getQueueItemId());
             assertThat(trackTypes.contains(trackInfo.getTrackType())).isTrue();
+            assertThat(trackInfo.getVersion()).isEqualToIgnoringCase("2.1");
         }
     }
 

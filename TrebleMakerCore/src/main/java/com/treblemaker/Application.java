@@ -40,3 +40,4 @@ public class Application {
         client = HazelcastClient.newHazelcastClient(clientConfig);
     }
 }
+

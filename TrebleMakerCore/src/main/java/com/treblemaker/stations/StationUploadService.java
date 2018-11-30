@@ -94,11 +94,6 @@ public class StationUploadService {
                     String itemId = file.getName().replace("_0_1.mp3", "");
                     Path tarSource = Paths.get(appConfigs.getTarPackage(), itemId + ".tar");
 
-                    //PackagingService packagingService = new PackagingService(appConfigs,null, null);
-
-                    //update tar
-                    //packagingService.removeUnusedFiles(stationTrack, tarSource.toFile());
-
                     //upload mp3
                     audioTransferService.uploadAudioFile(s3Bin, file.getName(), appConfigs.getFinalMixOutput() + "/" + file.getName());
 
