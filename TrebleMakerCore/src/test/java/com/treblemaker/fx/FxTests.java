@@ -132,20 +132,6 @@ public class FxTests {
     }
 
     @Test
-    public void allDelaysFromDBAreWithinLimits(){
-
-        List<FXArpeggioDelay> fxArpeggioDelays = fxArpeggioDelayDal.findAll();
-
-        int count = 0;
-        for (FXArpeggioDelay fxArpeggioDelay: fxArpeggioDelays) {
-            System.out.println("testing fxArpeggio instance :  " + count++);
-            assertThat(masterVolumeIsValid(fxArpeggioDelay.getMasterVolume())).isTrue();
-            assertThat(echoVolumeIsValid(fxArpeggioDelay.getDelayVolume())).isTrue();
-            assertThat(delayTypeIsValid(fxArpeggioDelay.getDelayType())).isTrue();
-        }
-    }
-
-    @Test
     public void shouldCreateFfmpegCommandOne(){
 
         FXArpeggioDelay fxArpeggioDelay = new FXArpeggioDelay();

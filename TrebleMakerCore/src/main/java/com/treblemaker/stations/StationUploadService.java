@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -45,33 +46,41 @@ public class StationUploadService {
         this.appConfigs = appConfigs;
     }
 
-    public void fetchAndUploadTrack() {
+    public void fetchAndUploadApprovedTracks() {
         Application.logger.debug("LOG: UPLOADING: STARTED *************************");
-        StationTrack stationTrack = fetchStationTrackToUpload();
+        List<StationTrack> stationTracks = fetchStationTracksToUpload();
 
-        if(stationTrack != null){
+        if(stationTracks != null) {
+            for (StationTrack stationTrack : stationTracks) {
 
-            //create metadata
-            MetaDataGenerator metaDataGenerator = new MetaDataGenerator(appConfigs, stationTrack, metaDataTrackInfoDal.findAll(), metaDataChordInfoDal.findAll());
-            metaDataGenerator.generate(appConfigs.getMetadataPath(stationTrack.getFile()));
+                //create metadata
+                MetaDataGenerator metaDataGenerator = new MetaDataGenerator(appConfigs, stationTrack, metaDataTrackInfoDal.findAll(), metaDataChordInfoDal.findAll());
+                metaDataGenerator.generate(appConfigs.getMetadataPath(stationTrack.getFile()));
 
-            PackagingService packagingService = new PackagingService(appConfigs, stationTrack, numOfAltMelodies);
-            packagingService.tar();
+                //create tar package
+                PackagingService packagingService = new PackagingService(appConfigs, stationTrack, numOfAltMelodies);
+                packagingService.tar();
+
+                uploadTrack(appConfigs.getAwsBucketName(), stationTrack);
+            }
         }
-
-        uploadTrack(appConfigs.getAwsBucketName(), stationTrack);
     }
 
-    public StationTrack fetchStationTrackToUpload() {
+    public List<StationTrack> fetchStationTracksToUpload() {
         List<StationTrack> stationTracks = stationTrackDal.findAll();
+        List<StationTrack> approvedStationTracks = null;
 
         for (StationTrack stationTrack : stationTracks) {
             if (stationTrack.getAddToStation() == 1 && stationTrack.getUploaded() == 0) {
-                return stationTrack;
+                if(approvedStationTracks == null){
+                    approvedStationTracks = new ArrayList<>();
+                }
+
+                approvedStationTracks.add(stationTrack);
             }
         }
 
-        return null;
+        return approvedStationTracks;
     }
 
     //String stationTrackName, String stationTrackPath

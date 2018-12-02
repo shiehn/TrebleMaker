@@ -29,8 +29,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @RunWith(SpringRunner.class)
 @ComponentScan({"com.treblemaker"})
 @SpringBootTest(classes = SpringConfiguration.class)
-@TestPropertySource(
-        locations = "classpath:application-test.properties")
 public class HarmonicLoopRenderTests {
 
     private static final int NUMBER_OF_ITERATIONS = 500;

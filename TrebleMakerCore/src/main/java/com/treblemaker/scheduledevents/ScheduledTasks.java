@@ -95,7 +95,7 @@ public class ScheduledTasks {
 
         //UPLOAD any completed tracks to stations
         //ALSO UPLOADS TAR FILES
-        stationUploadService.fetchAndUploadTrack();
+        stationUploadService.fetchAndUploadApprovedTracks();
 
         //SYNC COMPLETED TRACKS WITH FEED BACK INTERFACE ...
         File folder = new File(appConfigs.getFinalMixOutput());

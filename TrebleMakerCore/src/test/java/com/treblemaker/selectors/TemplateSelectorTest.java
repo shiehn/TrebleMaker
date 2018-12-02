@@ -21,8 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @ComponentScan({"com.treblemaker"})
 @SpringBootTest(classes = SpringConfiguration.class)
-@TestPropertySource(
-        locations = "classpath:application-test.properties")
 public class TemplateSelectorTest extends TestCase {
 
     @Autowired
