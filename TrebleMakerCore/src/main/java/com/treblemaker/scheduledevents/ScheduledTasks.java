@@ -127,14 +127,6 @@ public class ScheduledTasks {
                 queueItemCustomDal.setQueueItemProcessing(queueItem.getQueueItemId());
                 queueDigester.digest(queueItem);
             } else if (queueItem == null && !GlobalState.getInstance().isQueueItemInprogress() && healthMonitor.mLServicesHealthCheckOk()) {
-
-                if (queueService.isAtRatedSongCapacity()) {
-                    //fix this for local testing
-                    queueService.deleteRatedCompositions();
-                }
-                //fix this for local testing
-                queueService.deleteOrphanedCompositions();
-
                 if (queueService.isAtUnratedSongCompacity()) {
                     Application.logger.debug("LOG: AT MAXIMUM UNRATED SONG CAPACITY .. NOT ADDING QUEUE ITEM");
                 } else {

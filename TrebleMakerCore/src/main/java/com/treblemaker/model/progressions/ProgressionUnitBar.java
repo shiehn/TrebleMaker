@@ -54,6 +54,7 @@ public class ProgressionUnitBar implements Cloneable {
     private Pattern hatMidiPattern;
     private HatPattern hatPattern;
 
+
     private Pattern snareMidiPattern;
     private SnarePattern snarePattern;
 

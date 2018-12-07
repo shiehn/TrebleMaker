@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.treblemaker.Application;
 import com.treblemaker.configs.*;
 import com.treblemaker.dal.interfaces.ICompositionDal;
-import com.treblemaker.dal.interfaces.ICompositionTimeSlotDal;
 import com.treblemaker.dal.interfaces.IQueueItemsDal;
 import com.treblemaker.dal.interfaces.IStationDal;
 import com.treblemaker.model.composition.Composition;
@@ -34,9 +33,6 @@ public class QueueService {
 
     @Autowired
     private ICompositionDal compositionDal;
-
-    @Autowired
-    private ICompositionTimeSlotDal compositionTimeSlotDal;
 
     @Autowired
     private IStationDal stationDal;
@@ -219,71 +215,6 @@ public class QueueService {
         Application.logger.debug("LOG:","ratedSongs : " + unratedSongs);
         Application.logger.debug("LOG:","maxUnratedSongsOnDisk : " + maxUnratedSongsOnDisk);
         return countUnratedSongs() >  maxUnratedSongsOnDisk;
-    }
-
-    public void deleteOrphanedCompositions(){
-
-        Application.logger.debug("LOG:","deleteOrphanedCompositions ENTERED");
-        Application.logger.debug("LOG:","Directory to deleteFile  : " + appConfigs.getFinalMixOutput());
-        File[] audioFiles = FileStructure.getFilesInDirectory(appConfigs.getFinalMixOutput());
-
-        Map<String, String> compositionsDelete = new HashMap<>();
-
-        List<Composition> compositions = compositionDal.findAll();
-
-        for (Composition composition : compositions) {
-
-            List<CompositionTimeSlot> timeslots = composition.getCompositionTimeSlots();
-
-            boolean shouldDeleteOrphan = true;
-            boolean isNotRated = false;
-
-            for(CompositionTimeSlot ts : timeslots){
-                if(ts.getRated() == UNRATED){
-                    if(ts.getCompositionId().equals(composition.getId())) {
-                        isNotRated = true;
-                        if (exisitsOnDisk(composition.getCompositionUid(), audioFiles)) {
-                            shouldDeleteOrphan = false;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if(shouldDeleteOrphan && isNotRated){
-
-                Application.logger.debug("LOG:","ORPHAN TO DELETE !!! : " + composition.getCompositionUid());
-                Application.logger.debug("LOG:","ORPHAN TO DELETE !!! : " + composition.getCompositionUid());
-                Application.logger.debug("LOG:","ORPHAN TO DELETE !!! : " + composition.getCompositionUid());
-                Application.logger.debug("LOG:","ORPHAN TO DELETE !!! : " + composition.getCompositionUid());
-                removeOrphanRecordsFromDatabase(composition.getCompositionUid());
-            }
-        }
-    }
-
-    private void removeOrphanRecordsFromDatabase(String compositionUid){
-
-        Composition composition = compositionDal.findByCompositionUid(compositionUid);
-
-        List<CompositionTimeSlot> timeSlots = composition.getCompositionTimeSlots();
-
-        for (CompositionTimeSlot timeSlot : timeSlots) {
-            Application.logger.debug("LOG: atemping timeslot deleteFile");
-            try {
-                compositionTimeSlotDal.delete(timeSlot);
-            }catch(Exception e){
-                Application.logger.debug("LOG:", e);
-            }
-            Application.logger.debug("LOG: successfull timeslot deleteFile");
-        }
-
-        Application.logger.debug("LOG: attemping composition deleteFile 0f " + composition.getCompositionUid());
-        try {
-            compositionDal.delete(composition);
-        }catch(Exception e){
-            Application.logger.debug("LOG:", e);
-        }
-        Application.logger.debug("LOG: successfull composition deleteFile !!!");
     }
 
     private boolean exisitsOnDisk(String compId, File[] audioFiles){

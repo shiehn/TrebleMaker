@@ -64,14 +64,11 @@ public class QueueDigester implements IQueueDigester {
     @Value("${tm.app.root}")
     String appRoot;
 
-
     @Autowired
     IMetaDataChordInfoDal metaDataChordInfoDal;
 
     @Autowired
     IMetaDataTrackInfoDal metaDataTrackInfoDal;
-
-
 
     @Override
     public QueueItem digest(QueueItem queueItem) throws Exception {
