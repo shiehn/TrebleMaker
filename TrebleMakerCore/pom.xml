@@ -29,6 +29,7 @@
         <dependency.tritonus_share>${env.TM_ROOT_DIR}/libs/tritonus_share.jar</dependency.tritonus_share>
         <dependency.TarsosDSP-latest>${env.TM_ROOT_DIR}/libs/TarsosDSP-latest.jar</dependency.TarsosDSP-latest>
 
+        <spring-version>2.0.8.RELEASE</spring-version>
         <org.slf4j-version>1.7.5</org.slf4j-version>
         <nd4j.version>1.0.0-alpha</nd4j.version>
         <dl4j.version>1.0.0-alpha</dl4j.version>
@@ -41,7 +42,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>2.0.4.RELEASE</version>
+                    <version>${spring-version}</version>
                     <configuration>
                     <!-- FOR PROD: WHEN JVM ARGS ARE PASSED THE PROCESS FORKS AND DEBUGGER IS NOT ATTACHED -->
                     <!--<jvmArguments>-->
@@ -73,7 +74,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.0.4.RELEASE</version>
+            <version>${spring-version}</version>
         </dependency>
 
         <!-- Logging -->
@@ -101,7 +102,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>2.0.4.RELEASE</version>
+            <version>${spring-version}</version>
         </dependency>
 
         <dependency>
@@ -113,7 +114,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>2.0.4.RELEASE</version>
+            <version>${spring-version}</version>
         </dependency>
 
         <dependency>
@@ -132,6 +133,13 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.9.6</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.24.1-GA</version>
+        </dependency>
+
 
         <!-- MYSQL -->
         <dependency>
@@ -222,6 +230,14 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.4</version>
+            <scope>provided</scope>
+        </dependency>
+
 
         <!-- USED BY JFUGUGE -->
         <dependency>

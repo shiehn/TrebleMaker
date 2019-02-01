@@ -6,6 +6,8 @@ TrebleMaker.ai is a distributed system that procedurally generates royalty free 
 *For usage instruction please visit:*
 https://github.com/shiehn/TrebleMakerDocker
 
+*import project dependencies by running: './scripts/fetch-deps.sh' from the root of this repo
+
 ---
 
 #### The system is composed of five related components:
