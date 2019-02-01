@@ -11,4 +11,6 @@ echo "TREBLE MAKER API IS UP!!"
 echo "TREBLE MAKER API IS UP!!"
 echo "TREBLE MAKER API IS UP!!"
 
+cd ${TM_ROOT_DIR}/TrebleMakerCore
+
 mvn clean spring-boot:run
