@@ -10,16 +10,15 @@
     <packaging>jar</packaging>
 
     <properties>
+        <dependency.jl1>/TrebleMaker/libs/jl1.0.1.jar</dependency.jl1>
+        <dependency.jsminim>/TrebleMaker/libs/jsminim.jar</dependency.jsminim>
+        <dependency.minim>/TrebleMaker/libs/minim.jar</dependency.minim>
+        <dependency.minim-spi>/TrebleMaker/libs/minim-spi.jar</dependency.minim-spi>
+        <dependency.mp3spi1>/TrebleMaker/libs/mp3spi1.9.5.jar</dependency.mp3spi1>
+        <dependency.tritonus_aos>/TrebleMaker/libs/tritonus_aos.jar</dependency.tritonus_aos>
+        <dependency.tritonus_share>/TrebleMaker/libs/tritonus_share.jar</dependency.tritonus_share>
+        <dependency.TarsosDSP-latest>/TrebleMaker/libs/TarsosDSP-latest.jar</dependency.TarsosDSP-latest>
         <!--
-        <dependency.jl1>/home/stevehiehn/TrebleMaker/libs/jl1.0.1.jar</dependency.jl1>
-        <dependency.jsminim>/home/stevehiehn/TrebleMaker/libs/jsminim.jar</dependency.jsminim>
-        <dependency.minim>/home/stevehiehn/TrebleMaker/libs/minim.jar</dependency.minim>
-        <dependency.minim-spi>/home/stevehiehn/TrebleMaker/libs/minim-spi.jar</dependency.minim-spi>
-        <dependency.mp3spi1>/home/stevehiehn/TrebleMaker/libs/mp3spi1.9.5.jar</dependency.mp3spi1>
-        <dependency.tritonus_aos>/home/stevehiehn/TrebleMaker/libs/tritonus_aos.jar</dependency.tritonus_aos>
-        <dependency.tritonus_share>/home/stevehiehn/TrebleMaker/libs/tritonus_share.jar</dependency.tritonus_share>
-        <dependency.TarsosDSP-latest>/home/stevehiehn/TrebleMaker/libs/TarsosDSP-latest.jar</dependency.TarsosDSP-latest>
-        -->
         <dependency.jl1>${env.TM_ROOT_DIR}/libs/jl1.0.1.jar</dependency.jl1>
         <dependency.jsminim>${env.TM_ROOT_DIR}/libs/jsminim.jar</dependency.jsminim>
         <dependency.minim>${env.TM_ROOT_DIR}/libs/minim.jar</dependency.minim>
@@ -28,7 +27,7 @@
         <dependency.tritonus_aos>${env.TM_ROOT_DIR}/libs/tritonus_aos.jar</dependency.tritonus_aos>
         <dependency.tritonus_share>${env.TM_ROOT_DIR}/libs/tritonus_share.jar</dependency.tritonus_share>
         <dependency.TarsosDSP-latest>${env.TM_ROOT_DIR}/libs/TarsosDSP-latest.jar</dependency.TarsosDSP-latest>
-
+        -->
         <spring-version>2.0.8.RELEASE</spring-version>
         <org.slf4j-version>1.7.5</org.slf4j-version>
         <nd4j.version>1.0.0-alpha</nd4j.version>
