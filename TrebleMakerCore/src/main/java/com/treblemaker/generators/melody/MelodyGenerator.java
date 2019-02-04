@@ -101,6 +101,18 @@ public class MelodyGenerator {
     }
 
     public List<String> generate(List<HiveChord> chords, int numOfAltMelodies) {
+        /*
+            CHORD TYPES
+            0 | maj
+            1 | min
+            2 | dim
+            3 | maj7
+            4 | min7
+            5 | dom7
+            6 | min7b5
+         */
+
+        //String keyAndChords = "31^313*313*313*313*613*613*715*715*";
 
         String keyAndChords = "";
 
@@ -130,21 +142,6 @@ public class MelodyGenerator {
         }
 
         System.out.println("KEYS AND CHORDS: " + keyAndChords);
-
-
-        /*
-        CHORD TYPES
-0 | maj
-1 | min
-2 | dim
-3 | maj7
-4 | min7
-5 | dom7
-6 | min7b5
-         */
-
-        //String keyAndChords = "31^313*313*313*313*613*613*715*715*";
-
 
         int miniBatchSize = 32;             //Size of mini batch to use when  training
         int exampleLength = 355;

@@ -7,6 +7,7 @@ import com.treblemaker.dal.interfaces.IQueueItemCustomDal;
 import com.treblemaker.extractors.RhythmicExtractionUtil;
 import com.treblemaker.extractors.pitchextraction.PitchExtractionUtil;
 import com.treblemaker.healthmonitor.HealthMonitor;
+import com.treblemaker.integration.IntegrationValidation;
 import com.treblemaker.loadbalance.LoadBalancer;
 import com.treblemaker.model.queues.QueueItem;
 import com.treblemaker.scheduledevents.interfaces.IQueueDigester;
@@ -46,6 +47,7 @@ public class ScheduledTasks {
     private PitchExtractionUtil pitchExtractionUtil;
     private QueueService queueService;
     private HealthMonitor healthMonitor;
+    private IntegrationValidation integrationValidation;
     private final String[] mlEndpoints;
     private final boolean useOnlyFirstMachinelearnEndpoint;
 
@@ -64,6 +66,7 @@ public class ScheduledTasks {
                           PitchExtractionUtil pitchExtractionUtil,
                           QueueService queueService,
                           HealthMonitor healthMonitor,
+                          IntegrationValidation integrationValidation,
                           @Value("${machinelearning_endpoints}") String[] mlEndpoints,
                           @Value("${use_only_first_machinelearn_endpoint}") boolean useOnlyFirstMachinelearnEndpoint) {
         this.queueDigester = queueDigester;
@@ -79,6 +82,7 @@ public class ScheduledTasks {
         this.pitchExtractionUtil = pitchExtractionUtil;
         this.queueService = queueService;
         this.mlEndpoints = mlEndpoints;
+        this.integrationValidation = integrationValidation;
         this.useOnlyFirstMachinelearnEndpoint = useOnlyFirstMachinelearnEndpoint;
         this.healthMonitor = healthMonitor;
 
@@ -92,6 +96,8 @@ public class ScheduledTasks {
         Application.logger.debug("LOG: ******************************************");
         Application.logger.debug("LOG: QUEUE EVENT FIRED ************************");
         Application.logger.debug("LOG: ******************************************");
+
+        integrationValidation.validateEndpoints();
 
         //UPLOAD any completed tracks to stations
         //ALSO UPLOADS TAR FILES
