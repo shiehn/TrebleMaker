@@ -8,16 +8,7 @@ import com.treblemaker.weighters.helper.CurrentPriorBar;
 import com.treblemaker.weighters.interfaces.IRhythmWeighter;
 import com.treblemaker.weighters.themeweighters.HarmonicAltThemeWeighter;
 
-import java.util.concurrent.Callable;
-
-/*
-harmonicVerticalClassifier.classify(bars.getCurrentBarIndex(), optionToWeight));
-rhythmWeighter.calculateRhythmicWeight(bars.getCurrentBarIndex().getBeatLoop(), optionToWeight));
-harmonicLoopTimeseriesClassifier.classify(optionToWeight, bars.getCurrentBarIndex(), bars.getOneBarPrior(), bars.getSecondBarPrior()));
-harmonicAltThemeWeighter.calculateThe
- */
-
-public class HarmonicLoopWeightTask implements Callable<Boolean> {
+public class HarmonicLoopWeightTask {
 
     private HarmonicLoop optionToWeight;
     private CurrentPriorBar bars;
@@ -42,7 +33,6 @@ public class HarmonicLoopWeightTask implements Callable<Boolean> {
 
     }
 
-    @Override
     public Boolean call() throws Exception {
 
         Application.logger.debug("LOG: CURRENT THREAD : " + Thread.currentThread().getName());

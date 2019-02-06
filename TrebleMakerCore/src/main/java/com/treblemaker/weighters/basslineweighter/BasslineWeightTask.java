@@ -9,13 +9,10 @@ import com.treblemaker.utils.Http.HttpUtils;
 import com.treblemaker.utils.arpeggio.BassAndArpeggioUtil;
 import com.treblemaker.utils.rhythmic.RhythmicAccentUtil;
 import com.treblemaker.weighters.enums.WeightClass;
-
 import java.util.List;
-import java.util.concurrent.Callable;
 
-public class BasslineWeightTask implements Callable<BasslineWithRating> {
+public class BasslineWeightTask {
 
-    //
     private boolean bypassBasslineVerticalRating;
     private ProgressionUnitBar barOne;
     private ProgressionUnitBar barTwo;
@@ -34,9 +31,6 @@ public class BasslineWeightTask implements Callable<BasslineWithRating> {
         this.apiPassword = apiPassword;
     }
 
-
-
-    @Override
     public BasslineWithRating call() throws Exception {
 
         if(bypassBasslineVerticalRating){

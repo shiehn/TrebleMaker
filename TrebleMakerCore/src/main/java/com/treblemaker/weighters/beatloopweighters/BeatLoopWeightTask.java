@@ -9,9 +9,7 @@ import com.treblemaker.weighters.helper.CurrentPriorBar;
 import com.treblemaker.weighters.interfaces.IRhythmWeighter;
 import com.treblemaker.weighters.themeweighters.BeatLoopAltThemeWeighter;
 
-import java.util.concurrent.Callable;
-
-public class BeatLoopWeightTask implements Callable<Boolean> {
+public class BeatLoopWeightTask {
 
     private BeatLoop optionToWeight;
     private CurrentPriorBar bars;
@@ -31,7 +29,6 @@ public class BeatLoopWeightTask implements Callable<Boolean> {
         this.beatLoopAltThemeWeighter = beatLoopAltThemeWeighter;
     }
 
-    @Override
     public Boolean call() throws Exception {
 
         Application.logger.debug("LOG: CURRENT THREAD : " + Thread.currentThread().getName());

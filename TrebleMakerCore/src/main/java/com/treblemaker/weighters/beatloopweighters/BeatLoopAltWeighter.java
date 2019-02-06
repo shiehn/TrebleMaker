@@ -74,17 +74,13 @@ public class BeatLoopAltWeighter implements IWeighter {
             collection.add(loop);
         });
 
-        ExecutorService executorPool = ExecutorPoolFactory.getPool();
         try {
-            List<Future<Boolean>> taskList = executorPool.invokeAll(collection);
-
-            for (Future<Boolean> task : taskList) {
-                Application.logger.debug("LOG: BeatLoop Alt weight status : " + task.get());
+            for (BeatLoopWeightTask task : collection) {
+                Application.logger.debug("LOG: BeatLoop Alt weight status : " + task.call());
             }
         } catch (Exception e) {
             Application.logger.debug("LOG:", e);
         }
-        executorPool.shutdown();
 
         return true;
     }

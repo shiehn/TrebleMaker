@@ -64,17 +64,13 @@ public class HarmonicLoopAltWeighter {
         //TODO DO THE WEIGHTS EVEN GET SET???  RETURNS BOOL ...
         //TODO DO THE WEIGHTS EVEN GET SET???  RETURNS BOOL ...
 
-        ExecutorService executorPool = ExecutorPoolFactory.getPool();
         try {
-            List<Future<Boolean>> taskList = executorPool.invokeAll(collection);
-
-            for (Future<Boolean> task : taskList) {
-                Application.logger.debug("LOG: Harmonic Alt weight status : " + task.get());
+            for (HarmonicLoopWeightTask task : collection) {
+                Application.logger.debug("LOG: Harmonic Alt weight status : " + task.call());
             }
         } catch (Exception e) {
             Application.logger.debug("LOG:", e);
         }
-        executorPool.shutdown();
 
         return true;
     }

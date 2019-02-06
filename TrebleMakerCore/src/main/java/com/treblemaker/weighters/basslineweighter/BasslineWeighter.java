@@ -40,11 +40,20 @@ public class BasslineWeighter implements IBasslineWeighter {
 
         List<BasslineWithRating> responses = new ArrayList<>();
 
-//        Application.logger.debug("LOG:","Bassline TaskList SIZE: " + taskList.size());
         ExecutorService executorPool = ExecutorPoolFactory.getPool();
-//        Application.logger.debug("LOG:","EXECUTOR : CREATING");
-//        Application.logger.debug("LOG:","TIME: " + DateTime.now());
         try {
+
+            for(BasslineWeightTask task : taskList){
+                try {
+                    responses.add(task.call());
+                }catch (TimeoutException tException){
+                    Application.logger.debug("LOG: ERROR!! : TIMEOUT EXCEPTION : BassL WEIGHTING!!");
+                }catch(InterruptedException ie){
+                    Application.logger.debug("LOG: ERROR!! : INTERRUPT EXCEPTION : BassL WEIGHTING!!");
+                }
+            }
+
+            /*
             List<Future<BasslineWithRating>> invokedTasks = executorPool.invokeAll(taskList);
 
 
@@ -52,13 +61,13 @@ public class BasslineWeighter implements IBasslineWeighter {
                 try {
                     responses.add(task.get());
                     task.get(THREAD_TIMEOUT, TimeUnit.SECONDS).getTotalWeight(); //TODO IS THIS USED!!!!!
-//                    Application.logger.debug("LOG:","Bassline weight status : " + task.get(THREAD_TIMEOUT, TimeUnit.SECONDS).getTotalWeight());
                 }catch (TimeoutException tException){
                     Application.logger.debug("LOG: ERROR!! : TIMEOUT EXCEPTION : BassL WEIGHTING!!");
                 }catch(InterruptedException ie){
                     Application.logger.debug("LOG: ERROR!! : INTERRUPT EXCEPTION : BassL WEIGHTING!!");
                 }
             }
+            */
         } catch (Exception e) {
             Application.logger.debug("LOG:", e);
         }
