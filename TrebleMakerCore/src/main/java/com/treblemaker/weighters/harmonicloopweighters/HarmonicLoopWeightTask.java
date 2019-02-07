@@ -30,7 +30,6 @@ public class HarmonicLoopWeightTask {
         this.rhythmWeighter = rhythmWeighter;
         this.harmonicLoopTimeseriesClassifier = harmonicLoopTimeseriesClassifier;
         this.harmonicAltThemeWeighter = harmonicAltThemeWeighter;
-
     }
 
     public Boolean call() throws Exception {
